@@ -53,7 +53,17 @@ public class PageController {
      * @return url
      */
     @RequestMapping("/toPage/admin/{page}")
-    public String toPage(@PathVariable String page) {
+    public String toAdminPage(@PathVariable String page) {
         return "/admin/" + page;
+    }
+
+    /**
+     * 页面映射
+     * @param page 页面url
+     * @return url
+     */
+    @RequestMapping("/toPage/mall/{page}")
+    public String toMallPage(@PathVariable String page) {
+        return "/mall/" + page;
     }
 }

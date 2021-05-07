@@ -204,9 +204,20 @@ public class CommodityController {
      * @return 页面url
      */
     @RequestMapping( "/admin/commodityDetail/{id}")
-    public String toDetailPage(@PathVariable("id") String id, Model model) {
+    public String toAdminDetailPage(@PathVariable("id") String id, Model model) {
         model.addAttribute(id);
         return "/admin/commodityDetail";
     }
 
+    /**
+     * 跳转到商品详情页
+     * @param commodityId commodity id
+     * @param model 传递参数
+     * @return 页面url
+     */
+    @RequestMapping( "/mall/commodityDetail")
+    public String toMallDetailPage(@RequestBody String commodityId, Model model) {
+        model.addAttribute(commodityId);
+        return "/mall/commodityDetail";
+    }
 }
