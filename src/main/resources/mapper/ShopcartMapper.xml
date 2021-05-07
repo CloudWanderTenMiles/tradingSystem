@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frye.trading.dao.ShopcartMapper">
+
+    <select id="getCommodityByCustomerId" resultType="com.frye.trading.pojo.model.Shopcart">
+        select *
+        from tradingsystem.shopcart
+        where customer_id = #{id}
+    </select>
+
+    <insert id="addShopcart">
+        insert into tradingsystem.shopcart(customer_id, commodity_id, `state`)
+        values (#{customerId}, #{commodityId}, #{state})
+    </insert>
+
+    <delete id="deleteShopcart">
+        delete
+        from tradingsystem.shopcart
+        where customer_id = #{customerId}
+        and commodity_id = #{commodityId}
+    </delete>
+
+    <update id="setAllShopcartInvalidByCommodityId">
+        update tradingsystem.shopcart
+        <set>
+            `state` = 'invalid'
+        </set>
+        where commodity_id = #{commodityId}
+    </update>
+
+</mapper>

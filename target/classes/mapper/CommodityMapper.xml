@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frye.trading.dao.CommodityMapper">
+
+    <select id="getCommodityState" resultType="String">
+        select `state`
+        from tradingsystem.commodity
+        where commodity_id = #{id}
+    </select>
+
+    <select id="getCommodityById" resultType="com.frye.trading.pojo.dto.Commodity">
+        select commodity_id, commodity_name, `count`, price, image, `state`, detail, customer_id, customer_name,
+               parent_type_id, parent_type_name, type_id, type_name, added_time
+        from tradingsystem.commodity natural join tradingsystem.customer
+            natural join tradingsystem.parent_type natural join tradingsystem.type
+        where commodity_id = #{id}
+    </select>
+
+    <insert id="addCommodity" parameterType="com.frye.trading.pojo.dto.Commodity">
+        insert into tradingsystem.commodity(commodity_id, commodity_name, price, type_id, `count`, image, `state`,
+                                           detail, `customer_id`, added_time)
+        values (#{commodityId}, #{commodityName}, #{price}, #{typeId}, #{count}, #{image},
+                #{state}, #{detail}, #{customerId}, #{addedTime})
+    </insert>
+
+    <update id="updateCommodity" parameterType="com.frye.trading.pojo.dto.Commodity">
+        update tradingsystem.commodity
+        <set>
+            <if test="commodityName != null">commodity_name = #{commodityName},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="count != null">`count` = #{count},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="state != null">`state` = #{state},</if>
+            <if test="detail != null">detail = #{detail},</if>
+        </set>
+        <where>
+            commodity_id = #{commodityId}
+        </where>
+    </update>
+
+    <delete id="deleteCommodity">
+        delete
+        from tradingsystem.commodity
+        where commodity_id = #{id}
+    </delete>
+
+    <select id="getCount" resultType="int" parameterType="map">
+        select count(*)
+        from tradingsystem.commodity natural join tradingsystem.customer
+        natural join tradingsystem.parent_type natural join tradingsystem.type
+        <where>
+            <if test="params.customerId != null and params.customerId != ''">
+                customer_id = #{params.customerId}
+            </if>
+            <if test="params.customerName != null and params.customerName != ''">
+                and customer_name like CONCAT('%',#{params.customerName},'%')
+            </if>
+            <if test="params.parentTypeName != null and params.parentTypeName != ''">
+                and patent_type_name like CONCAT('%',#{params.parentTypeName},'%')
+            </if>
+            <if test="params.commodityName != null and params.commodityName != ''">
+                and commodity_name like CONCAT('%',#{params.commodityName},'%')
+            </if>
+            <if test="params.state != null and params.state != ''">
+                and `state` = #{params.state}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCommodityList" resultType="com.frye.trading.pojo.dto.Commodity" parameterType="map">
+        select commodity_id, commodity_name, `count`, price, image, `state`, detail, customer_id, customer_name,
+                parent_type_id, parent_type_name, type_id, type_name, added_time
+        from tradingsystem.commodity natural join tradingsystem.customer
+                natural join tradingsystem.parent_type natural join tradingsystem.type
+        <where>
+            <if test="params.customerId != null and params.customerId != ''">
+                customer_id = #{params.customerId}
+            </if>
+            <if test="params.customerName != null and params.customerName != ''">
+                and customer_name = #{params.customerName}
+            </if>
+            <if test="params.parentTypeName != null and params.parentTypeName != ''">
+                and patent_type_name like CONCAT('%',#{params.parentTypeName},'%')
+            </if>
+            <if test="params.commodityName != null and params.commodityName != ''">
+                and commodity_name like CONCAT('%',#{params.commodityName},'%')
+            </if>
+            <if test="params.state != null and params.state != ''">
+                and `state` = #{params.state}
+            </if>
+        </where>
+        order by added_time, price, commodity_id
+        limit #{begin}, #{pageSize}
+    </select>
+
+</mapper>

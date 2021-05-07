@@ -1,0 +1,59 @@
+package com.frye.trading.controller;
+
+import com.frye.trading.pojo.model.Admin;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * 负责页面跳转
+ */
+
+@Controller
+public class PageController {
+    /**
+     * 跳转商城首页
+     * @return
+     */
+    @RequestMapping({"/","/index","/home"})
+    public String getHomePage() {
+        return "/mall/home";
+    }
+
+    /**
+     * 跳转管理员登录页
+     * @return
+     */
+    @RequestMapping("/admin")
+    public String getALoginPage() {
+        return "/admin/alogin";
+    }
+
+    /**
+     * 跳转到后台管理页面
+     * @param model
+     * @return
+     */
+    @RequestMapping("/admin/home")
+    public String getAdminHomePage(Model model){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("name",admin.getAdminName());
+        return "/admin/home";
+    }
+
+    /**
+     * 页面映射
+     * @param page 页面url
+     * @return url
+     */
+    @RequestMapping("/toPage/admin/{page}")
+    public String toPage(@PathVariable String page) {
+        return "/admin/" + page;
+    }
+}

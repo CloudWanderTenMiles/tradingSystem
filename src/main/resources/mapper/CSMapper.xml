@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frye.trading.dao.CSMapper">
+
+    <select id="checkExist" resultType="int" parameterType="map">
+        select count(*)
+        from tradingsystem.staff
+        <where>
+            <if test="params.phone != null and params.phone != ''">
+                phone = #{params.phone}
+            </if>
+            <if test="params.email != null and params.email != ''">
+                and email = #{params.email}
+            </if>
+        </where>
+    </select>
+
+    <select id="getStaffById" resultType="com.frye.trading.pojo.model.Staff">
+        select *
+        from tradingsystem.staff
+        where staff_id = #{id}
+    </select>
+
+    <update id="changePwd">
+        update tradingsystem.staff
+        <set>
+            staff_pwd = #{password}
+        </set>
+        <where>
+            staff_id = #{id}
+        </where>
+    </update>
+
+    <insert id="addStaff" parameterType="com.frye.trading.pojo.model.Staff">
+        insert into tradingsystem.staff(staff_id,staff_name,staff_pwd,sex,birth,phone,email,address,photo)
+        values (#{staffId}, #{staffName}, #{staffPwd}, #{sex}, #{birth}, #{phone}, #{email}, #{address}, #{photo});
+    </insert>
+
+    <update id="updateStaff" parameterType="com.frye.trading.pojo.model.Staff">
+        update tradingsystem.staff
+        <set>
+            <if test="staffName != null">staff_name = #{staffName},</if>
+            <if test="staffPwd != null">staff_pwd = #{staffPwd},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="birth != null">birth = #{birth},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="photo != null">photo = #{photo},</if>
+        </set>
+        <where>
+            staff_id = #{staffId}
+        </where>
+    </update>
+
+    <delete id="deleteStaff">
+        delete
+        from tradingsystem.staff
+        where staff_id = #{id}
+    </delete>
+
+    <select id="getCount" resultType="int" parameterType="map">
+        select count(*)
+        from tradingsystem.staff
+        <where>
+            <if test="params.staffId != null">
+                staff_id = #{params.staffId}
+            </if>
+            <if test="params.staffName != null">
+                and staff_name like CONCAT('%',#{params.staffName},'%');
+            </if>
+            <if test="params.phone != null">
+                and phone = #{params.phone}
+            </if>
+            <if test="params.email != null">
+                and email = #{params.email}
+            </if>
+        </where>
+    </select>
+
+    <select id="getStaffList" resultType="com.frye.trading.pojo.model.Staff" parameterType="map">
+        select *
+        from tradingsystem.staff
+        <where>
+            <if test="params.staffId != null">
+                staff_id = #{params.staffId}
+            </if>
+            <if test="params.staffName != null">
+                and staff_name like CONCAT('%',#{params.staffName},'%');
+            </if>
+            <if test="params.phone != null">
+                and phone = #{params.phone}
+            </if>
+            <if test="params.email != null">
+                and email = #{params.email}
+            </if>
+        </where>
+        limit #{begin}, #{pageSize}
+    </select>
+
+</mapper>

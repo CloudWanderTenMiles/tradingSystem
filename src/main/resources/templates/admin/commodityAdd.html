@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>add commodity</title>
+    <meta charset="utf-8"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
+</head>
+<body>
+<form class="layui-form" method="post" style="width: auto; margin-left: 20%; margin-top: 30px;">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">Image:</label>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn" id="upload-btn">
+                <i class="layui-icon">&#xe67c;</i>upload image
+            </button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">Preview:</label>
+        <div class="layui-input-inline">
+            <img id="image" alt="" style="height: 180px; width: 150px;">
+        </div>
+    </div>
+    <input type="text" style="display: none" name="image" id="imagePath">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">Name:</label>
+        <div class="layui-input-inline">
+            <input type="text" id="commodityName" name="commodityName" class="layui-input"
+                   lay-verify="required|username"
+                   lay-reqText="The commodity name cannot be null">
+        </div>
+        <label class="layui-form-label">owner Id:</label>
+        <div class="layui-input-inline">
+            <input type="text" id="customerId" name="customerId" class="layui-input" lay-verify="required"
+                   lay-reqText="The owner id cannot be null">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">count:</label>
+        <div class="layui-input-inline">
+            <input type="text" id="count" name="count" class="layui-input" lay-verify="required|number"
+                   lay-reqText="The count cannot be null">
+        </div>
+        <label class="layui-form-label">price:</label>
+        <div class="layui-input-inline">
+            <input type="text" id="price" name="price" class="layui-input" lay-verify="required|number"
+                   lay-reqText="The price cannot be null">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">parent type:</label>
+        <div class="layui-input-inline">
+            <select id="parentTypeId" name="parentTypeId" lay-filter="select1" lay-verify="required" lay-reqText="The parent type cannot be null">
+                <option value="" selected="">select</option>
+            </select>
+        </div>
+        <label class="layui-form-label">type:</label>
+        <div class="layui-input-inline">
+            <select id="typeId" name="typeId" lay-verify="required" lay-reqText="The type cannot be null">
+                <option value="" selected="">select</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">detail:</label>
+        <div class="layui-input-block">
+            <textarea name="detail" placeholder="Please enter a description of the product" class="layui-textarea"
+                      style="width: 800px; height: 150px;"></textarea>
+        </div>
+    </div>
+
+    <!-- button -->
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn" onclick="window.history.back(-1)">
+                <i class="layui-icon">&#xe603;</i>Return
+            </button>
+            <button type="submit" class="layui-btn" lay-submit lay-filter="submit-btn">
+                <i class="layui-icon">&#xe605;</i>Submit
+            </button>
+            <button type="reset" class="layui-btn">
+                <i class="layui-icon">&#xe666;</i>Reset
+            </button>
+        </div>
+    </div>
+</form>
+<!-- layui动态加载效果 -->
+<script>
+    layui.use(['form', 'layer'], function () {
+        let form = layui.form;
+        let layer = layui.layer;
+        // 获取下拉框的值
+        window.onload = function (){
+            $.ajax({
+                url: '/op/getAllParentType',
+                type: 'post',
+                dataType: 'text',
+                contentType: 'application/json',
+                timeout: 2000,
+                success: function (data) {
+                    let res = JSON.parse(data);
+                    if (res.code === 200) {
+                        $.each(res.data, function (index, value){
+                            $('#parentTypeId').append("<option value=\""+value.parentTypeId+"\">"+value.parentTypeName+"</option>");
+                        });
+                        // 刷新表单
+                        form.render("select");
+                        return false;
+                    } else {
+                        layer.msg(res.msg);
+                        return false;
+                    }
+                },
+                error: function (){
+                    layer.msg("Pulling data from the background is abnormal");
+                }
+            });
+        }
+
+        // 表单验证
+        form.verify({
+            username: function (value) {
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                    return "Name cannot have special characters";
+                }
+                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                    return "No underscore at the beginning and end of the name";
+                }
+                if (/^\d+\d+\d$/.test(value)) {
+                    return "Name cannot be all numbers";
+                }
+                if (value.length < 3) {
+                    return "Name cannot be less than three bit";
+                }
+            }
+        });
+
+        // 选择事件
+        form.on('select(select1)', function (data) {
+            let id = $('#parentTypeId').val();
+            $.ajax({
+                url: '/op/getAllTypeByPid',
+                type: 'post',
+                dataType: 'text',
+                data: id,
+                contentType: 'application/json',
+                timeout: 2000,
+                success: function (data) {
+                    //清空选择框
+                    $('#typeId').empty();
+                    let res = JSON.parse(data);
+                    if (res.code === 200) {
+                        $.each(res.data, function (index, value){
+                            $('#typeId').append("<option value=\""+value.typeId+"\">"+value.typeName+"</option>");
+                        });
+                        // 刷新表单
+                        form.render("select");
+                    } else {
+                    }
+                },
+                error: function (){
+                }
+            });
+        });
+
+        // 表单提交
+        form.on('submit(submit-btn)', function (data) {
+            $.ajax({
+                url: '/op/commodityAdd',
+                type: 'post',
+                dataType: 'text',
+                contentType: 'application/json',
+                data: JSON.stringify(data.field),
+                time: 2000,
+                success: function (data) {
+                    let res = JSON.parse(data);
+                    if (res.code === 200) {
+                        layer.msg(res.msg);
+                        $('iframe', parent.document).attr("src", "/toPage/admin/commodityList");
+                    } else {
+                        layer.msg(res.msg);
+                        return false;
+                    }
+                },
+                error: function () {
+                    layer.msg("Exception!");
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+
+    layui.use('upload', function(){
+        let upload = layui.upload;
+        let $ = layui.$;
+
+        //执行实例
+        let uploadInst = upload.render({
+            elem: '#upload-btn' //绑定元素
+            ,url: '/upload/image' //上传接口
+            ,accept: 'images'
+            ,done: function(res){
+                if (res.code === 200) {
+                    layer.msg(res.msg);
+                    $('#image').attr("src",res.data.src);
+                    $('#imagePath').attr("value", res.data.src);
+                }
+            }
+            ,error: function(){
+                layer.msg("Exception!")
+            }
+        });
+    });
+</script>
+</body>
+</html>
