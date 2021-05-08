@@ -11,6 +11,8 @@ public interface CustomerService {
 
     public Customer getCustomerById(String id);
 
+    public Customer getCustomerByPhone(String phone);
+
     public int changePwd(String id, String pwd);
 
     public int addCustomer(Customer customer);

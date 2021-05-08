@@ -34,6 +34,15 @@ public class PageController {
     }
 
     /**
+     * 跳转商城登录页
+     * @return
+     */
+    @RequestMapping("/login")
+    public String getLoginPage() {
+        return "/mall/login";
+    }
+
+    /**
      * 跳转到后台管理页面
      * @param model
      * @return

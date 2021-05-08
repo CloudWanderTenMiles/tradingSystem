@@ -31,6 +31,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer getCustomerByPhone(String phone) {
+        return customerMapper.getCustomerByPhone(phone);
+    }
+
+    @Override
     public int changePwd(String id, String pwd) {
         return customerMapper.changePwd(id, pwd);
     }

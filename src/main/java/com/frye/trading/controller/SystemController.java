@@ -36,7 +36,7 @@ public class SystemController {
         int onSaleCom = commodityService.getCount(params);
         params.put("state","Completed");
         int orderNumber = orderService.getCount(params);
-        int days = (int) ((new Date().getTime() - CONSTANT.ORIGIN_TIME.getTime()) / (24*60*60*100));
+        int days = (int) ((new Date().getTime() - CONSTANT.ORIGIN_TIME.getTime()) / (24*60*60*1000));
         Map<String, Integer> res = new LinkedHashMap<>();
         res.put("cusNumber", cusNumber);
         res.put("csNumber", csNumber);

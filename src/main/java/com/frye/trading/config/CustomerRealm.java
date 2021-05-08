@@ -24,15 +24,14 @@ public class CustomerRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-//        String phone = token.getUsername();
-//        Customer customer = customerService.getCustomerById(account);
-//        if (customer == null) {
-//            return null;
-//        }
-//        // 盐值加密
-//        ByteSource credentialsSalt = ByteSource.Util.bytes(customer.getAdminName());
-//        return new SimpleAuthenticationInfo(account, admin.getAdminPwd(), credentialsSalt, this.getName());
-        return null;
+        String phone = token.getUsername();
+        Customer customer = customerService.getCustomerByPhone(phone);
+        if (customer == null) {
+            return null;
+        }
+        // 盐值加密
+        ByteSource credentialsSalt = ByteSource.Util.bytes(customer.getPhone());
+        return new SimpleAuthenticationInfo(phone, customer.getCustomerPwd(), credentialsSalt, this.getName());
     }
 
     public static String getEncryptedPassword(String username, String credentials) {

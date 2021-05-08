@@ -10,7 +10,7 @@
         where customer_id = #{id}
     </select>
 
-    <insert id="addShopcart">
+    <insert id="addShopcart" parameterType="com.frye.trading.pojo.model.Shopcart">
         insert into tradingsystem.shopcart(customer_id, commodity_id, `state`)
         values (#{customerId}, #{commodityId}, #{state})
     </insert>

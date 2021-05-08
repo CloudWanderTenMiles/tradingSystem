@@ -26,6 +26,12 @@
         where customer_id = #{id}
     </select>
 
+    <select id="getCustomerByPhone" resultType="com.frye.trading.pojo.model.Customer">
+        select *
+        from tradingsystem.customer
+        where phone = #{phone}
+    </select>
+
     <update id="changePwd">
         update tradingsystem.customer
         <set>
