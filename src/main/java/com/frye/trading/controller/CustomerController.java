@@ -1,5 +1,7 @@
 package com.frye.trading.controller;
 
+import com.frye.trading.config.AdminRealm;
+import com.frye.trading.config.CustomerRealm;
 import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.utils.DataJsonUtils;
@@ -101,7 +103,7 @@ public class CustomerController {
         customer.setCustomerName(map.get("customerName"));
         customer.setRealName(map.get("realName"));
         customer.setStudentId(stuId);
-        customer.setCustomerPwd(map.get("customerPwd"));
+        customer.setCustomerPwd(CustomerRealm.getEncryptedPassword(phone, map.get("customerPwd")));
         customer.setSex(map.get("sex"));
         customer.setBirth(map.get("birth"));
         customer.setPhone(phone);
