@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>详情页</title>
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <link rel="stylesheet" th:href="@{/css/proList.css}">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.SuperSlide.2.1.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/public.js}"></script>
+
+    <script type="text/javascript">jQuery(".bottom").slide({
+        titCell: ".hd ul",
+        mainCell: ".bd .likeList",
+        autoPage: true,
+        autoPlay: false,
+        effect: "leftLoop",
+        autoPlay: true,
+        vis: 1
+    });</script>
+</head>
+<body>
+
+<!------------------------------head------------------------------>
+<div class="head">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
+                                                                           style="width: 35%;height: auto"/></a>
+        </h1>
+            <div class="fr clearfix" id="top1">
+                <p class="fl">
+                    <a href="javascript:void(0);" url="/toPage/mall/" id="login">login</a>
+                    <a href="javascript:void(0);" url="/toPage/mall/" id="reg">register</a>
+                </p>
+                <form action="#" method="get" class="fl"><input type="text"/><input
+                        type="button"/></form>
+                <div class="btn fl clearfix">
+                    <a href="javascript:void(0);" url="/toPage/mall/">
+                        <img th:src="@{/img/grzx.png}"/>
+                    </a>
+                    <a href="javascript:void(0);" url="/toPage/mall/">
+                        <img th:src="@{/img/gwc.png}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="javascript:void(0);" url="/home">home</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">All Products</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">My Products</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">contact us</a></li>
+        </ul>
+    </div>
+</div>
+<div class="detCon">
+    <div class="proDet wrapper">
+        <div class="proCon clearfix">
+            <div class="proImg fl" id="image">
+            </div>
+            <div class="fr intro">
+                <div class="title" id="info"></div>
+                <div class="proIntro">
+                    <p>BASIC INFORMATION</p>
+                    <input id="commodityId" th:value="${commodityId}" style="display: none">
+                    <div class="proIntro" id="detail">
+                    </div>
+                </div>
+                <div class="btns clearfix">
+                    <a href="#2"><p class="buy fl">BUY</p></a>
+                    <p class="cart fr" onclick="addTocart()" type="button">ADD TO CART</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+
+        let commodityId = $("#commodityId").val();
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: "/op/getCommodity",
+            data: commodityId,
+            contentType: "application/json",
+            success: function (data) {
+                if(data.data.state=="1"){
+                    var state = "OnSale";
+                }
+                var obj =data.data;
+                var str1 = "";
+                var str2 = "";
+                var str3 = "";
+                str1 += "<img src="+obj.image+">";
+                str2 += "<h4> " + obj.commodityName + "</h4><p>" + obj.detail + "</p><span>" + '￥' + obj.price + "</span>";
+                str3 += "<p><span>TYPE:" + obj.commodityId + "</span></p>" +
+                        "<p><span>TYPE:" + obj.typeName + "</span></p>" +
+                        "<p><span>CUSTOMER NAME:" + obj.customerName + "</span></p>" +
+                        "<p><span>STATE:" + state + "</span></p>";
+                console.log(str1);
+                $("#image").append(str1);
+                $("#info").append(str2);
+                $("#detail").append(str3);
+            }
+        });
+    });
+</script>
+<script>
+    function addTocart() {
+        let commodityId = $("#commodityId").val();
+        $.ajax({
+            type:"post",
+            url:"/op/addtoCart",
+            data:commodityId,
+            dataType:'json',
+            success: function(data) {
+                }
+            });
+    }
+</script>
+</body>
+</html>
