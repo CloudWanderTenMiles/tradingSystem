@@ -25,6 +25,7 @@ public class CommodityController {
     @Autowired
     CustomerService customerService;
 
+
     /**
      * 获取商品列表
      * @param page                 pageNo, 页码
@@ -210,13 +211,13 @@ public class CommodityController {
 
     /**
      * 跳转到商品详情页
-     * @param id commodity id
+     * @param commodityId commodity id
      * @param model 传递参数
      * @return 页面url
      */
-    @RequestMapping( "/mall/commodityDetail/{id}")
-    public String toMallDetailPage(@PathVariable String id, Model model) {
-        model.addAttribute(id);
+    @RequestMapping( "/mall/commodityDetail/{commodityId}")
+    public String toMallDetailPage(@PathVariable("commodityId") String commodityId, Model model) {
+        model.addAttribute(commodityId);
         return "/mall/commodityDetail";
     }
 }
