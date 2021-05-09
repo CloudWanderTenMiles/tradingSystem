@@ -59,7 +59,7 @@
                 and customer_name like CONCAT('%',#{params.customerName},'%')
             </if>
             <if test="params.parentTypeName != null and params.parentTypeName != ''">
-                and patent_type_name like CONCAT('%',#{params.parentTypeName},'%')
+                and parent_type_name like CONCAT('%',#{params.parentTypeName},'%')
             </if>
             <if test="params.commodityName != null and params.commodityName != ''">
                 and commodity_name like CONCAT('%',#{params.commodityName},'%')
@@ -83,7 +83,7 @@
                 and customer_name = #{params.customerName}
             </if>
             <if test="params.parentTypeName != null and params.parentTypeName != ''">
-                and patent_type_name like CONCAT('%',#{params.parentTypeName},'%')
+                and parent_type_name like CONCAT('%',#{params.parentTypeName},'%')
             </if>
             <if test="params.commodityName != null and params.commodityName != ''">
                 and commodity_name like CONCAT('%',#{params.commodityName},'%')

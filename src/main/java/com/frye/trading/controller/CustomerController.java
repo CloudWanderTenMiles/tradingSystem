@@ -1,6 +1,5 @@
 package com.frye.trading.controller;
 
-import com.frye.trading.config.AdminRealm;
 import com.frye.trading.config.CustomerRealm;
 import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.service.CustomerService;
@@ -111,6 +110,7 @@ public class CustomerController {
         customer.setAddress(map.get("address"));
         customer.setCredit(Double.parseDouble(map.get("credit")));
         customer.setPhoto("/image/default.jpg");
+        customer.setRole("customer");
         if (customerService.addCustomer(customer) < 0) {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add customer error! please check the data you enter.");

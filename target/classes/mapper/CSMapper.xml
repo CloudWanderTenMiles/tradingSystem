@@ -23,6 +23,12 @@
         where staff_id = #{id}
     </select>
 
+    <select id="getStaffByPhone" resultType="com.frye.trading.pojo.model.Staff">
+        select *
+        from tradingsystem.staff
+        where phone = #{phone}
+    </select>
+
     <update id="changePwd">
         update tradingsystem.staff
         <set>

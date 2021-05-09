@@ -12,6 +12,8 @@ public interface CSMapper {
 
     public int checkExist(@Param("params") Map<String, String> params);
 
+    public Staff getStaffByPhone(@Param("phone") String phone);
+
     public Staff getStaffById(@Param("id") String id);
 
     public int changePwd(String id, String pwd);

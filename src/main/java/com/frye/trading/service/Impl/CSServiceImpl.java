@@ -25,6 +25,11 @@ public class CSServiceImpl implements CSService {
     }
 
     @Override
+    public Staff getStaffByPhone(String phone) {
+        return csMapper.getStaffByPhone(phone);
+    }
+
+    @Override
     public Staff getStaffById(String id) {
         return csMapper.getStaffById(id);
     }

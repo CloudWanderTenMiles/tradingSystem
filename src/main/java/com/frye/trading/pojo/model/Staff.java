@@ -22,8 +22,12 @@ public class Staff {
     private String email;
     private String address;
     private String photo;
+    private String role;
 
     public void setBirth(String birth) throws ParseException {
+        if (birth.isEmpty()) {
+            return;
+        }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         this.birth = format.parse(birth);
     }

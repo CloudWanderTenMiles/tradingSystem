@@ -3,6 +3,8 @@ package com.frye.trading.controller;
 import com.frye.trading.config.UserToken;
 import com.frye.trading.pojo.model.Admin;
 import com.frye.trading.service.AdminService;
+import com.frye.trading.service.CSService;
+import com.frye.trading.service.CustomerService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -27,6 +29,10 @@ public class LoginController {
 
     @Autowired
     AdminService adminService;
+    @Autowired
+    CustomerService customerService;
+    @Autowired
+    CSService csService;
 
 
     /**

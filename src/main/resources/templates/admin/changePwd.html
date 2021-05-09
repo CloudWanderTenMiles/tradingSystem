@@ -44,7 +44,7 @@
             <button type="button" class="layui-btn" onclick="window.history.back(-1)">
                 <i class="layui-icon">&#xe603;</i>Return
             </button>
-            <button type="submit" class="layui-btn" lay-submit lay-filter="submit-btn">
+            <button type="button" class="layui-btn" lay-submit lay-filter="submit-btn">
                 <i class="layui-icon">&#xe605;</i>Submit
             </button>
         </div>
@@ -84,7 +84,6 @@
                         parent.location.href = "/admin/logout";
                     } else {
                         layer.msg(res.msg);
-                        return false;
                     }
                 },
                 error: function () {

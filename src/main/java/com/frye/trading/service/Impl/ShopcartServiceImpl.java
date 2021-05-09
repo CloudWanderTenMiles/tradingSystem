@@ -1,5 +1,6 @@
 package com.frye.trading.service.Impl;
 
+import com.frye.trading.dao.ShopcartMapper;
 import com.frye.trading.pojo.model.Shopcart;
 import com.frye.trading.service.ShopcartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +12,25 @@ import java.util.List;
 public class ShopcartServiceImpl implements ShopcartService {
 
     @Autowired
-    ShopcartService shopcartService;
+    ShopcartMapper shopcartMapper;
 
     @Override
     public List<Shopcart> getCommodityByCustomerId(String id) {
-        return shopcartService.getCommodityByCustomerId(id);
+        return shopcartMapper.getCommodityByCustomerId(id);
     }
 
     @Override
     public int addShopcart(String customerId, String commodityId) {
-        return shopcartService.addShopcart(customerId, commodityId);
+        return shopcartMapper.addShopcart(customerId, commodityId);
     }
 
     @Override
     public int deleteShopcart(String customerId, String commodityId) {
-        return shopcartService.deleteShopcart(customerId, commodityId);
+        return shopcartMapper.deleteShopcart(customerId, commodityId);
     }
 
     @Override
     public int setAllShopcartInvalidByCommodityId(String commodityId) {
-        return shopcartService.setAllShopcartInvalidByCommodityId(commodityId);
+        return shopcartMapper.setAllShopcartInvalidByCommodityId(commodityId);
     }
 }

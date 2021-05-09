@@ -36,6 +36,11 @@ public class AdminController {
             dataJsonUtils.setMsg("the old password error!");
             return dataJsonUtils.toString();
         }
+        if (newPwd.equals(admin.getAdminPwd())) {
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("The new password cannot be the same as the old password!");
+            return dataJsonUtils.toString();
+        }
         if (adminService.changePassword(admin.getAdminId(),newPwd) < 0) {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("change password error!");

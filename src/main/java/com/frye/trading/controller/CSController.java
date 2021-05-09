@@ -94,6 +94,7 @@ public class CSController {
         staff.setEmail(email);
         staff.setAddress(map.get("address"));
         staff.setPhoto("/image/default.jpg");
+        staff.setRole("staff");
         if (csService.addStaff(staff) < 0) {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add staff error! please check the data you enter.");
@@ -147,7 +148,7 @@ public class CSController {
      */
     @RequestMapping(value = "/op/getCstaff", method = RequestMethod.POST)
     @ResponseBody
-    public String getCUstomer(@RequestBody String id) {
+    public String getCStaff(@RequestBody String id) {
         Staff staff = csService.getStaffById(id);
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         if (staff != null) {

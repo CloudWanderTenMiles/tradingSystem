@@ -8,6 +8,8 @@ public interface CSService {
 
     public boolean checkExist(String phone, String email);
 
+    public Staff getStaffByPhone(String phone);
+
     public Staff getStaffById(String id);
 
     public int changePwd(String id, String pwd);
