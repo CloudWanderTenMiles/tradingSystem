@@ -1,0 +1,28 @@
+*{
+    padding:0px;
+    margin:0px;
+    list-style:none;
+}
+.banner {
+    width:1000px;
+    height:300px;
+    margin:0px auto;
+    border:1px solid #808080;
+    position:relative;
+    overflow:hidden;
+}
+.banner .img{
+    width:10000px;
+    height:300px;
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+
+.banner .img img{
+    width:1000px;
+    height:300px;
+}
+.banner .img li{
+    float:left;
+}
