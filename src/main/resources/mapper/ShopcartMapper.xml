@@ -11,8 +11,8 @@
     </select>
 
     <insert id="addShopcart" parameterType="com.frye.trading.pojo.model.Shopcart">
-        insert into tradingsystem.shopcart(customer_id, commodity_id, `state`)
-        values (#{customerId}, #{commodityId}, #{state})
+        insert into tradingsystem.shopcart(customer_id, commodity_id)
+        values (#{customerId}, #{commodityId})
     </insert>
 
     <delete id="deleteShopcart">

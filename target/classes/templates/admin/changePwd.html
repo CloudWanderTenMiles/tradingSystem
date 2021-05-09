@@ -81,7 +81,7 @@
                     let res = JSON.parse(data);
                     if (res.code === 200) {
                         layer.msg(res.msg);
-                        window.location.href = "/admin/logout";
+                        parent.location.href = "/admin/logout";
                     } else {
                         layer.msg(res.msg);
                     }
