@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ---CSS reset is above--- */
+
+*{
+    box-sizing: border-box;
+}
+
+.header{
+    width: 100%;
+    height: 80px;
+    background: #f6a170;
+    color:white;
+    font-size: 36px;
+    padding-top: 20px;
+    padding-left: 30px;
+    position:fixed;
+    top:0;
+    z-index: 2;
+}
+
+
+.productList{
+    width: 960px;
+    margin: 120px auto;
+    z-index: 1;
+
+}
+
+.productList img{
+    width: 60%;
+    margin-top: 30px;
+    margin-left:30px;
+
+}
+
+.productList li{
+    position: relative;
+    float:left;
+    width: 220px;
+    height: 280px;
+    border: 1px dotted #efc7c1;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding-right: 5px;
+    padding-left: 10px;
+}
+
+.productList h2{
+    font-weight: bold;
+    color: #f3b500;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.productList span{
+    color: #ff0059;
+    font-size: 20px;
+}
