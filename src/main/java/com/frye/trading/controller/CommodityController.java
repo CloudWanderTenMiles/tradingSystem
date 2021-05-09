@@ -25,7 +25,6 @@ public class CommodityController {
     @Autowired
     CustomerService customerService;
 
-
     /**
      * 获取商品列表
      * @param page                 pageNo, 页码
