@@ -215,9 +215,15 @@ public class CommodityController {
      * @param model 传递参数
      * @return 页面url
      */
-    @RequestMapping( "/mall/commodityDetail/{commodityId}")
-    public String toMallDetailPage(@PathVariable("commodityId") String commodityId, Model model) {
+    @RequestMapping( "/mall/commodityDetail")
+    public String toMallDetailPage(@RequestBody String commodityId, Model model) {
         model.addAttribute(commodityId);
+        return "/mall/commodityDetail";
+    }
+
+    @RequestMapping( "/mall/commodityDetail/{id}")
+    public String toDetailPage(@PathVariable("id") String id, Model model) {
+        model.addAttribute(id);
         return "/mall/commodityDetail";
     }
 }

@@ -3,9 +3,7 @@ package com.frye.trading.controller;
 import com.frye.trading.config.UserToken;
 import com.frye.trading.pojo.model.Admin;
 import com.frye.trading.pojo.model.Customer;
-import com.frye.trading.pojo.model.Staff;
 import com.frye.trading.service.AdminService;
-import com.frye.trading.service.CSService;
 import com.frye.trading.service.CustomerService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -33,19 +31,15 @@ public class LoginController {
     AdminService adminService;
     @Autowired
     CustomerService customerService;
-    @Autowired
-    CSService csService;
-
 
     /**
      * admin用户登录
-     *
      * @param user 前端传回的json对象
      * @return 登陆的信息提示
      */
     @ResponseBody
     @RequestMapping(value = "/admin/login", method = RequestMethod.POST)
-    public String adminLogin(@RequestBody Map<String, String> user) {
+    public String adminLogin(@RequestBody Map<String, String> user){
         String account = user.get("account");
         String password = user.get("password");
         Subject subject = SecurityUtils.getSubject();
@@ -60,61 +54,29 @@ public class LoginController {
         }
         Admin admin = adminService.getAdminByID(account);
         Session session = subject.getSession();
-        session.setAttribute("admin", admin);
+        session.setAttribute("admin",admin);
         return "success";
     }
 
-    /**
-     * Customer用户登录
-     *
-     * @param user 前端传回的json对象
-     * @return 登陆的信息提示
-     */
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String customerLogin(@RequestBody Map<String, String> user) {
-        String phone = user.get("phone");
-        String password = user.get("password");
-        Subject subject = SecurityUtils.getSubject();
-        // 封装用户数据
-        UserToken token = new UserToken(phone, password, "Customer");
-        try {
-            subject.login(token);
-        } catch (UnknownAccountException e) {
-            return "Phone not exist!";
-        } catch (IncorrectCredentialsException e) {
-            return "Password error!";
-        }
-        Customer customer = customerService.getCustomerByPhone(phone);
-        Session session = subject.getSession();
-        session.setAttribute("customer", customer);
-        return "success";
-    }
 
-    /**
-     * Cstaff用户登录
-     *
-     * @param user 前端传回的json对象
-     * @return 登陆的信息提示
-     */
     @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String cstaffLogin(@RequestBody Map<String, String> user) {
-        String phone = user.get("phone");
+    @RequestMapping(value = "/customer/login", method = RequestMethod.POST)
+    public String customerLogin(@RequestBody Map<String, String> user){
+        String telephone = user.get("telephone");
         String password = user.get("password");
         Subject subject = SecurityUtils.getSubject();
         // 封装用户数据
-        UserToken token = new UserToken(phone, password, "Cstaff");
+        UserToken token = new UserToken(telephone, password, "Customer");
         try {
             subject.login(token);
         } catch (UnknownAccountException e) {
-            return "Phone not exist!";
+            return "Account not exist!";
         } catch (IncorrectCredentialsException e) {
             return "Password error!";
         }
-        Staff staff = csService.getStaffByPhone(phone);
+        Customer customer = customerService.getCustomerByPhone(telephone);
         Session session = subject.getSession();
-        session.setAttribute("staff", staff);
+        session.setAttribute("customer",customer);
         return "success";
     }
 }
