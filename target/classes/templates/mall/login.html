@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}"></script>
+</head>
+<body><!-------------------login-------------------------->
+<div class="login">
+    <form  method="post"><h1><img th:src="@{/image/logo2.1.png}"></h1>
+        <p></p>
+        <p><input type="text" name="" id="telephone" placeholder="telephone"></p>
+        <p><input type="password" name="" id="password" placeholder="password"></p>
+        <p><input type="button" name="" value="login" id="login"></p>
+        <p class="txt"><a class="" href="/toPage/mall/register">register</a></p></form>
+</div>
+
+
+<script th:src="@{/js/jquery-1.12.4.min.js}" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+    layui.use(['form', 'jquery', 'layer'], function () {
+        let $ = layui.jquery,
+            layer = layui.layer;
+    });
+
+    $("#login").click(function (){
+        let telephone = $("#telephone").val();
+        let password = $("#password").val();
+        let data = {
+            "telephone" : telephone,
+            "password" : password
+        };
+        $.ajax({
+            type:"post",
+            url:"/customer/login",
+            data: JSON.stringify(data),
+            dataType: "text",
+            contentType: "application/json",
+            success:function(msg){
+                if(msg === "success") {
+                    layer.msg(msg);
+                    window.location.href = "/toPage/mall/cart";
+                    return true;
+                }
+                else{
+                    layer.msg(msg);
+                    return false;
+                }
+            }
+        })
+    })
+
+</script>
+</body>
+</html>
