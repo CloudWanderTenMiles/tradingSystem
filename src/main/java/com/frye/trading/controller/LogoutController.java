@@ -15,8 +15,14 @@ import javax.servlet.http.HttpSession;
 public class LogoutController {
 
     @RequestMapping("/admin/logout")
-    public String logout(HttpSession session) {
+    public String adminLogout(HttpSession session) {
         session.removeAttribute("admin");
         return "redirect:/admin";
+    }
+
+    @RequestMapping("/cstaff/logout")
+    public String cstaffLogout(HttpSession session) {
+        session.removeAttribute("staff");
+        return "redirect:/cstaff";
     }
 }

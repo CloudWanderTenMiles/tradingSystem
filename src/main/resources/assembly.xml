@@ -17,8 +17,6 @@
             <!-- 本项目所生成的jar包不放入lib文件夹中 -->
             <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>lib</outputDirectory>
-            <!-- <unpack>false</unpack> -->
-
         </dependencySet>
     </dependencySets>
 

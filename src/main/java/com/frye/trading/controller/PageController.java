@@ -29,8 +29,17 @@ public class PageController {
      * @return
      */
     @RequestMapping("/admin")
-    public String getALoginPage() {
+    public String getAdminLoginPage() {
         return "/admin/alogin";
+    }
+
+    /**
+     * 跳转客服登录页
+     * @return
+     */
+    @RequestMapping("/cstaff")
+    public String getCstaffLoginPage() {
+        return "/cstaff/alogin";
     }
 
     /**
@@ -38,7 +47,7 @@ public class PageController {
      * @return
      */
     @RequestMapping("/login")
-    public String getLoginPage() {
+    public String getCustomerLoginPage() {
         return "/mall/login";
     }
 
