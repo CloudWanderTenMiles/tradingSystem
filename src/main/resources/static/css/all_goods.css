@@ -1,0 +1,101 @@
+/**********side bar***********/
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "montserrat",sans-serif;
+    background: #FFF;
+}
+
+.option1{
+    position: fixed;
+    top: 17%;
+    z-index: 99999;
+    left: 0;
+}
+
+.option1 i{
+    display: block;
+    width: 60px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    background: #f1f1f1;
+    color: #d25555;
+    font-size: 20px;
+    transition: 0.6s;
+    zoom: 0.9;
+}
+
+.contact-info{
+    position: fixed;
+    top: 25%;
+    z-index: 99999;
+    left: 0;
+    display: none;
+}
+
+.option{
+    cursor: pointer;
+    position: relative;
+}
+
+.option i{
+    display: block;
+    width: 60px;
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    background: #f1f1f1;
+    color: #d25555;
+    font-size: 20px;
+    transition: 0.6s;
+    zoom: 0.9;
+}
+
+.option:hover i{
+    color: #3498db;
+}
+
+.text{
+    position: absolute;
+    height: 60px;
+    width: 160px;
+    background: #c10000;
+    top: 0;
+    z-index: -1;
+    left: -140px;
+    color: #fff;
+    line-height: 60px;
+    text-align: center;
+    transition: 0.6s;
+    zoom: 0.9;
+}
+
+.option:hover .text{
+    left: 60px;
+}
+
+/****************pagination******************/
+.pagination{
+    background-color: #f2f2f2;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+}
+
+.pagination a{
+    width: 100px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    color: #333;
+    font-size: 18px;
+    font-weight: 700;
+    transition: .3s linear;
+}
+
+.pagination a:hover{
+    color: #eb4d4b;
+}
