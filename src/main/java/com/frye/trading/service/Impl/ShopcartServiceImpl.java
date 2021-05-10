@@ -33,4 +33,9 @@ public class ShopcartServiceImpl implements ShopcartService {
     public int setAllShopcartInvalidByCommodityId(String commodityId) {
         return shopcartMapper.setAllShopcartInvalidByCommodityId(commodityId);
     }
+
+    @Override
+    public int setAllShopcartValidByCommodityId(String commodityId) {
+        return shopcartMapper.setAllShopcartValidByCommodityId(commodityId);
+    }
 }

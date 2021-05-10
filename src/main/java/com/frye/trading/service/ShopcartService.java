@@ -14,4 +14,5 @@ public interface ShopcartService {
 
     public int setAllShopcartInvalidByCommodityId(String commodityId);
 
+    public int setAllShopcartValidByCommodityId(String commodityId);
 }

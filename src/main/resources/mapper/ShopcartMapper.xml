@@ -30,4 +30,12 @@
         where commodity_id = #{commodityId}
     </update>
 
+    <update id="setAllShopcartValidByCommodityId">
+        update tradingsystem.shopcart
+        <set>
+            `state` = 'valid'
+        </set>
+        where commodity_id = #{commodityId}
+    </update>
+
 </mapper>

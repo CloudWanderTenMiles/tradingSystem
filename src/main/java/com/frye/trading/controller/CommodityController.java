@@ -3,6 +3,7 @@ package com.frye.trading.controller;
 import com.frye.trading.pojo.dto.Commodity;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
+import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
 import com.frye.trading.utils.GenerateIdUtils;
 import org.apache.ibatis.annotations.Param;
@@ -24,6 +25,8 @@ public class CommodityController {
     CommodityService commodityService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    ShopcartService shopcartService;
 
 
     /**
@@ -117,6 +120,8 @@ public class CommodityController {
         for (String id : idList){
             if (commodityService.deleteCommodity(id) < 0){
                 error = true;
+            } else {
+                shopcartService.setAllShopcartInvalidByCommodityId(id);
             }
         }
         if (error) {

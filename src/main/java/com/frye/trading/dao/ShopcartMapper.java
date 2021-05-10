@@ -16,4 +16,6 @@ public interface ShopcartMapper {
     public int deleteShopcart(@Param("customerId") String customerId, @Param("commodityId") String commodityId);
 
     public int setAllShopcartInvalidByCommodityId(@Param("commodityId") String commodityId);
+
+    public int setAllShopcartValidByCommodityId(@Param("commodityId") String commodityId);
 }
