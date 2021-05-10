@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>详情页</title>
+    <title>commodity info</title>
     <link rel="stylesheet" th:href="@{/css/public.css}">
     <link rel="stylesheet" th:href="@{/css/proList.css}">
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
@@ -20,6 +20,7 @@
     });</script>
 </head>
 <body>
+
 <!------------------------------head------------------------------>
 <div class="head">
     <div class="wrapper clearfix">
@@ -32,28 +33,25 @@
                     <a href="/toPage/mall/" id="reg">register</a>
                 </p>
                 <div class="btn fl clearfix">
-                    <a href="/toPage/mall/">
+                    <a href="/toPage/mall/personInfo">
                         <img th:src="@{/image/grzx.png}"/>
                     </a>
-                    <a href="/toPage/mall/">
-                    <a href="javascript:void(0);" url="/toPage/mall/">
-                        <img th:src="@{/image/grzx.png}"/>
-                    </a>
-                    <a href="javascript:void(0);" url="/toPage/mall/">
+                    <a href="/toPage/mall/cart">
                         <img th:src="@{/image/gwc.png}"/>
                     </a>
                 </div>
             </div>
         </div>
         <ul class="clearfix" id="bott">
-            <li><a href="/home">home</a></li>
-            <li><a href="/toPage/mall/">All Products</a></li>
-            <li><a href="/toPage/mall/">My Products</a></li>
-            <li><a href="/toPage/mall/">contact us</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/toPage/mall/productList">All Products</a></li>
+            <li><a href="/toPage/mall/myProduct">My Products</a></li>
+            <li><a href="/toPage/mall/chart">Chart room</a></li>
         </ul>
     </div>
 </div>
 
+<!--商品详情信息展示-->
 <div class="detCon">
     <div class="proDet wrapper">
         <div class="proCon clearfix">
@@ -63,13 +61,13 @@
                 <div class="title" id="info"></div>
                 <div class="proIntro">
                     <p>BASIC INFORMATION</p>
-                    <input id="commodityId" th:value="${commodityId}" style="display: none">
+                    <input id="commodityId" th:value="${commodityId}" style="display: none"/>
                     <div class="proIntro" id="detail">
                     </div>
                 </div>
                 <div class="btns clearfix">
                     <a href="#2"><p class="buy fl">BUY</p></a>
-                    <p class="cart fr" onclick="addTocart()" type="button">ADD TO CART</p>
+                    <p class="cart fr" onclick="addToCart()" type="button">ADD TO CART</p>
                 </div>
             </div>
         </div>
@@ -88,19 +86,19 @@
             data: commodityId,
             contentType: "application/json",
             success: function (data) {
-                if(data.data.state==="1"){
-                    var state = "OnSale";
+                if (data.data.state === "1") {
+                    let state = "OnSale";
                 }
-                var obj =data.data;
-                var str1 = "";
-                var str2 = "";
-                var str3 = "";
-                str1 += "<img src="+obj.image+">";
+                let obj = data.data;
+                let str1 = "";
+                let str2 = "";
+                let str3 = "";
+                str1 += "<img src=" + obj.image + ">";
                 str2 += "<h4> " + obj.commodityName + "</h4><p>" + obj.detail + "</p><span>" + '￥' + obj.price + "</span>";
                 str3 += "<p><span>TYPE:" + obj.commodityId + "</span></p>" +
-                        "<p><span>TYPE:" + obj.typeName + "</span></p>" +
-                        "<p><span>CUSTOMER NAME:" + obj.customerName + "</span></p>" +
-                        "<p><span>STATE:" + state + "</span></p>";
+                    "<p><span>TYPE:" + obj.typeName + "</span></p>" +
+                    "<p><span>CUSTOMER NAME:" + obj.customerName + "</span></p>" +
+                    "<p><span>STATE:" + state + "</span></p>";
                 console.log(str1);
                 $("#image").append(str1);
                 $("#info").append(str2);
@@ -108,18 +106,17 @@
             }
         });
     });
-</script>
-<script>
-    function addTocart() {
+
+    function addToCart() {
         let commodityId = $("#commodityId").val();
         $.ajax({
-            type:"post",
-            url:"/op/addtoCart",
-            data:commodityId,
-            dataType:'json',
-            success: function(data) {
-                }
-            });
+            type: "post",
+            url: "/op/addtoCart",
+            data: commodityId,
+            dataType: 'json',
+            success: function (data) {
+            }
+        });
     }
 </script>
 </body>

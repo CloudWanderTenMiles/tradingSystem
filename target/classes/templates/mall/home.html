@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>最家</title>
+    <title>home</title>
     <link rel="stylesheet" th:href="@{/css/public.css}">
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/show.css}">
@@ -22,10 +22,10 @@
                     <a href="/toPage/mall/" id="reg">register</a>
                 </p>
                 <div class="btn fl clearfix">
-                    <a href="/toPage/mall/">
+                    <a href="/toPage/mall/personInfo">
                         <img th:src="@{/image/grzx.png}"/>
                     </a>
-                    <a href="/toPage/mall/">
+                    <a href="/toPage/mall/cart">
                         <img th:src="@{/image/gwc.png}"/>
                     </a>
                 </div>
@@ -33,12 +33,14 @@
         </div>
         <ul class="clearfix" id="bott">
             <li><a href="/home">Home</a></li>
-            <li><a href="/toPage/mall/">All Products</a></li>
-            <li><a href="/toPage/mall/">My Products</a></li>
-            <li><a href="/toPage/mall/">Contact us</a></li>
+            <li><a href="/toPage/mall/productList">All Products</a></li>
+            <li><a href="/toPage/mall/myProduct">My Products</a></li>
+            <li><a href="/toPage/mall/chart">Chart room</a></li>
         </ul>
     </div>
 </div>
+
+<!--轮播图-->
 <div class="banner">
     <ul class="img">
         <li id="ok">
