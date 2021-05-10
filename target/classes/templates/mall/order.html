@@ -19,7 +19,7 @@
             <div class="fr clearfix" id="top1">
                 <p class="fl">
                     <a href="/login" id="login">login</a>
-                    <a href="/toPage/mall/" id="reg">register</a>
+                    <a href="/toPage/mall/register" id="reg">register</a>
                 </p>
                 <div class="btn fl clearfix">
                     <a href="/toPage/mall/personCenter">
@@ -42,14 +42,17 @@
         </ul>
     </div>
 </div>
+
+<!--订单确认-->
 <div class="order cart mt"><!-----------------site------------------->
     <div class="site"><p class="wrapper clearfix"><span class="fl">Order confirm</span><img class="top"
-                                                                                            th:src="@{/image/temp/cartTop02.png}">
+                                                                                            th:src="@{/image/cartTop02.png}">
     </p>
     </div><!-----------------orderCon------------------->
     <div class="orderCon wrapper clearfix">
         <div class="orderR fr">
-            <div class="msg"><h3>order content<a href="/toPage/mall/cart" class="fr">back to cart</a></h3>
+            <div class="msg">
+                <h3>order content<a href="/toPage/mall/cart" class="fr">back to cart</a></h3>
                 <!--------ul---------------->
                 <input id="commodityId" th:value="${commodityId}" style="display: none">
                 <ul class="clearfix" id="body1">
@@ -64,37 +67,36 @@
 </div>
 
 <script type="text/javascript">
+    layui.use(['form', 'jquery', 'layer'], function () {
+        let $ = layui.jquery,
+            layer = layui.layer;
 
-    let commodityId = $("#commodityId").val();
-    $(function () {
-        layui.use(['form', 'jquery', 'layer'], function () {
-            let $ = layui.jquery,
-                layer = layui.layer;
+        let commodityId = $("#commodityId").val();
+        $(function () {
+            $.ajax({
+                type: "post",
+                url: "/op/getCommodity",
+                data: commodityId,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    let body1 = $("#body1");
+                    let li = "<li class='fl'><img style='height: 356px; width: 356px;' src=" + data.data.image + "></li>"
+                        + "<li class='fl'><p>name: " + data.data.commodityName + "</p><p>owner: " + data.data.customerName + "</p><p>price: " + data.data.price + "</p><p>count: " + data.data.count + "</p></li>";
+                    // + "<li class = 'fl'>price: "+data.data.price+"</li>";
+                    body1.append(li);
+                    let body3 = $("#body3");
+                    let count_tips = "<div class='count tips'><p><span class = 'fl'>sum: </span><span class='fr'>￥" + data.data.price * data.data.count + "</span></p></div>"
+                        + "<a  class='pay'>confirm order</a>";
+                    body3.append(count_tips);
+                }
+            })
+
+            $(document).on("click", ".pay", function () {
+                layer.msg("not completed!");
+            })
         });
-
-        $.ajax({
-            type: "post",
-            url: "/op/getCommodity",
-            data: commodityId,
-            contentType: "application/json",
-            dataType: "json",
-            success: function (data) {
-                let body1 = $("#body1");
-                let li = "<li class='fl'><img src=" + data.data.image + "></li>"
-                    + "<li class='fl'><p>name: " + data.data.commodityName + "</p><p>owner: " + data.data.customerName + "</p><p>price: " + data.data.price + "</p><p>count: " + data.data.count + "</p></li>";
-                // + "<li class = 'fl'>price: "+data.data.price+"</li>";
-                body1.append(li);
-                let body3 = $("#body3");
-                let count_tips = "<div class='count tips'><p><span class = 'fl'>sum: </span><span class='fr'>￥" + data.data.price * data.data.count + "</span></p></div>"
-                    + "<a  class='pay'>confirm order</a>";
-                body3.append(count_tips);
-            }
-        })
-
-        $(document).on("click", ".pay", function () {
-            layer.msg("not completed!");
-        })
-    })
+    });
 </script>
 </body>
 </html>

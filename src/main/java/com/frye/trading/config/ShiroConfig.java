@@ -27,7 +27,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(defaultWebSecurityManager);
 
-        /** 自定义配置内置过滤器
+        /* 自定义配置内置过滤器
          * anon: 无需认证就可以访问
          * authc: 必须认证才能访问
          * user: 必须拥有 “remember me”功能才能访问
@@ -37,12 +37,14 @@ public class ShiroConfig {
         Map<String, String> filterMap = new LinkedHashMap<>();
 
         // 放开权限
+        filterMap.put("/", "anon");
         filterMap.put("/static/**", "anon");
         filterMap.put("/admin", "anon");
         filterMap.put("/admin/login", "anon");
-        filterMap.put("/", "anon");
         filterMap.put("/customer/login", "anon");
-        filterMap.put("/toPage/**", "anon");
+        filterMap.put("/cstaff/login", "anon");
+        filterMap.put("/toPage/mall/productList", "anon");
+        filterMap.put("/toPage/mall/register", "anon");
         filterMap.put("/op/commodityList", "anon");
         filterMap.put("/op/customerAdd", "anon");
 
@@ -50,12 +52,15 @@ public class ShiroConfig {
         filterMap.put("/logout", "logout");
 
         // 认证后才能进入
+        filterMap.put("/mall/**", "authc");
+        filterMap.put("/toPage/mall/myProduct", "authc");
+        filterMap.put("/toPage/mall/**", "authc");
         filterMap.put("toPage/admin/**", "authc");
         filterMap.put("/admin/**", "authc");
         filterMap.put("/op/**", "authc");
 
         // 配置未认证时的跳转页面
-        bean.setLoginUrl("/admin");
+        bean.setLoginUrl("/login");
         // 配置无权限时的跳转页面
         bean.setUnauthorizedUrl("/admin");
         bean.setFilterChainDefinitionMap(filterMap);

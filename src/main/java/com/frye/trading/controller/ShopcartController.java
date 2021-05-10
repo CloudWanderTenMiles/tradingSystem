@@ -7,16 +7,14 @@ import com.frye.trading.pojo.dto.Commodity;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -27,6 +25,23 @@ public class ShopcartController {
     ShopcartService shopcartService;
     @Autowired
     CommodityService commodityService;
+
+    @RequestMapping(value = "/op/addtoCart", method = RequestMethod.POST)
+    @ResponseBody
+    public String addToCart(@RequestBody String commodityId) {
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        Customer customer = (Customer) session.getAttribute("customer");
+        DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        if (shopcartService.addShopcart(customer.getCustomerId(),commodityId) < 0) {
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("add to cart error!");
+        }else {
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setMsg("add to cart successfully!");
+        }
+        return dataJsonUtils.toString();
+    }
 
     @RequestMapping("/op/getShopcartGoods")
     @ResponseBody

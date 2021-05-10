@@ -22,53 +22,48 @@
     </form>
 </div>
 
-
-<script th:src="@{/js/jquery-1.12.4.min.js}" type="text/javascript" charset="utf-8"></script>
-
 <script type="text/javascript">
 
     layui.use(['form', 'jquery', 'layer'], function () {
         let $ = layui.jquery,
             layer = layui.layer;
-    });
 
-        $("#register").click(function(){
+        $("#register").click(function () {
             let customerName = $("#customerName").val();
             let customerPwd = $("#customerPwd").val();
             let repassword = $("#repassword").val();
             let studentId = $("#studentId").val();
             let email = $("#email").val();
             let phone = $("#phone").val();
-            if(customerPwd !== repassword){
+            if (customerPwd !== repassword) {
                 layer.msg("Secondary import password mismatch!");
                 return false;
             }
 
-            var parten = /^\s*$/ ;
-            if(parten.test(customerPwd)){
+            var parten = /^\s*$/;
+            if (parten.test(customerPwd)) {
                 layer.msg("Enter the password with spaces！");
                 return false;
             }
-            if(customerPwd.length < 6 || customerPwd.length > 12)
-            {
+            if (customerPwd.length < 6 || customerPwd.length > 12) {
                 layer.msg("Enter the password with less than six or more than twelve digits!");
                 return false;
             }
             let data = {
-                "customerName" : customerName,
-                "customerPwd" : customerPwd,
-                "studentId" : studentId,
-                "email" : email,
-                "phone" : phone,
-                "credit" : 5
+                "customerName": customerName,
+                "customerPwd": customerPwd,
+                "studentId": studentId,
+                "email": email,
+                "phone": phone,
+                "credit": 5
             };
             $.ajax({
-                type:"post",
-                url:"/op/customerAdd",
+                type: "post",
+                url: "/op/customerAdd",
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 dataType: "json",
-                success:function(data){
+                success: function (data) {
                     if (data.code === 200) {
                         layer.msg(data.msg);
                         window.location.href = "/login";
@@ -79,8 +74,8 @@
                 }
             })
             return false;
-        })
-    // })
+        });
+    });
 </script>
 </body>
 </html>

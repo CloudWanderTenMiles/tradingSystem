@@ -21,32 +21,31 @@
     layui.use(['form', 'jquery', 'layer'], function () {
         let $ = layui.jquery,
             layer = layui.layer;
-    });
-
-    $("#login").click(function () {
-        let telephone = $("#telephone").val();
-        let password = $("#password").val();
-        let data = {
-            "telephone": telephone,
-            "password": password
-        };
-        $.ajax({
-            type: "post",
-            url: "/cstaff/login",
-            data: JSON.stringify(data),
-            dataType: "text",
-            contentType: "application/json",
-            success: function (msg) {
-                if (msg === "success") {
-                    layer.msg(msg);
-                    window.location.href = "toPage/staff/chart";
-                    return true;
-                } else {
-                    layer.msg(msg);
-                    return false;
+        $("#login").click(function () {
+            let telephone = $("#telephone").val();
+            let password = $("#password").val();
+            let data = {
+                "telephone": telephone,
+                "password": password
+            };
+            $.ajax({
+                type: "post",
+                url: "/cstaff/login",
+                data: JSON.stringify(data),
+                dataType: "text",
+                contentType: "application/json",
+                success: function (msg) {
+                    if (msg === "success") {
+                        layer.msg(msg);
+                        window.location.href = "toPage/staff/chart";
+                        return true;
+                    } else {
+                        layer.msg(msg);
+                        return false;
+                    }
                 }
-            }
-        })
+            })
+        });
     });
 </script>
 </body>

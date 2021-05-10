@@ -33,7 +33,7 @@ public class Customer {
      * @throws ParseException 解析异常
      */
     public void setBirth(String birth) throws ParseException {
-        if (birth.isEmpty()) {
+        if (birth == null) {
             return;
         }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
