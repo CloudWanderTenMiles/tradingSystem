@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>order</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/proList.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mygxin.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
+</head>
+<body><!----------------------------------------order------------------>
+<!------------------------------head------------------------------>
+<div class="head">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
+                                                                           style="width: 35%;height: auto"/></a>
+        </h1>
+            <div class="fr clearfix" id="top1">
+                <p class="fl">
+                    <a href="/login"  id="login">login</a>
+                    <a href="/toPage/mall/register"  id="reg">register</a>
+                </p>
+                <div class="btn fl clearfix">
+                    <a href="/toPage/mall/" >
+                        <img th:src="@{/image/grzx.png}"/>
+                    </a>
+                    <a href="/toPage/mall/" >
+                        <img th:src="@{/image/gwc.png}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="javascript:void(0);" url="/home">home</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">All Products</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">My Products</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">contact us</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="order cart mt"><!-----------------site------------------->
+    <div class="site"><p class="wrapper clearfix"><span class="fl">Order confirm</span><img class="top"
+                                                                                   th:src="@{/image/temp/cartTop02.png}"></p>
+    </div><!-----------------orderCon------------------->
+    <div class="orderCon wrapper clearfix">
+        <div class="orderR fr">
+            <div class="msg"><h3>order content<a href="/toPage/mall/cart" class="fr">back to cart</a></h3><!--------ul---------------->
+                <input id="commodityId" th:value="${commodityId}" style="display: none">
+                <ul class="clearfix" id="body1">
+                </ul>
+            </div><!--------tips---------------->
+            <div class="tips" id="body2">
+<!--                <p><span class="fl">商品金额：</span><span class="fr">￥139.80</span></p>-->
+<!--                <p><span class="fl">优惠金额：</span><span class="fr">￥0.00</span></p>-->
+<!--                <p><span class="fl">运费：</span><span class="fr">免运费</span></p>-->
+            </div><!--------tips count---------------->
+            <div id="body3">
+<!--            <div class="count tips"><p><span class="fl">合计：</span><span class="fr">￥139.80</span></p></div>-->
+<!--            &lt;!&ndash;<input type="button" name="" value="去支付">&ndash;&gt; <a href="ok.html" class="pay">确认订单</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery-1.12.4.min.js}" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+
+
+    // console.log($("#commodityId").val());
+    let commodityId = $("#commodityId").val();
+    $(function (){
+
+        layui.use(['form', 'jquery', 'layer'], function () {
+            let $ = layui.jquery,
+                layer = layui.layer;
+        });
+
+        $.ajax({
+            type: "post",
+            url: "/op/getCommodity",
+            data: commodityId,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data){
+                let body1 = $("#body1");
+                let li = "<li class='fl'><img src=" + data.data.image + "></li>"
+                        + "<li class='fl'><p>name: " + data.data.commodityName + "</p><p>owner: " + data.data.customerName +"</p><p>price: "+data.data.price+"</p><p>count: "+data.data.count+"</p></li>";
+                        // + "<li class = 'fl'>price: "+data.data.price+"</li>";
+                body1.append(li);
+
+                // let body2 = $("#body2");
+                // let tips = "<p><span class = 'fl'>sum: </span><span class='fr'>￥"+data.data.price*data.data.count+"</span></p>";
+                // body2.append(tips);
+
+                let body3 = $("#body3");
+                let count_tips = "<div class='count tips'><p><span class = 'fl'>sum: </span><span class='fr'>￥"+data.data.price*data.data.count+"</span></p></div>"
+                                +"<a  class='pay'>confirm order</a>";
+                body3.append(count_tips);
+            }
+        })
+
+        $(document).on("click",".pay",function (){
+            layer.msg("not completed!");
+        })
+    })
+
+</script>
+
+
+</body>
+</html>

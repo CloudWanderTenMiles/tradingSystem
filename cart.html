@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>cart</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/proList.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
+</head>
+<body><!--------------------------------------cart--------------------->
+<!------------------------------head------------------------------>
+<div class="head">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
+                                                                           style="width: 35%;height: auto"/></a>
+        </h1>
+            <div class="fr clearfix" id="top1">
+                <p class="fl">
+                    <a href="/login"  id="login">login</a>
+                    <a href="/toPage/mall/register"  id="reg">register</a>
+                </p>
+
+                <div class="btn fl clearfix">
+                    <a href="/toPage/mall/" >
+                        <img th:src="@{/image/grzx.png}"/>
+                    </a>
+                    <a href="/toPage/mall/cart" >
+                        <img th:src="@{/image/gwc.png}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="javascript:void(0);" url="/home">home</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">All Products</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">My Products</a></li>
+            <li><a href="javascript:void(0);" url="/toPage/mall/">contact us</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+<div class="cart mt"><!-----------------logo------------------->
+    <!--<div class="logo"><h1 class="wrapper clearfix"><a href="index.html"><img class="fl" src="img/temp/logo.png"></a><img class="top" src="img/temp/cartTop01.png"></h1></div>-->
+    <!-----------------site------------------->
+    <div class="site"><p class=" wrapper clearfix"><span class="fl">shopping cart</span><img class="top"
+                                                                                   th:src="@{/image/temp/cartTop01.png}"><a
+            href="/home" class="fr">continue shopping&gt;</a></p></div><!-----------------table------------------->
+    <div class="table_content">
+        <table>
+        <tr class="table_head">
+            <th colspan="4">commodity</th>
+            <th>price</th>
+            <th>quantity</th>
+            <th>sum</th>
+            <th>option</th>
+        </tr>
+
+        <tbody id="content">
+
+        </tbody>
+        </table>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery-1.12.4.min.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{/js/pro.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{/js/cart.js}" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+
+    layui.use(['form', 'jquery', 'layer'], function () {
+        let $ = layui.jquery,
+            layer = layui.layer;
+    });
+
+    $(function(){
+        $.ajax({
+            type: "post",
+            url: "/op/getShopcartGoods",
+            // data: {},
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data){
+                console.log(data);
+                for(var i=0;i<data.count;i++)
+                {
+                    var body=$("#content");
+                    var tr = "<tr class='table_content'>"+
+                                "<td class='input_checkbox'></td>"+
+                                "<td class='show_img'><a href='/mall/commodityDetail/" + data.data[i].commodityId + "'><img src="+data.data[i].image+" /></a></td>"+
+                                "<td class='title' colspan='2'><span>name:"+data.data[i].commodityName+"<br /> owner:"+data.data[i].customerName+"</span></td>"+
+                                "<td class='cost'>￥<span>"+data.data[i].price+"</span></td>"+
+                                "<td class='count'><span class='number'>"+data.data[i].count+"</span></td>"+
+                                "<td class='per_sum'>￥<span>"+data.data[i].price*data.data[i].count+"</span></td>"+
+                                "<td class='delete_img'><button class='delete' value="+data.data[i].commodityId+">delete</button>\n" +
+                                "<a href='/mall/order/" +data.data[i].commodityId +"'><button class='buy' value="+data.data[i].commodityId+">buy</button></td>"+
+                                "</tr>";
+                    body.append(tr);
+                }
+            }
+        })
+
+        $(document).on("click",".delete",function (){
+            var r=confirm("Are you sure to delete the commodity?");
+            if(r===true) {
+                var commodityId = $(this).attr('value');
+                $.ajax({
+                    type:"post",
+                    url:"/op/deleteShopcartGoods",
+                    contentType: "application/json",
+                    dataType: "text",
+                    data: commodityId,
+                    success:function(data){
+                        console.log(data);
+                        if(data < 0){
+                            layer.msg("delete unsuccessfully!");
+                        }
+                        else{
+                            window.location.reload();
+                            layer.msg("delete successfully!");
+                        }
+                    }
+                })
+            }
+        })
+
+        // $(document).on("click",".buy",function (){
+        //     let commodityId = $(this).attr('value');
+        //     $.ajax({
+        //         type: "post",
+        //         url: "/shopCart/toOrder",
+        //         data: commodityId,
+        //         contentType: "application/json",
+        //         dataType: "text",
+        //         success:function (data){
+        //             return 1;
+        //         }
+        //     })
+        // })
+    })
+</script>
+
+</body>
+</html>
