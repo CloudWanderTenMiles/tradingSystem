@@ -53,11 +53,11 @@
     cursor: pointer;
     padding-left: 10px;
     width: 160px;
-    background: url("../img/temp/down.jpg") no-repeat 140px center;
+    background: url("../image/temp/down.jpg") no-repeat 140px center;
 }
 
 .current p.default.on {
-    background: url("../img/temp/up.jpg") no-repeat 140px center;
+    background: url("../image/temp/up.jpg") no-repeat 140px center;
 }
 
 /*********************proList****************************/
@@ -280,8 +280,8 @@ a.more {
 }
 
 .detCon .proDet .proImg > img {
-    width: 450px;
-    height: 500px;
+    width: 580px;
+    height: 580px;
 }
 
 .detCon .smallImg > img {
@@ -606,6 +606,148 @@ section h3 {
 }
 
 /**************************cart**********************************/
+
+
+/*自加样式-----------------------------------------------------------*/
+.cart_content{
+    width:1160px;
+    margin: auto;
+}
+
+.cart_content {
+    margin-left: 15%;
+    margin-top: 0%;
+    padding-top: 0.5%;
+    padding-bottom: 1%;
+    width: 70%;
+    height: auto;
+    margin-bottom: 10%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    display: block;
+}
+table {
+    width: 90%;
+    padding-bottom: 3%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+.table_head{
+    background-color: rgba(0,0,0,0.55);
+    color: white;
+    border-collapse:collapse;
+    height: 40px;
+    font-size: 0.9em;
+    border-bottom: 1px solid slateblue;
+}
+.table_head th {
+    margin-right: 0%;
+    width: 15%;
+}
+
+.table_content td {
+    width: 10%;
+    height: 6.5em;
+    border-bottom: 1px dashed #dbdbdb;
+}
+.table_content td.input_checkbox {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0%;
+    width: 5%;
+}
+.table_content td.show_img img {
+    width: 100%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+.table_content td.title {
+    vertical-align: middle;
+    text-align:center;
+    /*padding-top: 2%;*/
+    width: 30%;
+}
+.table_content td.cost {
+    text-align: center;
+}
+.table_content td.count {
+    text-align: center;
+}
+.table_content td.count span.number {
+    /*background-color: gray;*/
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    width: 1.3em;
+    font-size: 1em;
+    margin: 0 0.5em;
+}
+.table_content td.per_sum {
+    text-align: center;
+    color: rebeccapurple;
+}
+.table_content td.delete_img {
+    text-align: center;
+}
+
+.table_content td.delete_img img {
+    width: 20%;
+}
+.table_content td.delete_img img:hover {
+    cursor: pointer;
+}
+.end_pay .is_all {
+    width: 10%;
+    text-align: center;
+}
+.space {
+    width: 45%;
+}
+.count span.minus:hover {
+    cursor: pointer;
+}
+.count span.add:hover {
+    cursor: pointer;
+}
+.pay_button_div {
+    width: 20%;
+    text-align: center;
+}
+.pay_button {
+    width: 70%;
+    background-color: slateblue;
+    height: 45px;
+    border: none;
+    font-size: 1.1em;
+    color: white;
+    border-radius: 5px;
+}
+.pay_button:hover {
+    cursor: pointer;
+}
+.all_sum {
+    text-align: right;
+}
+footer {
+    width: 96%;
+    background-color: slateblue;
+    box-shadow: 4px 2px 10px #888888;
+    border-radius: 10px;
+    height: 80px;
+    margin-left: 2%;
+}
+footer p {
+    padding-top: 35px;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+    font-size: 1.2em;
+}
+
+/*自加样式-----------------------------------------------------*/
+
+
+
 .cart .logo {
     margin-top: 30px;
 }
@@ -777,7 +919,7 @@ section h3 {
     top: 0;
     width: 16px;
     height: 16px;
-    background: url("../img/temp/check.jpg");
+    background: url("../image/temp/check.jpg");
 }
 
 .table label input[type=checkbox]:checked + span {
@@ -786,7 +928,7 @@ section h3 {
     top: 0;
     width: 16px;
     height: 16px;
-    background: url("../img/temp/checkOn.jpg");
+    background: url("../image/temp/checkOn.jpg");
 }
 
 .table .tr p:last-child a, .table .tr p:last-child span {
@@ -952,6 +1094,10 @@ section h3 {
 
 .order .orderCon .orderR {
     width: 415px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 
 .order .orderCon .orderR .msg {
@@ -1064,3 +1210,5 @@ ul.sch li h4, ul.sch li a {
 ul.sch li a {
     color: #666;
 }
+
+

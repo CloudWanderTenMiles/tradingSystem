@@ -3,12 +3,13 @@ package com.frye.trading.controller;
 import com.frye.trading.config.UserToken;
 import com.frye.trading.pojo.model.Admin;
 import com.frye.trading.pojo.model.Customer;
+import com.frye.trading.pojo.model.Staff;
 import com.frye.trading.service.AdminService;
+import com.frye.trading.service.CSService;
 import com.frye.trading.service.CustomerService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class LoginController {
     AdminService adminService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    CSService csService;
 
     /**
      * admin用户登录
@@ -59,6 +62,11 @@ public class LoginController {
     }
 
 
+    /**
+     * customer 登录
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/customer/login", method = RequestMethod.POST)
     public String customerLogin(@RequestBody Map<String, String> user){
@@ -77,6 +85,27 @@ public class LoginController {
         Customer customer = customerService.getCustomerByPhone(telephone);
         Session session = subject.getSession();
         session.setAttribute("customer",customer);
+        return "success";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/cstaff/login", method = RequestMethod.POST)
+    public String cstaffLogin(@RequestBody Map<String, String> user){
+        String telephone = user.get("telephone");
+        String password = user.get("password");
+        Subject subject = SecurityUtils.getSubject();
+        // 封装用户数据
+        UserToken token = new UserToken(telephone, password, "Customer");
+        try {
+            subject.login(token);
+        } catch (UnknownAccountException e) {
+            return "Account not exist!";
+        } catch (IncorrectCredentialsException e) {
+            return "Password error!";
+        }
+        Staff staff = csService.getStaffByPhone(telephone);
+        Session session = subject.getSession();
+        session.setAttribute("staff",staff);
         return "success";
     }
 }

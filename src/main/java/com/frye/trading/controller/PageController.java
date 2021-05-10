@@ -84,4 +84,9 @@ public class PageController {
     public String toMallPage(@PathVariable String page) {
         return "/mall/" + page;
     }
+
+    @RequestMapping("/toPage/cstaff/{page}")
+    public String toCstaffPage(@PathVariable String page) {
+        return "/cstaff/" + page;
+    }
 }

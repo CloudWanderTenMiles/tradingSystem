@@ -38,7 +38,7 @@ table {
 
 caption, th, td {
     font-weight: normal;
-    /*text-align: left;*/
+    text-align: left;
 }
 
 input, textarea, select, button {
@@ -81,7 +81,6 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section, summar
 /*解决ie6的兼容性问题*/
 .fl {
     float: left;
-    font-size: large;
 }
 
 .fr {
@@ -139,10 +138,10 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section, summar
 }
 
 .head div form input:nth-child(2) {
-    /*float: right;*/
+    float: right;
     width: 13%;
-    /*padding-bottom: 10px;*/
-    background: url("../image/ss.png") no-repeat right 5px;
+    padding-bottom: 10px;
+    background: url("../img/ss.png") no-repeat right 5px;
     cursor: pointer;
 }
 
@@ -275,7 +274,7 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section, summar
 }
 
 .ding h1 img {
-    width: 65%;
+    width: 33%;
 }
 
 /*.ding #top1{	display: none;}*/

@@ -7,7 +7,6 @@ import com.frye.trading.pojo.dto.Commodity;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -75,12 +74,6 @@ public class ShopcartController {
 
         return shopcartService.deleteShopcart(CustomerId,commodityId);
     }
-
-//    @RequestMapping("/shopCart/toOrder")
-//    public String toOrderPage(@RequestBody String commodityId, Model model){
-//        model.addAttribute(commodityId);
-//        return "/mall/order";
-//    }
 
     @RequestMapping( "/mall/order/{commodityId}")
     public String toOrderPage(@PathVariable("commodityId") String commodityId, Model model) {

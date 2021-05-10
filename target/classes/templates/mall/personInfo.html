@@ -1,10 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>personal information</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{css/mygrxx.css}"/>
+    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
 </head>
+
 <body>
-personnal center
+<!------------------------------head------------------------------>
+<div class="head ding">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top">
+            <h1 class="f1"><a href="/home"><img th:src="@{/img/logo.png}" alt=""></a></h1>
+        </div>
+    </div>
+</div>
+<!------------------------------idea------------------------------>
+<div class="address mt">
+    <div class="wrapper clearfix"><a href="/home" class="fl">home page</a><span>/</span>
+        <a href="/toPage/mall/personCenter" class="on">personal info</a>
+    </div>
+</div>
+<!------------------------------Bott------------------------------>
+<div class="Bott">
+    <div class="wrapper clearfix">
+        <div class="zuo fl">
+            <h3><a href="javascript:void(0)"><img class="photo"/></a>
+                <p class="clearfix">
+                    <span class="fl customerName"></span>
+                </p>
+            </h3>
+            <div>
+                <h4>my trading</h4>
+                <ul>
+                    <li><a href="toPage/mall/cart">my shoppingcart</a></li>
+                    <li><a href="toPage/mall/myOrder">my order</a></li>
+                </ul>
+                <h4>personal center</h4>
+                <ul>
+                    <li><a href="toPage/mall/personCenter">my center</a></li>
+                </ul>
+                <h4>account manage</h4>
+                <ul>
+                    <li class="on">
+                        <a href="/toPage/mall/personInfo">personal info</a></li>
+                    <li><a href="changePwd.html">modify password</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="you fl">
+            <h2>Personal Information</h2>
+            <div class="gxin">
+                <div class="tx"><a href="#"><img class="photo"/>
+                    <p id="avatar">Modify avatar</p>
+                </a></div>
+                <div class="xx">
+                    <h3 class="clearfix"><strong class="fl">Basic Information</strong>
+                        <a href="#" class="fr" id="edit1">Edit</a>
+                    </h3>
+                    <div><label>ID:</label><span class="customerId"></span></div>
+                    <div><label>Nickname:</label><span class="customerName"></span></div>
+                    <div><label>Student ID:</label><span class="studentId"></span></div>
+                    <div><label>Real Name:</label><span class="realName"></span></div>
+                    <div><label>Sex:</label><span class="sex"></span></div>
+                    <div><label>Birth:</label><span class="birth"></span></div>
+                    <div><label>Email:</label><span class="email"></span></div>
+                    <div><label>Phone:</label><span class="phone"></span></div>
+                    <div><label>Address:</label><span class="address"></span></div>
+                    <div><label>Credit:</label><span class="credit"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--遮罩-->
+<div class="mask"></div>
+<!--编辑弹框-->
+<div class="bj">
+    <div class="clearfix"><a href="#" class="fr gb"><img th:src="@{/img/icon4.png}"/></a></div>
+    <h3>Edit</h3>
+    <form>
+        <p>
+            <label>Nickname：</label>
+            <input style="width: 200px;margin-left: 4px" type="text" class="customerName" name="customerName"/>
+        </p>
+        <p>
+            <label>Student ID：</label>
+            <input style="width: 200px" type="text" name="studentId" class="studentId"/>
+        </p>
+        <p>
+            <label>Name：</label>
+            <input style="width: 200px;height: 40px;margin-left: 27px" type="text" name="realName" class="realName"/>
+        </p>
+
+        <label>Sex：</label>
+        <input style="margin-left: 40px" type="radio" class= "sex" name="sex" value="male"/>male
+        <input style="margin-left: 20px" type="radio" class="sex" name="sex" value="female"/>female
+        <p>
+            <label>Email：</label>
+            <input style="width: 200px;margin-top: 10px;margin-left: 30px" type="email" class="email" name="email"/>
+        </p>
+        <p>
+            <label>Phone：</label>
+            <input style="width: 200px;margin-left: 25px" type="tel" class="phone" name="phone"/>
+        </p>
+        <p>
+            <label>Address：</label>
+            <input style="width: 200px;margin-left: 16px" type="text" class="address" name="address"/>
+        </p>
+        <div class="bc">
+            <input type="button" value="save" id="save"/>
+            <input type="button" value="cancel"/>
+        </div>
+    </form>
+</div>
+<!--修改头像-->
+<div class="avatar">
+    <div class="clearfix"><a href="#" class="fr gb"><img th:src="@{/img/icon4.png}" /></a></div>
+    <h3>modify Avatar</h3>
+    <form>
+        <h4>Please upload avatar</h4><input type="submit" value="upload"/>
+        <p>jpg or png, the size does not exceed 20M</p>
+    </form>
+</div>
 </body>
 </html>
