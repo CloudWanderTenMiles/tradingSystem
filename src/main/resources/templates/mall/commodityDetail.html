@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="btns clearfix">
-                    <a href="#2"><p class="buy fl">BUY</p></a>
+                    <a href="javascript:void(0)" onclick="buy()"><p class="buy fl">BUY</p></a>
                     <p class="cart fr" onclick="addToCart()" type="button">ADD TO CART</p>
                 </div>
             </div>
@@ -77,14 +77,13 @@
     </div>
 </div>
 
-
 <script>
 
     layui.use(['form', 'jquery', 'layer'], function () {
         let $ = layui.jquery,
             layer = layui.layer;
-        $(function () {
 
+        $(function () {
             let commodityId = $("#commodityId").val();
             $.ajax({
                 type: "post",
@@ -115,6 +114,11 @@
             });
         });
     });
+
+    function buy() {
+        let commodityId = $("#commodityId").val();
+        window.location.href = "/mall/order/" + commodityId;
+    }
 
     function addToCart() {
         let commodityId = $("#commodityId").val();

@@ -1,5 +1,6 @@
 package com.frye.trading.controller;
 
+import com.frye.trading.config.CstaffRealm;
 import com.frye.trading.pojo.model.Staff;
 import com.frye.trading.service.CSService;
 import com.frye.trading.utils.DataJsonUtils;
@@ -87,7 +88,7 @@ public class CSController {
         // 设置staff的成员
         staff.setStaffId(id);
         staff.setStaffName(map.get("staffName"));
-        staff.setStaffPwd("staffPwd");
+        staff.setStaffPwd(CstaffRealm.getEncryptedPassword(phone,map.get("staffPwd")));
         staff.setSex(map.get("sex"));
         staff.setBirth(map.get("birth"));
         staff.setPhone(phone);
@@ -190,7 +191,7 @@ public class CSController {
             return dataJsonUtils.toString();
         }
         staff.setStaffName(map.get("staffName"));
-        staff.setStaffPwd(map.get("staffPwd"));
+        staff.setStaffPwd(CstaffRealm.getEncryptedPassword(phone,map.get("staffPwd")));
         staff.setSex(map.get("sex"));
         staff.setBirth(map.get("birth"));
         staff.setPhone(phone);

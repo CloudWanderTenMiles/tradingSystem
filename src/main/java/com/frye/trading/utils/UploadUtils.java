@@ -18,6 +18,8 @@ public class UploadUtils {
 
     // 从application.yaml中获取图片上传路径
     private static String IMAGE_PATH;
+    // 从application.yaml中获取浏览器访问地址
+    private static String SERVER_PATH;
 
     // 注入
     @Value("${upload-path}")
@@ -25,8 +27,11 @@ public class UploadUtils {
         IMAGE_PATH = imagePath;
     }
 
-    // 浏览器访问路径
-    private static final String SERVER_PATH = "http://localhost:8080/";
+    @Value("${ip-address}")
+    public void setServerPath(String serverPath) {
+        SERVER_PATH = serverPath;
+    }
+
 
     public static String upload(MultipartFile multipartFile) {
         // 更改文件名

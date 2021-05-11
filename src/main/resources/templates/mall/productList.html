@@ -141,7 +141,7 @@
                 var str2 = "";
 
                 for (var i = 0; i < data_num; i++) {   //遍历
-                    str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img src='"
+                    str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img style='width: 120px; height: 160px;' src='"
                         + tt[i].image + "'></dt><dd>" + tt[i].commodityName + "</dd><dd>￥"
                         + tt[i].price + "</dd></dl></a></li>";
                 }
@@ -205,7 +205,7 @@
                 if (data_num != 0) {
                     $('#plist').empty()
                     for (var i = 0; i < data_num; i++) {   //遍历
-                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img src='"
+                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img style='width: 120px; height: 160px;' src='"
                             + tt[i].image + "'></dt><dd>" + tt[i].commodityName + "</dd><dd>￥"
                             + tt[i].price + "</dd></dl></a></li>";
                         // if (pagenum == )
@@ -254,7 +254,7 @@
                     alert("The commodity of this type does not exist");
                 } else {
                     for (var i = 0; i < data_num; i++) {   //遍历
-                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img src='"
+                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img style='width: 120px; height: 160px;' src='"
                             + tt[i].image + "'></dt><dd>" + tt[i].commodityName + "</dd><dd>￥"
                             + tt[i].price + "</dd></dl></a></li>";
                     }
@@ -319,7 +319,7 @@
                 if (data_num != 0) {
                     $('#plist').empty()
                     for (var i = 0; i < data_num; i++) {   //遍历
-                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img src='"
+                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img style='width: 120px; height: 160px;' src='"
                             + tt[i].image + "'></dt><dd>" + tt[i].commodityName + "</dd><dd>￥"
                             + tt[i].price + "</dd></dl></a></li>";
                         // if (pagenum == )
@@ -430,7 +430,7 @@
                 if (data_num != 0) {
                     $('#plist').empty()
                     for (var i = 0; i < data_num; i++) {   //遍历
-                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img src='"
+                        str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img style='width: 120px; height: 160px;' src='"
                             + tt[i].image + "'></dt><dd>" + tt[i].commodityName + "</dd><dd>￥"
                             + tt[i].price + "</dd></dl></a></li>";
                         // if (pagenum == )
@@ -446,7 +446,6 @@
                 console.log(arg1);
             }
         })
-
     }
 </script>
 </html>

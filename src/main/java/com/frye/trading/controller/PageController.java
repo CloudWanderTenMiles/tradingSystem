@@ -39,7 +39,7 @@ public class PageController {
      */
     @RequestMapping("/cstaff")
     public String getCstaffLoginPage() {
-        return "/cstaff/alogin";
+        return "/cstaff/login";
     }
 
     /**

@@ -48,7 +48,7 @@ public class AdminRealm extends AuthorizingRealm {
     }
 
     public static void main(String[] args) {
-        String username = "frye";
+        String username = "15529559896";
         String credentials = "123456";
         String result = getEncryptedPassword(username, credentials);
         System.out.println(result);

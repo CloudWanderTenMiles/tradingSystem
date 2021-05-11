@@ -1,6 +1,7 @@
 # value statement start
 upload-path: E:/trading-system/upload/
 front-path: E:/trading-system/front/
+ip-address: http://localhost:8080/
 # upload-path: /usr/local/trading-system/upload/
 # front-path: /usr/local/trading-system/front/
 # value statement end

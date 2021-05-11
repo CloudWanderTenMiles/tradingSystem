@@ -1,9 +1,7 @@
 package com.frye.trading.config;
 
-import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.pojo.model.Staff;
 import com.frye.trading.service.CSService;
-import com.frye.trading.service.CustomerService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.crypto.hash.SimpleHash;

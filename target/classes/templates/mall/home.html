@@ -7,15 +7,18 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/show.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 <body>
 <!------------------------------head------------------------------>
 <div class="head">
     <div class="wrapper clearfix">
-        <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
-                                                                           style="width: 35%;height: auto"/></a>
-        </h1>
+        <div class="clearfix" id="top">
+            <h1 class="fl">
+                <a href="/home">
+                    <img th:src="@{image/logo2.1.png}" style="width: 35%;height: auto"/>
+                </a>
+            </h1>
             <div class="fr clearfix" id="top1">
                 <p class="fl">
                     <a href="/login" id="login">login</a>
@@ -47,6 +50,10 @@
 <div class="banner">
     <ul class="img">
         <li id="ok">
+            <img th:src="@{/image/banner1.jpg}">
+            <img th:src="@{/image/banner2.jpg}">
+            <img th:src="@{/image/banner1.jpg}">
+            <img th:src="@{/image/banner2.jpg}">
         </li>
     </ul>
 </div>
@@ -63,90 +70,92 @@
 </div>
 
 
-<!--轮播图获取图片-->
-<script>
-    $(function () {
-        let shop={"page":1,"limit":5,"state":1};
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "/op/commodityList",
-            data:shop,
-            success: function (data) {
-                console.log(data.data);
-                var str = "";
-                $.each(data.data, function (index, obj) {
-                    str += "<a href='" + obj["url"] + "' target='_blank'><img src='" + obj.image + "' /></a>";
-                });
-                $("#ok").append(str);
-            }
-        });
-    });
-</script>
+<!--&lt;!&ndash;轮播图获取图片&ndash;&gt;-->
+<!--<script>-->
+<!--    $(function () {-->
+<!--        let shop = {"page": 1, "limit": 5, "state": 1};-->
+<!--        $.ajax({-->
+<!--            type: "POST",-->
+<!--            dataType: "json",-->
+<!--            url: "/op/commodityList",-->
+<!--            data: shop,-->
+<!--            success: function (data) {-->
+<!--                console.log(data.data);-->
+<!--                var str = "";-->
+<!--                $.each(data.data, function (index, obj) {-->
+<!--                    str += "<a href='" + obj["url"] + "' target='_blank'><img src='" + obj.image + "' /></a>";-->
+<!--                });-->
+<!--                $("#ok").append(str);-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 <!--商品获取-->
 <script>
-    //请求json数据拼接字符串，并在URL传参数id跳转
-    $(function () {
-        let shop={"page":1,"limit":20,"state":1};
-        $.ajax({
-            type: "post",
-            url: "/op/commodityList",
-            dataType: "json",
-            data:shop,
-            success: function (data) {
-                var str="<ul>";
-                $.each(data.data,function (i,value) {
-                    str+="<li><a href='"+"/mall/commodityDetail/"+value.commodityId+"'><img src='"+value.image+"' alt=''></a><h2>"+value.commodityName+"</h2><span>"+"￥"+value.price+"</span></li>"
-                });
-                str+="</ul>";
-                $("#list").append(str);
-            }, error: function () {
-                alert("error")
-            }
-        });
-    })
-</script>
-<!--轮播图实现-->
-<script>
-    $(document).ready(function () {
 
-        var i = 0;
+    layui.use(['form', 'jquery', 'layer'], function () {
+        let $ = layui.jquery,
+            layer = layui.layer;
+        //请求json数据拼接字符串，并在URL传参数id跳转
 
-        var clone = $(".banner .img li").first().clone();//克隆第一张图片
-        $(".banner .img").append(clone);                //复制到列表最后
-        var size = $(".banner .img li").size();         //返回匹配元素的数量
-        console.log(size);
+        $(function () {
+            let shop = {"page": 1, "limit": 20, "state": 1};
+            $.ajax({
+                type: "post",
+                url: "/op/commodityList",
+                dataType: "json",
+                data: shop,
+                success: function (data) {
+                    var str = "<ul>";
+                    $.each(data.data, function (i, value) {
+                        str += "<li><a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a><h2>" + value.commodityName + "</h2><span>" + "￥" + value.price + "</span></li>"
+                    });
+                    str += "</ul>";
+                    $("#list").append(str);
+                }, error: function () {
+                    alert("error")
+                }
+            });
+        })
 
-        /*自动轮播*/
 
-        var t = setInterval(function () {
-            i++;
-            move();
-        }, 2000);
+        // <!--轮播图实现-- >
+        $(document).ready(function () {
 
-        /*鼠标悬停事件*/
+            var i = 0;
 
-        $(".banner").hover(function () {
-            clearInterval(t);//鼠标悬停时清除定时器
-        }, function () {
-            t = setInterval(function () {
+            var clone = $(".banner .img li").first().clone();//克隆第一张图片
+            $(".banner .img").append(clone);                //复制到列表最后
+            var size = $(".banner .img li").size();         //返回匹配元素的数量
+            console.log(size);
+            /*自动轮播*/
+            var t = setInterval(function () {
                 i++;
                 move();
-            }, 2000); //鼠标移出时开始定时器
-        });
+            }, 2000);
+            /*鼠标悬停事件*/
+            $(".banner").hover(function () {
+                clearInterval(t);//鼠标悬停时清除定时器
+            }, function () {
+                t = setInterval(function () {
+                    i++;
+                    move();
+                }, 2000); //鼠标移出时开始定时器
+            });
 
-        /*移动事件*/
-        function move() {
-            if (i == size) {
-                $(".banner .img").css({left: 0});
-                i = 1;
+            /*移动事件*/
+            function move() {
+                if (i == size) {
+                    $(".banner .img").css({left: 0});
+                    i = 1;
+                }
+                if (i == -1) {
+                    $(".banner .img").css({left: -(size - 1) * 1000});
+                    i = size - 2;
+                }
+                $(".banner .img").stop().animate({left: -i * 1000}, 1000);
             }
-            if (i == -1) {
-                $(".banner .img").css({left: -(size - 1) * 1000});
-                i = size - 2;
-            }
-            $(".banner .img").stop().animate({left: -i * 1000}, 1000);
-        }
+        });
     });
 </script>
 </body>
