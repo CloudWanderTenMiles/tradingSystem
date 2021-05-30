@@ -38,7 +38,7 @@ table {
 
 caption, th, td {
     font-weight: normal;
-    text-align: left;
+    /*text-align: middle;*/
 }
 
 input, textarea, select, button {
