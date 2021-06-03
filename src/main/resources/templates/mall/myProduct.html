@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/public.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/show.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 <body>
 <div class="head">
     <div class="wrapper clearfix">
+        <input id="custId" th:value="${custid}" style="display: none"/>
+
         <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
                                                                            style="width: 35%;height: auto"/></a>
         </h1>
@@ -37,6 +44,43 @@
         </ul>
     </div>
 </div>
-<h2>Some bugs to be modified</h2>
+<a class="submit" href="/toPage/admin/commodityAdd">
+    <button>123</button>
+</a>
+
+<div class="productList" id="myProductList"></div>
+
+<!--<div><button id="add"></button>添加商品</div>-->
+
+<script>
+
+    layui.use(['table','form', 'jquery', 'layer'], function () {
+        var table =layui.table,
+            $ = layui.jquery,
+            layer = layui.layer;
+        //请求json数据拼接字符串，并在URL传参数id跳转
+
+        $(function () {
+            let shop = {"page": 1, "limit": 20, "state": 1};
+            $.ajax({
+                type: "post",
+                url: "/op/getCommodityByCid",
+                dataType: "json",
+                data: shop,
+
+                success: function (data) {
+                    var str = "<ul>";
+                    $.each(data.data, function (i, value) {
+                        str += "<li><a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a><h2>" + value.commodityName + "</h2><span>" + "￥" + value.price + "</span></li>"
+                    });
+                    str += "</ul>";
+                    $("#myProductList").append(str);
+                }, error: function () {
+                    alert("error")
+                }
+            });
+        })
+    })
+</script>
 </body>
 </html>

@@ -5,12 +5,17 @@ import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.utils.DataJsonUtils;
 import com.frye.trading.utils.GenerateIdUtils;
+
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+//import javax.security.auth.Subject;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -162,18 +167,28 @@ public class CustomerController {
      * @param id customer id
      * @return 返回customer的json
      */
-    @RequestMapping(value = "/op/getCustomer", method = RequestMethod.POST)
+    /**
+     * 从后台获取customer的信息填充到form中
+     * @param id customer id
+     * @return 返回customer的json
+     */
+//    @RequestMapping(value = "/op/getCustomer", method = RequestMethod.POST)
+    @RequestMapping("/op/getCustomer")
     @ResponseBody
-    public String getCustomer(@RequestBody String id) {
-        Customer customer = customerService.getCustomerById(id);
-        DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        if (customer != null) {
+    public String getCustomer(){
+        DataJsonUtils dataJsonUtils=new DataJsonUtils();
+        Subject subject = SecurityUtils.getSubject();
+        Session session=subject.getSession();
+        Customer customer = (Customer) session.getAttribute("customer");
+        String CustomerId=customer.getCustomerId();
+        Customer customer1 = customerService.getCustomerById(CustomerId);
+        if(customer1!=null){
             dataJsonUtils.setCode(200);
-            dataJsonUtils.setData(customer);
-            dataJsonUtils.setMsg("Pull data successfully");
-        } else {
+            dataJsonUtils.setData(customer1);
+            dataJsonUtils.setMsg("successfully");
+        }else{
             dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("Error pulling data");
+            dataJsonUtils.setMsg("Error");
         }
         return dataJsonUtils.toString();
     }

@@ -30,6 +30,11 @@ img {
     border: none;
 }
 
+.submit button{
+    height: 200px;
+    width: 200px;
+}
+
 /*图片的默认边框去掉 */
 table {
     border-collapse: collapse;
