@@ -169,6 +169,10 @@ body {
     display: none;
 }
 
+.bj .bc input{
+    cursor: pointer;
+}
+
 .bj div a, .xg div a, .avatar div a {
     width: 20px;
     height: 20px;
