@@ -1,12 +1,16 @@
 package com.frye.trading.controller;
 
 import com.frye.trading.pojo.dto.Commodity;
+import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
 import com.frye.trading.utils.GenerateIdUtils;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -155,6 +159,32 @@ public class CommodityController {
         return dataJsonUtils.toString();
     }
 
+    @RequestMapping("/op/getCommodityByCid")
+    @ResponseBody
+    public String getCommodityByCid(@Param("page") int page,@Param("limit")int limit){
+        DataJsonUtils dataJsonUtils=new DataJsonUtils();
+        Subject subject = SecurityUtils.getSubject();
+        Session session=subject.getSession();
+        Customer customer = (Customer) session.getAttribute("customer");
+        String CustomerId=customer.getCustomerId();
+        System.out.println(CustomerId);
+        Map<String,String>params=new LinkedHashMap<>();
+        params.put("customerId",CustomerId);
+        List<Commodity> commodities = commodityService.getCommodityList(page,limit,params);
+        int count = commodityService.getCount(params);
+
+        if (count >= 0) {
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setMsg("get data successfully");
+            dataJsonUtils.setCount(count);
+            dataJsonUtils.setData(commodities);
+        } else {
+            dataJsonUtils.setCode(0);
+            dataJsonUtils.setMsg("get data failed");
+        }
+        return dataJsonUtils.toString();
+    }
+
     /**
      * 跳转到修改页面
      * @param id 修改的commodity id
@@ -166,6 +196,8 @@ public class CommodityController {
         model.addAttribute(id);
         return "/admin/commodityUpdate";
     }
+
+
 
     /**
      * 更新商品
