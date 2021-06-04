@@ -163,16 +163,21 @@ public class CustomerController {
     }
 
     /**
-     * 从后台获取customer的信息填充到form中
+     * 跳转到用户页
      * @param id customer id
-     * @return 返回customer的json
+     * @param model 传递参数
+     * @return 页面url
      */
+    @RequestMapping( "/mall/personCenter/{id}")
+    public String topersonCenterPage(@PathVariable("id") String id, Model model) {
+        model.addAttribute(id);
+        return "/mall/personCenter";
+    }
+
     /**
      * 从后台获取customer的信息填充到form中
-     * @param id customer id
      * @return 返回customer的json
      */
-//    @RequestMapping(value = "/op/getCustomer", method = RequestMethod.POST)
     @RequestMapping("/op/getCustomer")
     @ResponseBody
     public String getCustomer(){
@@ -246,4 +251,6 @@ public class CustomerController {
         }
         return dataJsonUtils.toString();
     }
+
+
 }

@@ -11,7 +11,7 @@ spring:
     name: trading-system
   servlet:
     multipart:
-      max-file-size: 20MB
+        max-file-size: 20MB
       enabled: true
 
   # database connection config start
