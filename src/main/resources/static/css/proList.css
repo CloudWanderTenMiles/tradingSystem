@@ -53,11 +53,10 @@
     cursor: pointer;
     padding-left: 10px;
     width: 160px;
-    background: url("../image/temp/down.jpg") no-repeat 140px center;
 }
 
 .current p.default.on {
-    background: url("../image/temp/up.jpg") no-repeat 140px center;
+    /*background: url("../image/up.jpg") no-repeat 140px center;*/
 }
 
 /*********************proList****************************/
@@ -919,7 +918,7 @@ footer p {
     top: 0;
     width: 16px;
     height: 16px;
-    background: url("../image/temp/check.jpg");
+    /*background: url("../image/temp/check.jpg");*/
 }
 
 .table label input[type=checkbox]:checked + span {
@@ -928,7 +927,7 @@ footer p {
     top: 0;
     width: 16px;
     height: 16px;
-    background: url("../image/temp/checkOn.jpg");
+    /*background: url("../image/temp/checkOn.jpg");*/
 }
 
 .table .tr p:last-child a, .table .tr p:last-child span {
@@ -1026,7 +1025,7 @@ footer p {
 .order .orderCon h3 {
     height: 48px;
     line-height: 48px;
-    font-weight: normal;
+    font-weight: bold;
     border-bottom: 1px solid #dbdbdb;
     font-size: 16px;
 }

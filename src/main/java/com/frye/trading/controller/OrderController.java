@@ -105,6 +105,8 @@ public class OrderController {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add order error! please check the data you enter.");
         } else {
+            CommodityController commodityController = new CommodityController();
+            commodityController.updateCommodityState(commodityId,"2");
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("add order successfully!");
         }
@@ -131,6 +133,54 @@ public class OrderController {
         } else {
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("delete successfully!");
+        }
+        return dataJsonUtils.toString();
+    }
+
+    /**
+     * 撤销order
+     * @return json
+     */
+    @RequestMapping(value = "/op/orderWithdraw", method = RequestMethod.POST)
+    @ResponseBody
+    public String withdrawOrder(@RequestBody String orderId) {
+        DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setState("withdrawn");
+        if (orderService.updateOrder(order) < 0) {
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("withdraw error");
+        } else {
+            String commodityId = orderService.getOrderById(orderId).getCommodityId();
+            CommodityController commodityController = new CommodityController();
+            commodityController.updateCommodityState(commodityId,"1");
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setMsg("withdraw successfully!");
+        }
+        return dataJsonUtils.toString();
+    }
+
+    /**
+     * 完成order
+     * @return json
+     */
+    @RequestMapping(value = "/op/orderComplete", method = RequestMethod.POST)
+    @ResponseBody
+    public String completeOrder(@RequestBody String orderId) {
+        DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setState("completed");
+        if (orderService.updateOrder(order) < 0) {
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("complete error");
+        } else {
+            String commodityId = orderService.getOrderById(orderId).getCommodityId();
+            CommodityController commodityController = new CommodityController();
+            commodityController.updateCommodityState(commodityId,"4");
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setMsg("complete successfully!");
         }
         return dataJsonUtils.toString();
     }
@@ -175,7 +225,7 @@ public class OrderController {
      */
     @RequestMapping(value = "/op/orderUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public String updateCustomer(@RequestBody Map<String, String> map) {
+    public String updateOrder(@RequestBody Map<String, String> map) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         Order order = new Order();
         order.setOrderId(map.get("orderId"));
