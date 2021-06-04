@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frye.trading.dao.CustomerMapper">
+
+    <select id="checkExist" resultType="int" parameterType="map">
+        select count(*)
+        from tradingsystem.customer
+        <where>
+            <if test="params.studentId != null and params.studentId != ''">
+                student_id = #{params.studentId}
+            </if>
+            <if test="params.phone != null and params.phone != ''">
+                and phone = #{params.phone}
+            </if>
+            <if test="params.email != null and params.email != ''">
+                and email = #{params.email}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCustomerById" resultType="com.frye.trading.pojo.model.Customer">
+        select *
+        from tradingsystem.customer
+        where customer_id = #{id}
+    </select>
+
+    <select id="getCustomerByPhone" resultType="com.frye.trading.pojo.model.Customer">
+        select *
+        from tradingsystem.customer
+        where phone = #{phone}
+    </select>
+
+    <update id="changePwd">
+        update tradingsystem.customer
+        <set>
+            customer_pwd = #{password}
+        </set>
+        <where>
+            customer_id = #{id}
+        </where>
+    </update>
+
+    <insert id="addCustomer" parameterType="com.frye.trading.pojo.model.Customer">
+        insert into tradingsystem.customer(customer_id, customer_name, customer_pwd, student_id, real_name,
+                                           sex, birth, `role`, address, email, phone, photo, credit)
+        values (#{customerId}, #{customerName}, #{customerPwd}, #{studentId}, #{realName}, #{sex},
+                #{birth}, #{role}, #{address}, #{email}, #{phone}, #{photo}, #{credit});
+    </insert>
+
+    <update id="updateCustomer" parameterType="com.frye.trading.pojo.model.Customer">
+        update tradingsystem.customer
+        <set>
+            <if test="customerName != null">customer_name = #{customerName},</if>
+            <if test="customerPwd != null">customer_pwd = #{customerPwd},</if>
+            <if test="studentId != null">student_id = #{studentId},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="credit != null">credit = #{credit},</if>
+            <if test="photo != null">photo = #{photo}</if>
+        </set>
+        <where>
+            customer_id = #{customerId}
+        </where>
+    </update>
+
+    <delete id="deleteCustomer">
+        delete
+        from tradingsystem.customer
+        where customer_id = #{id}
+    </delete>
+
+    <select id="getCount" resultType="int" parameterType="map">
+        select count(*)
+        from tradingsystem.customer
+        <where>
+            <if test="params.customerId != null and params.customerId != ''">
+                customer_id = #{params.customerId}
+            </if>
+            <if test="params.customerName != null and params.customerName != ''">
+                and customer_name like CONCAT('%',#{params.customerName},'%')
+            </if>
+            <if test="params.realName != null and params.realName != ''">
+                and real_name like CONCAT('%',#{params.realName},'%')
+            </if>
+            <if test="params.phone != null and params.phone != ''">
+                and phone = #{params.phone}
+            </if>
+            <if test="params.email != null and params.email != ''">
+                and email = #{params.email}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCustomerList" resultType="com.frye.trading.pojo.model.Customer" parameterType="map">
+        select *
+        from tradingsystem.customer
+        <where>
+            <if test="params.customerId != null and params.customerId != ''">
+                customer_id = #{params.customerId}
+            </if>
+            <if test="params.customerName != null and params.customerName != ''">
+                and customer_name like CONCAT('%',#{params.customerName},'%')
+            </if>
+            <if test="params.realName != null and params.realName != ''">
+                and real_name like CONCAT('%',#{params.realName},'%')
+            </if>
+            <if test="params.phone != null and params.phone != ''">
+                and phone = #{params.phone}
+            </if>
+            <if test="params.email != null and params.email != ''">
+                and email = #{params.email}
+            </if>
+        </where>
+        limit #{begin}, #{pageSize}
+    </select>
+
+</mapper>

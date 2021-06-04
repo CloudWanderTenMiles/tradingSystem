@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/show.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
+</head>
+<body>
+<div class="head">
+    <div class="wrapper clearfix">
+        <input id="custId" th:value="${custid}" style="display: none"/>
+
+        <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
+                                                                           style="width: 35%;height: auto"/></a>
+        </h1>
+            <div class="fr clearfix" id="top1">
+                <p class="fl">
+                    <a href="/login" id="login">login</a>
+                    <a href="/toPage/mall/" id="reg">register</a>
+                </p>
+                <div class="btn fl clearfix">
+                    <a href="/toPage/mall/personCenter">
+                        <img th:src="@{/image/grzx.png}"/>
+                    </a>
+                    <a href="/toPage/mall/cart">
+                        <img th:src="@{/image/gwc.png}"/>
+                    </a>
+                    <a href="/logout">
+                        <img th:src="@{/image/logout.png}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/toPage/mall/productList">All Products</a></li>
+            <li><a href="/toPage/mall/myProduct">My Products</a></li>
+            <li><a href="/toPage/mall/chart">Chart room</a></li>
+        </ul>
+    </div>
+</div>
+<a class="submit" href="/toPage/mall/goodsAdd">
+    <button>+ Add</button>
+</a>
+
+<div class="productList" id="myProductList"></div>
+
+<!--<div><button id="add"></button>添加商品</div>-->
+
+<script>
+
+    layui.use(['table','form', 'jquery', 'layer'], function () {
+        var table =layui.table,
+            $ = layui.jquery,
+            layer = layui.layer;
+        //请求json数据拼接字符串，并在URL传参数id跳转
+
+
+
+        $(function () {
+            let shop = {"page": 1, "limit": 20, "state": 1};
+            $.ajax({
+                type: "post",
+                url: "/op/getCommodityByCid",
+                dataType: "json",
+                data: shop,
+
+                success: function (data) {
+                    var str = "<ul>";
+                    $.each(data.data, function (i, value) {
+                        str += "<li>" +
+                                    "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
+                                    "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
+                                    "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span><button class='delete' id='del'>Delete</button></div>" +
+                                "</li>"
+                    });
+                    str += "</ul>";
+                    $("#myProductList").append(str);
+                    $(".delete").click(function (){
+                        let id = $($(this).parent().prev().children().get(0)).val();
+                        layer.confirm("delete this commodity?",function (){
+                            delLine(id);
+                        })
+                    });
+
+                    function delLine(data){
+                        let id=[];
+                        id.push(data);
+                        $.ajax({
+                            url:'/op/commodityDelete',
+                            type: 'post',
+                            dataType: 'json',
+                            contentType:'application/json',
+                            data:JSON.stringify(id),
+                            timeout:2000,
+                            success:function (res){
+                                if(res.code===200){
+                                    layer.msg(res.msg,{time:1000});
+                                    window.history.go(0);
+                                    return false;
+                                }
+                                else{
+                                    layer.msg(res.msg);
+                                    return false;
+                                }
+                            },
+                            error: function () {
+                                layer.msg("Exception!");
+                            }
+                        });
+                    }
+                }, error: function () {
+                    alert("error")
+                }
+            });
+        })
+    })
+</script>
+</body>
+</html>

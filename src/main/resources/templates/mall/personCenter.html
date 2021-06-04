@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>personal information</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mygrxx.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
+    <!--<script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery.min.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>-->
+</head>
+
+<body>
+<!------------------------------head------------------------------>
+<div class="head">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top">
+            <h1 class="fl">
+                <a href="/home"><img th:src="@{/image/logo2.1.png}" style="width: 35%;height: auto"/>
+                </a>
+            </h1>
+        </div>
+        </h1>
+        <div class="fr clearfix" id="top1">
+            <p class="fl">
+                <a href="/login" id="login">login</a>
+                <a href="/toPage/mall/register" id="reg">register</a>
+            </p>
+            <div class="btn fl clearfix">
+                <a href="/toPage/mall/personCenter">
+                    <img th:src="@{/image/grzx.png}"/>
+                </a>
+                <a href="/toPage/mall/cart">
+                    <img th:src="@{/image/gwc.png}"/>
+                </a>
+                <a href="/logout">
+                    <img th:src="@{/image/logout.png}"/>
+                </a>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/toPage/mall/productList">All Products</a></li>
+            <li><a href="/toPage/mall/myProduct">My Products</a></li>
+            <li><a href="/toPage/mall/chart">Chart room</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="Bott">
+    <div class="wrapper clearfix">
+        <div class="you fl">
+            <h2>Personal Information</h2>
+            <div class="gxin">
+                <div class="tx">
+
+                    <img id="photo" alt="" style="height: 180px; width: 150px;">
+                </div>
+
+                <!--                    <p id='avatar' style="text-align: left">Modify avatar</p>-->
+                <div class="xx" id="grxx">
+                    <h3 class="clearfix">
+                        <strong class="fl">Basic Information</strong>
+                        <div id="toolbarDemo" style="display: block;">
+                            <div class="layui-btn-container">
+                                <button style="float: right" class="layui-btn layui-btn-sm" id="edit" lay-event="add"></button>
+                            </div>
+                        </div>
+                        <a href="#" class="fr" id="edit1">Edit</a>
+                    </h3>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mask"></div>
+<!--编辑弹框-->
+<div class="bj">
+    <div class="clearfix"><a href="/toPage/mall/personCenter" class="fr gb"><img th:src="@{/image/icon.png}" /></a></div>
+    <h3>Edit</h3>
+    <form action="/op/customerUpdate" method="post">
+        <p><label>Nickname：</label><input style="width: 200px;margin-left: 4px" type="text" id="customerName" /></p>
+        <p><label>Student ID：</label><input style="width: 200px" type="text" id="stuId" readonly/></p>
+        <p><label>Customer ID：</label><input style="width: 200px" type="text" id="customerId" readonly/></p>
+        <p><label>Name：</label><input style="width: 200px;height: 40px;margin-left: 27px" type="text" readonly />
+        </p>
+
+        <label>Sex：</label><input style="margin-left: 40px" type="radio" name="sex" value="男" />男
+        <input style="margin-left: 20px" type="radio" name="sex" value="女" />女
+
+        <p><label>Email：</label><input style="width: 200px;margin-top: 10px;margin-left: 30px" type="email" id="email"/></p>
+        <p><label>Phone：</label><input style="width: 200px;margin-left: 25px" type="tel" id="phone" /></p>
+        <p><label>Address：</label><input style="width: 200px;margin-left: 16px" type="text" id="address" /></p>
+        <div class="bc"><input type="submit" value="save" /><input type="reset" value="cancel" /></div>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    layui.use(['table', 'jquery', 'layer'], function () {
+        var table = layui.table,
+            $ = layui.jquery,
+            layer = layui.layer;
+
+        var btn = document.getElementById("edit");
+
+        btn.onclick=function (){
+            //alert(123);
+            updateCustomer();
+        }
+
+        function updateCustomer() {
+            alert(11);
+            layer.close(index);
+            window.location.href = "/toPage/mall/home/";
+        }
+
+        $(function (){
+            $.ajax({
+                type:"post",
+                url:"/op/getCustomer",
+                contentType:"application/json",
+                dataType:"json",
+                success:function (data){
+                    let obj=data.data;
+                    let str="";
+                    let str1="";
+                    // let x = {"abv": "食品标准物质", "xyz": "环境标准物质", 3: "职业卫生标准物质", 4: "仪器鉴定标准物质", 5: "药典及对照品", 6: "进口标准品", 7: "地质矿产标准物质", 8: "其他标准物质", 9: "化学试剂"};
+                    $.each(obj,function(i,n){
+                        if(i=='customerPwd'||i=='photo'){
+                            return true;
+                        }
+                        $('#'+i).val(n);
+                        str+="<div>"+i+":"+n+"</div>";
+                        if(i=='customerId'){
+                            str+="<input type='text' id='customerId' name='customerId' class='layui-input' style='display:none' value='"+n+"'>";
+                        }
+                    });
+                    $('#grxx').append(str);
+                    $('#photo').attr("src",obj.photo);
+                }
+
+            })
+        })
+    })
+</script>
+
+</body>
+</html>

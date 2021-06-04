@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frye.trading.dao.AdminMapper">
+
+    <select id="queryAdminById" resultType="com.frye.trading.pojo.model.Admin">
+        select *
+        from tradingsystem.admin
+        where admin_id = #{id}
+    </select>
+
+    <update id="changePassword">
+        update tradingsystem.admin
+        <set>
+            admin_pwd = #{password}
+        </set>
+        <where>
+            admin_id = #{id}
+        </where>
+    </update>
+
+</mapper>
