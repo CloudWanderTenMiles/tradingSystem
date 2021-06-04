@@ -1,12 +1,16 @@
 package com.frye.trading.controller;
 
 import com.frye.trading.pojo.dto.Commodity;
+import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
 import com.frye.trading.utils.GenerateIdUtils;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -155,6 +159,32 @@ public class CommodityController {
         return dataJsonUtils.toString();
     }
 
+    @RequestMapping("/op/getCommodityByCid")
+    @ResponseBody
+    public String getCommodityByCid(@Param("page") int page,@Param("limit")int limit){
+        DataJsonUtils dataJsonUtils=new DataJsonUtils();
+        Subject subject = SecurityUtils.getSubject();
+        Session session=subject.getSession();
+        Customer customer = (Customer) session.getAttribute("customer");
+        String CustomerId=customer.getCustomerId();
+        System.out.println(CustomerId);
+        Map<String,String>params=new LinkedHashMap<>();
+        params.put("customerId",CustomerId);
+        List<Commodity> commodities = commodityService.getCommodityList(page,limit,params);
+        int count = commodityService.getCount(params);
+
+        if (count >= 0) {
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setMsg("get data successfully");
+            dataJsonUtils.setCount(count);
+            dataJsonUtils.setData(commodities);
+        } else {
+            dataJsonUtils.setCode(0);
+            dataJsonUtils.setMsg("get data failed");
+        }
+        return dataJsonUtils.toString();
+    }
+
     /**
      * 跳转到修改页面
      * @param id 修改的commodity id
@@ -167,6 +197,8 @@ public class CommodityController {
         return "/admin/commodityUpdate";
     }
 
+
+
     /**
      * 更新商品
      * @param map 商品信息map
@@ -174,7 +206,7 @@ public class CommodityController {
      */
     @RequestMapping(value = "/op/commodityUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public String updateCustomer(@RequestBody Map<String, String> map) {
+    public String updateCommodity(@RequestBody Map<String, String> map) {
         String customerId = map.get("customerId");
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         if (customerService.getCustomerById(customerId) == null) {
@@ -201,6 +233,41 @@ public class CommodityController {
         }
         return dataJsonUtils.toString();
     }
+
+    /**
+     *
+     * @param commodityId 商品id
+     * @param state 商品状态
+     * @return 返回更改商品状态结果
+     */
+    public boolean updateCommodityState(String commodityId,String state) {
+        Commodity commodity = new Commodity();
+        commodity.setCommodityId(commodityId);
+        commodity.setState(state);
+        return commodityService.updateCommodity(commodity) >= 0;
+    }
+
+    /**
+     *
+     * @param commodityId 商品id
+     * @param state 商品状态
+     * @return 返回更改商品状态结果
+     */
+    @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)
+    @ResponseBody
+    public String commodityUpdateState(String commodityId,String state) {
+        DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        CommodityController commodityController = new CommodityController();
+        if (!commodityController.updateCommodityState(commodityId,state)) {
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("update commodity state error!");
+        } else {
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setMsg("update commodity state successfully!");
+        }
+        return dataJsonUtils.toString();
+    }
+
 
     /**
      * 跳转到商品详情页

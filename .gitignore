@@ -23,7 +23,13 @@
 *target
 *output
 *.yaml
+<<<<<<< HEAD
 *.xml
+=======
+*.iml
+*src/test
+
+>>>>>>> 72713bec7cecabbcf5eee904abb7ed4770724ab6
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

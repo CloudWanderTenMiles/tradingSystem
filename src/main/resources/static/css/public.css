@@ -30,6 +30,11 @@ img {
     border: none;
 }
 
+.submit button{
+    height: 200px;
+    width: 200px;
+}
+
 /*图片的默认边框去掉 */
 table {
     border-collapse: collapse;
@@ -38,7 +43,7 @@ table {
 
 caption, th, td {
     font-weight: normal;
-    text-align: left;
+    /*text-align: middle;*/
 }
 
 input, textarea, select, button {
@@ -81,6 +86,8 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section, summar
 /*解决ie6的兼容性问题*/
 .fl {
     float: left;
+    font-size: 20px;
+    color: gray;
 }
 
 .fr {
