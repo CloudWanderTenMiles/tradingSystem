@@ -55,6 +55,8 @@
                 <h3>order content<a href="/toPage/mall/cart" class="fr">back to cart</a></h3>
                 <!--------ul---------------->
                 <input id="commodityId" th:value="${commodityId}" style="display: none">
+                <input id="sellerId" th:value="${sellerId}" style="display: none">
+                <input id="buyerId" th:value="${buyerId}" style="display: none">
                 <ul class="clearfix" id="body1">
                 </ul>
             </div><!--------tips---------------->
@@ -71,7 +73,16 @@
         let $ = layui.jquery,
             layer = layui.layer;
 
+        let data = {
+            "commodityId":$("#commodityId").val(),
+            "sellerId":$("#sellerId").val(),
+            "buyerId":$("#buyerId").val()
+        }
+
         let commodityId = $("#commodityId").val();
+        // let sellerId = $("#sellerId").val();
+        // let buyerId = $("#buyerId").val();
+        console.log(commodityId,sellerId,buyerId);
         $(function () {
             $.ajax({
                 type: "post",
@@ -93,7 +104,16 @@
             })
 
             $(document).on("click", ".pay", function () {
-                layer.msg("not completed!");
+                $.ajax({
+                    type: "post",
+                    url: "/op/orderAdd",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function(data){
+                        layer.msg(data.msg);
+                    }
+                })
             })
         });
     });

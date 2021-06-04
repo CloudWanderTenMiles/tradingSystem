@@ -68,7 +68,7 @@ public class OrderController {
      * @param map order信息
      * @return    增加结果
      */
-    @RequestMapping("/op/orderAdd")
+    @RequestMapping(value = "/op/orderAdd", method = RequestMethod.POST)
     @ResponseBody
     public String addOrder(@RequestBody Map<String, String> map) {
         String commodityId = map.get("commodityId");

@@ -92,7 +92,14 @@ public class ShopcartController {
 
     @RequestMapping( "/mall/order/{commodityId}")
     public String toOrderPage(@PathVariable("commodityId") String commodityId, Model model) {
-        model.addAttribute(commodityId);
+        model.addAttribute("commodityId",commodityId);
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        Customer buyer = (Customer) session.getAttribute("customer");
+        String buyerId = buyer.getCustomerId();
+        model.addAttribute("buyerId",buyerId);
+        String sellerId = commodityService.getCommodityById(commodityId).getCustomerId();
+        model.addAttribute("sellerId",sellerId);
         return "/mall/order";
     }
 }
