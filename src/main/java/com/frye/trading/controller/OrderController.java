@@ -1,5 +1,6 @@
 package com.frye.trading.controller;
 
+import com.frye.trading.pojo.dto.Commodity;
 import com.frye.trading.pojo.model.Order;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
@@ -105,8 +106,10 @@ public class OrderController {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add order error! please check the data you enter.");
         } else {
-            CommodityController commodityController = new CommodityController();
-            commodityController.updateCommodityState(commodityId,"2");
+            Commodity commodity = new Commodity();
+            commodity.setCommodityId(commodityId);
+            commodity.setState("2");
+            commodityService.updateCommodity(commodity);
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("add order successfully!");
         }
@@ -153,8 +156,10 @@ public class OrderController {
             dataJsonUtils.setMsg("withdraw error");
         } else {
             String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            CommodityController commodityController = new CommodityController();
-            commodityController.updateCommodityState(commodityId,"1");
+            Commodity commodity = new Commodity();
+            commodity.setCommodityId(commodityId);
+            commodity.setState("1");
+            commodityService.updateCommodity(commodity);
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("withdraw successfully!");
         }
@@ -177,8 +182,10 @@ public class OrderController {
             dataJsonUtils.setMsg("complete error");
         } else {
             String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            CommodityController commodityController = new CommodityController();
-            commodityController.updateCommodityState(commodityId,"4");
+            Commodity commodity = new Commodity();
+            commodity.setCommodityId(commodityId);
+            commodity.setState("4");
+            commodityService.updateCommodity(commodity);
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("complete successfully!");
         }
