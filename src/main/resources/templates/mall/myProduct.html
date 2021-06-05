@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/show.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 <body>
@@ -44,8 +45,8 @@
         </ul>
     </div>
 </div>
-<a class="submit" href="/toPage/admin/commodityAdd">
-    <button>123</button>
+<a class="submit" href="/toPage/mall/goodsAdd">
+    <button>+ Add</button>
 </a>
 
 <div class="productList" id="myProductList"></div>
@@ -60,6 +61,8 @@
             layer = layui.layer;
         //请求json数据拼接字符串，并在URL传参数id跳转
 
+
+
         $(function () {
             let shop = {"page": 1, "limit": 20, "state": 1};
             $.ajax({
@@ -71,10 +74,47 @@
                 success: function (data) {
                     var str = "<ul>";
                     $.each(data.data, function (i, value) {
-                        str += "<li><a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a><h2>" + value.commodityName + "</h2><span>" + "￥" + value.price + "</span></li>"
+                        str += "<li>" +
+                            "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
+                            "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
+                            "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span><button class='delete' id='del'>Delete</button></div>" +
+                            "</li>"
                     });
                     str += "</ul>";
                     $("#myProductList").append(str);
+                    $(".delete").click(function (){
+                        let id = $($(this).parent().prev().children().get(0)).val();
+                        layer.confirm("delete this commodity?",function (){
+                            delLine(id);
+                        })
+                    });
+
+                    function delLine(data){
+                        let id=[];
+                        id.push(data);
+                        $.ajax({
+                            url:'/op/commodityDelete',
+                            type: 'post',
+                            dataType: 'json',
+                            contentType:'application/json',
+                            data:JSON.stringify(id),
+                            timeout:2000,
+                            success:function (res){
+                                if(res.code===200){
+                                    layer.msg(res.msg,{time:1000});
+                                    window.history.go(0);
+                                    return false;
+                                }
+                                else{
+                                    layer.msg(res.msg);
+                                    return false;
+                                }
+                            },
+                            error: function () {
+                                layer.msg("Exception!");
+                            }
+                        });
+                    }
                 }, error: function () {
                     alert("error")
                 }
