@@ -53,10 +53,13 @@
     cursor: pointer;
     padding-left: 10px;
     width: 160px;
+<<<<<<< HEAD
+=======
 }
 
 .current p.default.on {
     /*background: url("../image/up.jpg") no-repeat 140px center;*/
+>>>>>>> 72713bec7cecabbcf5eee904abb7ed4770724ab6
 }
 
 /*********************proList****************************/

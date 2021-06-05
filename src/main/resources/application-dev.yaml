@@ -15,22 +15,21 @@ spring:
     multipart:
       max-file-size: 20MB
       enabled: true
-
   # database connection config start
   datasource:
-    username: root
-    password: mynameis123
+    username: frye
+    password: fjq1832176381
     url: jdbc:mysql://localhost:3306/tradingsystem?useUnicode=true&serverTimeZone=UTC&characterEncoding=UTF-8
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       filters: stat, wall, slf4j
       filter:
-        stat:       # spy
+        stat: # spy
           slow-sql-millis: 1000
           log-slow-sql: true
           enabled: true
-        wall:      # firewall
+        wall: # firewall
           enabled: true
           config:
             drop-table-allow: false
@@ -43,22 +42,22 @@ spring:
       web-stat-filter:
         enabled: true
         url-pattern: /*
-# database connection config end
+  # database connection config end
 
   output:
     ansi:
       enabled: detect
 
-# thymeleaf config start
+  # thymeleaf config start
   thymeleaf:
     mode: HTML
     encoding: UTF-8
     servlet:
       content-type: text/html
     cache: false
-# thymeleaf config end
+  # thymeleaf config end
 
-# road config start
+  # road config start
   mvc:
     static-path-pattern: /**
 

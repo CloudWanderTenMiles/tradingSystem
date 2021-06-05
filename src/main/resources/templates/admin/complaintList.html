@@ -45,12 +45,12 @@
 <table class="layui-hide" id="compList" lay-filter="compList"></table>
 <script type="text/javascript">
     layui.use(['table', 'jquery', 'layer'], function () {
-        var table = layui.table,
+        let table = layui.table,
             $ = layui.jquery,
             layer = layui.layer;
 
         //渲染表格
-        var t = table.render({
+        let t = table.render({
             elem: '#compList'
             , id: 'datatableID'
             , url: '/op/complaintList'
@@ -188,7 +188,6 @@
                 }
             });
         }
-
         //行工具栏编辑按钮事件
         function updateComplaint(data, index) {
             layer.close(index);
