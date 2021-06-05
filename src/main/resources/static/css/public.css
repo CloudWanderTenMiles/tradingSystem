@@ -86,8 +86,6 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section, summar
 /*解决ie6的兼容性问题*/
 .fl {
     float: left;
-    font-size: 20px;
-    color: gray;
 }
 
 .fr {
