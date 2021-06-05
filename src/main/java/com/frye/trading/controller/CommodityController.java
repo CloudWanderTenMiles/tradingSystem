@@ -167,7 +167,6 @@ public class CommodityController {
         Session session=subject.getSession();
         Customer customer = (Customer) session.getAttribute("customer");
         String CustomerId=customer.getCustomerId();
-        System.out.println(CustomerId);
         Map<String,String>params=new LinkedHashMap<>();
         params.put("customerId",CustomerId);
         List<Commodity> commodities = commodityService.getCommodityList(page,limit,params);
