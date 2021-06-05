@@ -78,12 +78,12 @@
                     var str = "<ul>";
                     var str1="<ul>";
                     $.each(data.data, function (i, value) {
-                        console.log(value.state);
                         if(value.state==1){
                             str += "<li>" +
                                 "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
                                 "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
-                                "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span><button class='delete' id='del'>Delete</button></div>" +
+                                "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span>" +
+                                "<div class='btn'><button class='update' id='upd'>Update</button><button class='delete' id='del'>Delete</button></div></div>" +
                                 "</li>"
                         }
                         else if(value.state==2){
@@ -97,14 +97,18 @@
                     str += "</ul>";
                     str1+= "</ul>";
                     $("#myOnsaleProductList").append(str);
-                    alert(($('#myOnsaleProductList').height()));
                     $("#myOrderedProductList").append(str1);
                     $(".delete").click(function (){
-                        let id = $($(this).parent().prev().children().get(0)).val();
+                        let id = $($(this).parent().parent().prev().children().get(0)).val();
                         layer.confirm("delete this commodity?",function (){
                             delLine(id);
                         })
                     });
+
+                    $(".update").click(function (){
+                        let id = $($(this).parent().parent().prev().children().get(0)).val();
+                        console.log(id);
+                    })
 
                     function delLine(data){
                         let id=[];
