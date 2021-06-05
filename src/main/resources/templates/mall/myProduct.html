@@ -49,7 +49,10 @@
     <button>+ Add</button>
 </a>
 
-<div class="productList" id="myProductList"></div>
+<h1 class="myProductFont">On sale</h1>
+<div class="productList1" id="myOnsaleProductList"></div>
+<h2 class="myProductFont">Have been sold</h2>
+<div class="productList1" id="myOrderedProductList"></div>
 
 <!--<div><button id="add"></button>添加商品</div>-->
 
@@ -73,15 +76,29 @@
 
                 success: function (data) {
                     var str = "<ul>";
+                    var str1="<ul>";
                     $.each(data.data, function (i, value) {
-                        str += "<li>" +
-                                    "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
-                                    "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
-                                    "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span><button class='delete' id='del'>Delete</button></div>" +
+                        console.log(value.state);
+                        if(value.state==1){
+                            str += "<li>" +
+                                "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
+                                "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
+                                "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span><button class='delete' id='del'>Delete</button></div>" +
                                 "</li>"
+                        }
+                        else if(value.state==2){
+                            str1 += "<li>" +
+                                "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
+                                "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
+                                "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span><button class='delete' id='del'>Delete</button></div>" +
+                                "</li>"
+                        }
                     });
                     str += "</ul>";
-                    $("#myProductList").append(str);
+                    str1+= "</ul>";
+                    $("#myOnsaleProductList").append(str);
+                    alert(($('#myOnsaleProductList').height()));
+                    $("#myOrderedProductList").append(str1);
                     $(".delete").click(function (){
                         let id = $($(this).parent().prev().children().get(0)).val();
                         layer.confirm("delete this commodity?",function (){

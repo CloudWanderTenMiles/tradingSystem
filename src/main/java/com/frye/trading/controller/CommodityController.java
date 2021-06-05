@@ -215,6 +215,7 @@ public class CommodityController {
             dataJsonUtils.setMsg("the customer does not exist.");
             return dataJsonUtils.toString();
         }
+
         Commodity commodity = new Commodity();
         commodity.setCommodityId(map.get("commodityId"));
         commodity.setCommodityName(map.get("commodityName"));
@@ -225,6 +226,9 @@ public class CommodityController {
         commodity.setDetail(map.get("detail"));
         commodity.setTypeId(Integer.parseInt(map.get("typeId")));
         commodity.setState(map.get("state"));
+
+
+
         if (commodityService.updateCommodity(commodity) < 0) {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add commodity error! please check the data you enter.");

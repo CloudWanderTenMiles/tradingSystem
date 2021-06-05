@@ -216,6 +216,7 @@
 
         // 表单提交
         form.on('submit(submit-btn)', function (data) {
+            console.log(data);
             $.ajax({
                 url: '/op/commodityUpdate',
                 type: 'post',

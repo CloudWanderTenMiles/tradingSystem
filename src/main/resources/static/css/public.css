@@ -35,16 +35,64 @@ img {
     float: left;
     margin-left: 1368px;
     margin-top: 25px;
+
 }
 
-.productList .topInfo{
+.myProductFont{
+    float: left;
+    position: relative;
+    margin-top: 40px;
+    margin-left: 490px;
+    font-size: 20px;
+}
+
+.productList1{
+    width: 960px;
+    margin: 150px auto;
+    z-index: 1;
+
+}
+
+.productList1 img{
+    width: 60%;
+    margin-top: 30px;
+    margin-left:30px;
+
+}
+
+.productList1 li{
+    position: relative;
+    float:left;
+    width: 220px;
+    height: 280px;
+    border: 1px dotted #efc7c1;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding-right: 5px;
+    padding-left: 10px;
+}
+
+.productList1 h2{
+    font-weight: bold;
+    color: #f3b500;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.productList1 span{
+    color: #ff0059;
+    font-size: 20px;
+}
+
+.productList1 .topInfo{
     width: 220px;
     height: 170px;
 }
 
 
 
-.productList .title{
+.productList1 .title{
     display: inline-block;
     float: left;
     height: 26px;
@@ -54,14 +102,14 @@ img {
     margin-top: 20px;
 }
 
-.productList .price{
+.productList1 .price{
     display: inline-block;
     float: left;
     margin-left: 5px;
     margin-top: 20px;
 }
 
-.productList .delete{
+.productList1 .delete{
     display: inline-block;
     float: right;
     position: relative;
@@ -74,7 +122,7 @@ img {
     margin-left: 5px;
 }
 
-.productList li a{
+.productList1 li a{
     float: left;
 }
 
