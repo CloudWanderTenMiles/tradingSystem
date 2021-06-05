@@ -206,7 +206,7 @@ public class CommodityController {
      */
     @RequestMapping(value = "/op/commodityUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public String updateCommodity(@RequestBody Map<String, String> map) {
+    public String updateCustomer(@RequestBody Map<String, String> map) {
         String customerId = map.get("customerId");
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         if (customerService.getCustomerById(customerId) == null) {
@@ -233,41 +233,6 @@ public class CommodityController {
         }
         return dataJsonUtils.toString();
     }
-
-    /**
-     *
-     * @param commodityId 商品id
-     * @param state 商品状态
-     * @return 返回更改商品状态结果
-     */
-    public boolean updateCommodityState(String commodityId,String state) {
-        Commodity commodity = new Commodity();
-        commodity.setCommodityId(commodityId);
-        commodity.setState(state);
-        return commodityService.updateCommodity(commodity) >= 0;
-    }
-
-    /**
-     *
-     * @param commodityId 商品id
-     * @param state 商品状态
-     * @return 返回更改商品状态结果
-     */
-    @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)
-    @ResponseBody
-    public String commodityUpdateState(String commodityId,String state) {
-        DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        CommodityController commodityController = new CommodityController();
-        if (!commodityController.updateCommodityState(commodityId,state)) {
-            dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("update commodity state error!");
-        } else {
-            dataJsonUtils.setCode(200);
-            dataJsonUtils.setMsg("update commodity state successfully!");
-        }
-        return dataJsonUtils.toString();
-    }
-
 
     /**
      * 跳转到商品详情页

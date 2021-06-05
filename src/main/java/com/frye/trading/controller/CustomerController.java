@@ -1,8 +1,6 @@
 package com.frye.trading.controller;
 
-import com.frye.trading.config.AdminRealm;
 import com.frye.trading.config.CustomerRealm;
-import com.frye.trading.pojo.model.Admin;
 import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.utils.DataJsonUtils;
@@ -165,21 +163,16 @@ public class CustomerController {
     }
 
     /**
-     * 跳转到用户页
-     * @param id customer id
-     * @param model 传递参数
-     * @return 页面url
-     */
-    @RequestMapping( "/mall/personCenter/{id}")
-    public String topersonCenterPage(@PathVariable("id") String id, Model model) {
-        model.addAttribute(id);
-        return "/mall/personCenter";
-    }
-
-    /**
      * 从后台获取customer的信息填充到form中
+     * @param id customer id
      * @return 返回customer的json
      */
+    /**
+     * 从后台获取customer的信息填充到form中
+     * @param id customer id
+     * @return 返回customer的json
+     */
+//    @RequestMapping(value = "/op/getCustomer", method = RequestMethod.POST)
     @RequestMapping("/op/getCustomer")
     @ResponseBody
     public String getCustomer(){
@@ -250,37 +243,6 @@ public class CustomerController {
         } else {
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("update customer successfully!");
-        }
-        return dataJsonUtils.toString();
-    }
-
-
-    @RequestMapping("/op/changePwd")
-    @ResponseBody
-    public String changePwd(@RequestBody Map<String, String> map) {
-        Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession();
-        Customer customer = (Customer) session.getAttribute("customer");
-        //MD5盐值加密
-        String oldPwd = CustomerRealm.getEncryptedPassword(customer.getPhone(),map.get("oldPassword"));
-        String newPwd = CustomerRealm.getEncryptedPassword(customer.getPhone(), map.get("newPassword"));
-        DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        if (!oldPwd.equals(customer.getCustomerPwd())) {
-            dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("the old password error!");
-            return dataJsonUtils.toString();
-        }
-        if (newPwd.equals(customer.getCustomerPwd())) {
-            dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("The new password cannot be the same as the old password!");
-            return dataJsonUtils.toString();
-        }
-        if (customerService.changePwd(customer.getCustomerId(),newPwd) < 0) {
-            dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("change password error!");
-        } else {
-            dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("change password successfully!");
         }
         return dataJsonUtils.toString();
     }
