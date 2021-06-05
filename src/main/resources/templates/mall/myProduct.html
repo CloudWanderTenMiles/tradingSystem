@@ -107,9 +107,15 @@
 
                     $(".update").click(function (){
                         let id = $($(this).parent().parent().prev().children().get(0)).val();
-                        console.log(id);
+                        layer.confirm("update this commodity?",function (){
+                            updateCommodity(id);
+                        })
                     })
 
+                    function updateCommodity(data) {
+                        alert(data);
+                        window.location.href = "/admin/commodityUpdate/" + data;
+                    }
                     function delLine(data){
                         let id=[];
                         id.push(data);
