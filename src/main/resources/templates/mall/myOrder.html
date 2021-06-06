@@ -101,7 +101,7 @@
         "                    <div class=\"dkuang\"><p class=\"one\">{{ order.state }}</p>\n" +
         "                        <div class=\"word clearfix\">\n" +
         "                            <ul class=\"fl clearfix\">\n" +
-        "                                <li>订单号:{{ order.orderId }}</li>\n" +
+        "                                <li>OrderID:{{ order.orderId }}</li>\n" +
         "                            </ul>\n" +
         "                        </div>\n" +
         "                        <div class=\"shohou clearfix\">\n" +
@@ -110,15 +110,13 @@
         "                                <a>￥{{ order.price }}</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Completed'\">\n" +
-        "                                <a href=\"mycomplaint.html\">投诉</a>\n" +
-        "                                <a href=\"orderxq.html\">评价</a>\n" +
+        "                                <a href=\"mycomplaint.html\">Complain</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Ordered'\">\n" +
-        "                                <a href=\"mycomplaint.html\">确认完成</a>\n" +
-        "                                <a href=\"orderxq.html\">订单详情</a>\n" +
+        "                                <a @click=\"OrderCompleted(order.orderId)\">Completed</a>\n" +
+        "                                <a @click=\"OrderWithdrawn(order.orderId)\">Withdrawn</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Withdrawn'\">\n" +
-        "                                <a href=\"mycomplaint.html\">投诉</a>\n" +
         "                            </p>\n" +
         "                        </div>\n" +
         "                    </div>\n" +
