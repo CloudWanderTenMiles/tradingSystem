@@ -1158,6 +1158,7 @@ footer p {
     line-height: 40px;
     background: #c10000;
     color: #fff;
+    cursor: pointer;
 }
 
 /****************ok********************/
