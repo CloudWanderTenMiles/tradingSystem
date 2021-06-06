@@ -73,7 +73,7 @@
                             </p>
                             <p class="fr" v-if="order.state == 'Ordered'">
                                 <a @click="OrderCompleted(order.orderId)">Completed</a>
-                                <a @click="OrderWithdrawn">Withdrawn</a>
+                                <a @click="OrderWithdrawn(order.orderId)">Withdrawn</a>
                             </p>
                             <p class="fr" v-if="order.state == 'Withdrawn'">
                             </p>
@@ -186,38 +186,23 @@
                         alert("Completed Succeed");
                     }
                 })
+            },
+            OrderWithdrawn: function (cc) {
+                // bb.orderId = this.orders.orderId
+                bb.orderId = cc
+                console.log(bb)
+                $.ajax({
+                    url: "/op/orderWithdraw",
+                    data: bb,
+                    dataType: "json",
+                    type: "post",
+                    success: function () {
+                        alert("Withdraw Succeed");
+                    }
+                })
             }
         },
     });
     };
-
-    // function OrderCompleted(obj) {
-    //     bb.orderId = this.orderId
-    //     // bb.orderId = obj.value
-    //     console.log(bb)
-    //     $.ajax({
-    //         url: "/op/orderComplete",
-    //         data: bb,
-    //         dataType: "json",
-    //         type: "post",
-    //         success: function () {
-    //             alert("Completed Succeed");
-    //         }
-    //     })
-    // }
-
-    function OrderWithdrawn(obj) {
-        bb.orderId = obj.value
-        console.log(bb)
-        $.ajax({
-            url: "/op/orderWithdraw",
-            data: bb,
-            dataType: "json",
-            type: "post",
-            success: function () {
-                alert("Withdraw Succeed");
-            }
-        })
-    }
 </script>
 </html>

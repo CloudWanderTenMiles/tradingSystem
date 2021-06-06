@@ -9,11 +9,6 @@
     <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
     <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
-    <!--<script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/js/jquery.min.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>-->
 </head>
 
 <body>
@@ -74,7 +69,6 @@
                         </div>
                         <a href="#" class="fr" id="edit1">Edit</a>
                     </h3>
-
                 </div>
             </div>
         </div>
@@ -113,6 +107,13 @@
         let btn = document.getElementById("edit");
 
         btn.onclick=function (){
+        let table = layui.table,
+            $ = layui.jquery,
+            layer = layui.layer;
+
+        let btn = document.getElementById("edit");
+
+        btn.onclick=function (){
             updateCustomer();
         }
 
@@ -135,11 +136,14 @@
                     // let x = {"abv": "食品标准物质", "xyz": "环境标准物质", 3: "职业卫生标准物质", 4: "仪器鉴定标准物质", 5: "药典及对照品", 6: "进口标准品", 7: "地质矿产标准物质", 8: "其他标准物质", 9: "化学试剂"};
                     $.each(obj,function(i,n){
                         if(i === 'customerPwd' || i === 'photo'){
+                    $.each(obj,function(i,n){
+                        if(i=='customerPwd'||i=='photo'){
                             return true;
                         }
                         $('#'+i).val(n);
                         str+="<div>"+i+":"+n+"</div>";
                         if(i === 'customerId'){
+                        if(i=='customerId'){
                             str+="<input type='text' id='customerId' name='customerId' class='layui-input' style='display:none' value='"+n+"'>";
                         }
                     });
@@ -150,6 +154,8 @@
             })
         })
     })
+
+
 </script>
 </body>
 </html>
