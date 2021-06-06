@@ -1,22 +1,22 @@
 package com.frye.trading.controller;
 
 import com.frye.trading.pojo.dto.Commodity;
+import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.pojo.model.Order;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.service.OrderService;
-import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
 import com.frye.trading.utils.GenerateIdUtils;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class OrderController {
@@ -27,8 +27,6 @@ public class OrderController {
     CommodityService commodityService;
     @Autowired
     CustomerService customerService;
-    @Autowired
-    ShopcartService shopcartService;
 
 
     /**
@@ -109,11 +107,8 @@ public class OrderController {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add order error! please check the data you enter.");
         } else {
-            Commodity commodity = new Commodity();
-            commodity.setCommodityId(commodityId);
-            commodity.setState("2");
-            shopcartService.setAllShopcartInvalidByCommodityId(commodityId);
-            commodityService.updateCommodity(commodity);
+            CommodityController commodityController = new CommodityController();
+            commodityController.updateCommodityState(commodityId,"2");
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("add order successfully!");
         }
@@ -160,11 +155,8 @@ public class OrderController {
             dataJsonUtils.setMsg("withdraw error");
         } else {
             String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            Commodity commodity = new Commodity();
-            commodity.setCommodityId(commodityId);
-            commodity.setState("1");
-            shopcartService.setAllShopcartValidByCommodityId(commodityId);
-            commodityService.updateCommodity(commodity);
+            CommodityController commodityController = new CommodityController();
+            commodityController.updateCommodityState(commodityId,"1");
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("withdraw successfully!");
         }
@@ -187,10 +179,8 @@ public class OrderController {
             dataJsonUtils.setMsg("complete error");
         } else {
             String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            Commodity commodity = new Commodity();
-            commodity.setCommodityId(commodityId);
-            commodity.setState("4");
-            commodityService.updateCommodity(commodity);
+            CommodityController commodityController = new CommodityController();
+            commodityController.updateCommodityState(commodityId,"4");
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("complete successfully!");
         }
@@ -253,4 +243,38 @@ public class OrderController {
         }
         return dataJsonUtils.toString();
     }
+
+    @RequestMapping("/mall/myOrder")
+    public String getMyOrder(Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        Customer customer = (Customer) subject.getSession().getAttribute("customer");
+        model.addAttribute("customerId", customer.getCustomerId());
+        return "/mall/myOrder";
+    }
+
+    @RequestMapping("/op/ordermy")
+    @ResponseBody
+    public String getMyOrderList(@Param("buyerId") String buyerId, @Param("state") String state) {
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("buyerId", buyerId);
+        params.put("state", state);
+        List<Order> orders = orderService.getOrderList(1, 100, params);
+        List<com.frye.trading.pojo.dto.Order> myOrders = new ArrayList<>();
+        for (Order order : orders) {
+            Commodity commodity = commodityService.getCommodityById(order.getCommodityId());
+            com.frye.trading.pojo.dto.Order myOrder = new com.frye.trading.pojo.dto.Order();
+            myOrder.setOrderId(order.getOrderId());
+            myOrder.setCommodityName(commodity.getCommodityName());
+            myOrder.setPrice(commodity.getPrice());
+            myOrder.setCustomerName(commodity.getCustomerName());
+            myOrder.setState(order.getState());
+            myOrders.add(myOrder);
+        }
+        DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        dataJsonUtils.setCode(200);
+        dataJsonUtils.setMsg("get data successfully");
+        dataJsonUtils.setData(myOrders);
+        return dataJsonUtils.toString();
+    }
+
 }
