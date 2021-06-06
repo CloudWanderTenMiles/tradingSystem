@@ -37,11 +37,13 @@
              lay-verify="required|username"
              lay-reqText="The commodity name cannot be null">
     </div>
+
     <label class="layui-form-label">owner Id:</label>
     <div class="layui-input-inline">
       <input type="text" id="customerId" name="customerId" class="layui-input" lay-verify="required"
              lay-reqText="The owner id cannot be null">
     </div>
+
   </div>
 
   <div class="layui-form-item">
@@ -127,8 +129,6 @@
         }
       });
     }
-
-
 
     // 表单验证
     form.verify({
