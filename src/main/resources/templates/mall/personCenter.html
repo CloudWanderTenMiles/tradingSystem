@@ -5,11 +5,15 @@
     <title>personal information</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/mygrxx.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/mygxin.css}"/>
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
     <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
+    <!--<script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/jquery.min.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>-->
 </head>
 
 <body>
@@ -49,69 +53,102 @@
     </div>
 </div>
 
-<!------------------------------Bott------------------------------>
 <div class="Bott">
     <div class="wrapper clearfix">
-        <div class="zuo fl">
-            <h3><a href="#" id="image"></a><p class="clearfix"><span id="cutomername"></span></p></h3>
-            <div><h4>我的交易</h4>
-                <ul>
-                    <li><a href="cart.html">我的购物车</a></li>
-                    <li><a href="/toPage/mall/myOrder.html">我的订单</a></li>
-                </ul>
-                <h4>个人中心</h4>
-                <ul>
-                    <li><a href="/toPage/mall/personCenter.html">我的中心</a></li>
-                    <li><a href="/toPage/mall/personInfo.html">个人信息</a></li>
-                    <li><a href="/toPage/mall/changePwd.html">修改密码</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="you fl">
-            <div class="tx clearfix">
-                <div class="fl clearfix">
-                    <input id="customerId" th:value="${id}" style="display: none"/></a>
-                    <p class="fl"><a href="/toPage/mall/personInfo.html">修改个人信息></a></p></div>
-                <div class="fr" id="email"></div>
-            </div>
-            <div class="bott">
-                <div class="clearfix"><a href="#" class="fl"><img th:src="@{/image/gxin1.jpg}"/></a>
-                    <p class="fl"><span>待支付的订单：<strong>0</strong></span><a
-                            href="/toPage/mall/myOrderq.html">查看待支付订单></a></p></div>
-                <div class="clearfix"><a href="#" class="fl"><img th:src="@{/image/gxin3.jpg}"/></a>
-                    <p class="fl"><span>我的投诉：<strong>0</strong></span><a href="mycomplaint.html">查看投诉订单></a></p></div>
+            <h2>Personal Information</h2>
+            <div class="gxin">
+                <div class="tx">
+                    <img id="photo" alt="" style="height: 180px; width: 150px;">
+                </div>
+                <div class="xx" id="grxx">
+                    <h3 class="clearfix">
+                        <strong class="fl">Basic Information</strong>
+                        <div id="toolbarDemo" style="display: block;">
+                            <div class="layui-btn-container">
+                                <button style="float: right" class="layui-btn layui-btn-sm" id="edit"
+                                        lay-event="add"></button>
+                            </div>
+                        </div>
+                        <a href="#" class="fr" id="edit1">Edit</a>
+                    </h3>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<script>
 
-    layui.use(['form', 'jquery', 'layer'], function () {
-        let $ = layui.jquery,
+<div class="mask"></div>
+<!--编辑弹框-->
+<div class="bj">
+    <div class="clearfix"><a href="/toPage/mall/personCenter" class="fr gb"><img th:src="@{/image/icon.png}"/></a></div>
+    <h3>Edit</h3>
+    <form action="/op/customerUpdate" method="post">
+        <p><label>Nickname：</label><input style="width: 200px;margin-left: 4px" type="text" id="customerName"/></p>
+        <p><label>Student ID：</label><input style="width: 200px" type="text" id="stuId" readonly/></p>
+        <p><label>Customer ID：</label><input style="width: 200px" type="text" id="customerId" readonly/></p>
+        <p><label>Name：</label><input style="width: 200px;height: 40px;margin-left: 27px" type="text" readonly/>
+        </p>
+
+        <label>Sex：</label><input style="margin-left: 40px" type="radio" name="sex" value="男"/>男
+        <input style="margin-left: 20px" type="radio" name="sex" value="女"/>女
+
+        <p><label>Email：</label><input style="width: 200px;margin-top: 10px;margin-left: 30px" type="email" id="email"/>
+        </p>
+        <p><label>Phone：</label><input style="width: 200px;margin-left: 25px" type="tel" id="phone"/></p>
+        <p><label>Address：</label><input style="width: 200px;margin-left: 16px" type="text" id="address"/></p>
+        <div class="bc"><input type="submit" value="save"/><input type="reset" value="cancel"/></div>
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    layui.use(['table', 'jquery', 'layer'], function () {
+        var table = layui.table,
+            $ = layui.jquery,
             layer = layui.layer;
 
+        var btn = document.getElementById("edit");
+
+        btn.onclick = function () {
+            updateCustomer();
+        }
+
+        function updateCustomer() {
+            alert(11);
+            layer.close(index);
+            window.location.href = "/toPage/mall/home/";
+        }
+
         $(function () {
-            let commodityId = $("#customerId").val();
             $.ajax({
                 type: "post",
-                dataType: "json",
                 url: "/op/getCustomer",
-                data: commodityId,
                 contentType: "application/json",
+                dataType: "json",
                 success: function (data) {
+                    let obj = data.data;
+                    let str = "";
                     let str1 = "";
-                    let str2 = "";
-                    let str3 = "";
-                    str1 += "<img width='92' height='92' src=" + data.data.photo + ">";
-                    str2 += "[" + data.data.customerName + "]";
-                    str3 += "绑定邮箱：" + data.data.email;
-                    $("#image").append(str1);
-                    $("#cutomername").append(str2);
-                    $("#email").append(str3);
+                    // let x = {"abv": "食品标准物质", "xyz": "环境标准物质", 3: "职业卫生标准物质", 4: "仪器鉴定标准物质", 5: "药典及对照品", 6: "进口标准品", 7: "地质矿产标准物质", 8: "其他标准物质", 9: "化学试剂"};
+                    $.each(obj, function (i, n) {
+                        if (i === 'customerPwd' || i === 'photo') {
+                            return true;
+                        }
+                        $('#' + i).val(n);
+                        str += "<div>" + i + ":" + n + "</div>";
+                        if (i === 'customerId') {
+                            str += "<input type='text' id='customerId' name='customerId' class='layui-input' style='display:none' value='" + n + "'>";
+                        }
+                    });
+                    $('#grxx').append(str);
+                    $('#photo').attr("src", obj.photo);
+                    $('')
                 }
-            });
-        });
-    });
+            })
+        })
+    })
 </script>
+
 </body>
 </html>
