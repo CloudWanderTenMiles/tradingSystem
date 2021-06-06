@@ -151,7 +151,8 @@ public class OrderController {
      */
     @RequestMapping(value = "/op/orderWithdraw", method = RequestMethod.POST)
     @ResponseBody
-    public String withdrawOrder(@RequestBody String orderId) {
+    public String withdrawOrder(@RequestBody Map<String, String> map) {
+        String orderId = map.get("orderId");
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         Order order = new Order();
         order.setOrderId(orderId);
@@ -177,8 +178,9 @@ public class OrderController {
      */
     @RequestMapping(value = "/op/orderComplete", method = RequestMethod.POST)
     @ResponseBody
-    public String completeOrder(@RequestBody String orderId) {
+    public String completeOrder(@RequestBody Map<String, String> map) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        String orderId = map.get("orderId");
         Order order = orderService.getOrderById(orderId);
         String commodityId = order.getCommodityId();
         if (commodityService.checkCommodityComplete(commodityId)) {
