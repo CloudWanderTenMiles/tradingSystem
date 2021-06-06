@@ -69,7 +69,7 @@
                                 <a>￥{{ order.price }}</a>
                             </p>
                             <p class="fr" v-if="order.state == 'Completed'">
-                                <a href="myprod.html">Complain</a>
+                                <a href="mycomplaint.html">Complain</a>
                             </p>
                             <p class="fr" v-if="order.state == 'Ordered'">
                                 <a @click="OrderCompleted(order.orderId)">Completed</a>
@@ -110,15 +110,15 @@
         "                                <a>￥{{ order.price }}</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Completed'\">\n" +
-        "                                <a href=\"myprod.html\">投诉</a>\n" +
+        "                                <a href=\"mycomplaint.html\">投诉</a>\n" +
         "                                <a href=\"orderxq.html\">评价</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Ordered'\">\n" +
-        "                                <a href=\"myprod.html\">确认完成</a>\n" +
+        "                                <a href=\"mycomplaint.html\">确认完成</a>\n" +
         "                                <a href=\"orderxq.html\">订单详情</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Withdrawn'\">\n" +
-        "                                <a href=\"myprod.html\">投诉</a>\n" +
+        "                                <a href=\"mycomplaint.html\">投诉</a>\n" +
         "                            </p>\n" +
         "                        </div>\n" +
         "                    </div>\n" +

@@ -58,7 +58,8 @@ table {
 }
 
 .productList img{
-    width: 60%;
+    width: 120px;
+    height: 150px;
     margin-top: 30px;
     margin-left:30px;
 
