@@ -110,8 +110,7 @@ public class OrderController {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add order error! please check the data you enter.");
         } else {
-            Commodity commodity = new Commodity();
-            commodity.setCommodityId(commodityId);
+            Commodity commodity = commodityService.getCommodityById(commodityId);
             commodity.setState("2");
             shopcartService.deleteShopcart(buyerId, commodityId);
             shopcartService.setAllShopcartInvalidByCommodityId(commodityId);
@@ -162,8 +161,7 @@ public class OrderController {
             dataJsonUtils.setMsg("withdraw error");
         } else {
             String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            Commodity commodity = new Commodity();
-            commodity.setCommodityId(commodityId);
+            Commodity commodity = commodityService.getCommodityById(commodityId);
             commodity.setState("1");
             shopcartService.setAllShopcartValidByCommodityId(commodityId);
             commodityService.updateCommodity(commodity);

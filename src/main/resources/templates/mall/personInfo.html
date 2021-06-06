@@ -63,7 +63,8 @@
                         <strong class="fl">Basic Information</strong>
                         <div id="toolbarDemo" style="display: block;">
                             <div class="layui-btn-container">
-                                <button style="float: right" class="layui-btn layui-btn-sm" id="edit" lay-event="add"></button>
+                                <button style="float: right" class="layui-btn layui-btn-sm" id="edit"
+                                        lay-event="add"></button>
                             </div>
                         </div>
                         <a href="#" class="fr" id="edit1">Edit</a>
@@ -77,27 +78,29 @@
 <div class="mask"></div>
 <!--编辑弹框-->
 <div class="bj">
-    <div class="clearfix"><a href="/toPage/mall/personCenter" class="fr gb"><img th:src="@{/image/icon.png}" /></a></div>
+    <div class="clearfix"><a href="/toPage/mall/personCenter" class="fr gb"><img th:src="@{/image/icon.png}"/></a></div>
     <h3>Edit</h3>
     <form action="/op/customerUpdate" method="post">
-        <p><label>Nickname：</label><input style="width: 200px;margin-left: 4px" type="text" id="customerName" /></p>
+        <p><label>Nickname：</label><input style="width: 200px;margin-left: 4px" type="text" id="customerName"/></p>
         <p><label>Student ID：</label><input style="width: 200px" type="text" id="stuId" readonly/></p>
         <p><label>Customer ID：</label><input style="width: 200px" type="text" id="customerId" readonly/></p>
-        <p><label>Name：</label><input style="width: 200px;height: 40px;margin-left: 27px" type="text" readonly />
+        <p><label>Name：</label><input style="width: 200px;height: 40px;margin-left: 27px" type="text" readonly/>
         </p>
 
-        <label>Sex：</label><input style="margin-left: 40px" type="radio" name="sex" value="男" />男
-        <input style="margin-left: 20px" type="radio" name="sex" value="女" />女
+        <label>Sex：</label><input style="margin-left: 40px" type="radio" name="sex" value="男"/>男
+        <input style="margin-left: 20px" type="radio" name="sex" value="女"/>女
 
-        <p><label>Email：</label><input style="width: 200px;margin-top: 10px;margin-left: 30px" type="email" id="email"/></p>
-        <p><label>Phone：</label><input style="width: 200px;margin-left: 25px" type="tel" id="phone" /></p>
-        <p><label>Address：</label><input style="width: 200px;margin-left: 16px" type="text" id="address" /></p>
-        <div class="bc"><input type="submit" value="save" /><input type="reset" value="cancel" /></div>
+        <p><label>Email：</label><input style="width: 200px;margin-top: 10px;margin-left: 30px" type="email" id="email"/>
+        </p>
+        <p><label>Phone：</label><input style="width: 200px;margin-left: 25px" type="tel" id="phone"/></p>
+        <p><label>Address：</label><input style="width: 200px;margin-left: 16px" type="text" id="address"/></p>
+        <div class="bc"><input type="submit" value="save"/><input type="reset" value="cancel"/></div>
     </form>
 </div>
 
 
 <script type="text/javascript">
+
     layui.use(['table', 'jquery', 'layer'], function () {
         let table = layui.table,
             $ = layui.jquery,
@@ -105,14 +108,7 @@
 
         let btn = document.getElementById("edit");
 
-        btn.onclick=function (){
-        let table = layui.table,
-            $ = layui.jquery,
-            layer = layui.layer;
-
-        let btn = document.getElementById("edit");
-
-        btn.onclick=function (){
+        btn.onclick = function () {
             updateCustomer();
         }
 
@@ -122,39 +118,32 @@
             window.location.href = "/toPage/mall/home/";
         }
 
-        $(function (){
+        $(function () {
             $.ajax({
-                type:"post",
-                url:"/op/getCustomer",
-                contentType:"application/json",
-                dataType:"json",
-                success:function (data){
-                    let obj=data.data;
-                    let str="";
-                    let str1="";
-                    // let x = {"abv": "食品标准物质", "xyz": "环境标准物质", 3: "职业卫生标准物质", 4: "仪器鉴定标准物质", 5: "药典及对照品", 6: "进口标准品", 7: "地质矿产标准物质", 8: "其他标准物质", 9: "化学试剂"};
-                    $.each(obj,function(i,n){
-                        if(i === 'customerPwd' || i === 'photo'){
-                    $.each(obj,function(i,n){
-                        if(i=='customerPwd'||i=='photo'){
+                type: "post",
+                url: "/op/getCustomer",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    let obj = data.data;
+                    let str = "";
+                    let str1 = "";
+                    $.each(obj, function (i, n) {
+                        if (i === 'customerPwd' || i === 'photo') {
                             return true;
                         }
-                        $('#'+i).val(n);
-                        str+="<div>"+i+":"+n+"</div>";
-                        if(i === 'customerId'){
-                        if(i=='customerId'){
-                            str+="<input type='text' id='customerId' name='customerId' class='layui-input' style='display:none' value='"+n+"'>";
+                        $('#' + i).val(n);
+                        str += "<div>" + i + ":" + n + "</div>";
+                        if (i === 'customerId') {
+                            str += "<input type='text' id='customerId' name='customerId' class='layui-input' style='display:none' value='" + n + "'>";
                         }
                     });
                     $('#grxx').append(str);
-                    $('#photo').attr("src",obj.photo);
-                    $('')
+                    $('#photo').attr("src", obj.photo);
                 }
             })
         })
     })
-
-
 </script>
 </body>
 </html>

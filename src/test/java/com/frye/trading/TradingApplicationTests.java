@@ -31,7 +31,7 @@ class TradingApplicationTests {
     @Test
     public void contextLoads() {
 
-        String commodityId = "CD16229502019231";
+        String commodityId = "O16229509163671";
         Commodity commodity = commodityService.getCommodityById(commodityId);
         System.out.println(commodity);
     }
