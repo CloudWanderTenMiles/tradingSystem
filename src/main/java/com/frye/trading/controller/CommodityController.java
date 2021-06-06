@@ -196,8 +196,6 @@ public class CommodityController {
         return "/admin/commodityUpdate";
     }
 
-
-
     /**
      * 更新商品
      * @param map 商品信息map

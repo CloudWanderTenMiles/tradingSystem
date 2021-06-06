@@ -6,6 +6,7 @@ import com.frye.trading.pojo.model.Order;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.service.OrderService;
+import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
 import com.frye.trading.utils.GenerateIdUtils;
 import org.apache.ibatis.annotations.Param;
@@ -27,6 +28,8 @@ public class OrderController {
     CommodityService commodityService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    ShopcartService shopcartService;
 
 
     /**
@@ -107,8 +110,11 @@ public class OrderController {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("add order error! please check the data you enter.");
         } else {
-            CommodityController commodityController = new CommodityController();
-            commodityController.updateCommodityState(commodityId,"2");
+            Commodity commodity = new Commodity();
+            commodity.setCommodityId(commodityId);
+            commodity.setState("2");
+            shopcartService.setAllShopcartInvalidByCommodityId(commodityId);
+            commodityService.updateCommodity(commodity);
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("add order successfully!");
         }
@@ -155,8 +161,11 @@ public class OrderController {
             dataJsonUtils.setMsg("withdraw error");
         } else {
             String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            CommodityController commodityController = new CommodityController();
-            commodityController.updateCommodityState(commodityId,"1");
+            Commodity commodity = new Commodity();
+            commodity.setCommodityId(commodityId);
+            commodity.setState("1");
+            shopcartService.setAllShopcartValidByCommodityId(commodityId);
+            commodityService.updateCommodity(commodity);
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("withdraw successfully!");
         }
@@ -179,8 +188,10 @@ public class OrderController {
             dataJsonUtils.setMsg("complete error");
         } else {
             String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            CommodityController commodityController = new CommodityController();
-            commodityController.updateCommodityState(commodityId,"4");
+            Commodity commodity = new Commodity();
+            commodity.setCommodityId(commodityId);
+            commodity.setState("4");
+            commodityService.updateCommodity(commodity);
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("complete successfully!");
         }
