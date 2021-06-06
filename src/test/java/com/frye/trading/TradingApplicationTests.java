@@ -31,7 +31,8 @@ class TradingApplicationTests {
     @Test
     public void contextLoads() {
 
-        int days = (int) (((CONSTANT.ORIGIN_TIME.getTime()) - (new Date().getTime())) / (24*60*60*100));
-        System.out.println(days);
+        String commodityId = "CD16229502019231";
+        Commodity commodity = commodityService.getCommodityById(commodityId);
+        System.out.println(commodity);
     }
 }
