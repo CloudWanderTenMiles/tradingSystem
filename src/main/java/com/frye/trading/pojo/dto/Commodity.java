@@ -21,5 +21,5 @@ public class Commodity {
     private String parentTypeName; // 父标签名
     private int typeId;            // 标签id
     private String typeName;       // 标签名
-    private String addedTime;        // 上架时间
+    private String addedTime;      // 上架时间
 }

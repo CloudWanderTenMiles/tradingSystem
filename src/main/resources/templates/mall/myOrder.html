@@ -1,10 +1,223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>My Orders</title>
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <link rel="stylesheet" th:href="@{/css/myorder.css}">
+    <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
+    <script type="text/javascript" charset="utf-8" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{/js/vue.js}"></script>
 </head>
-<body>
-
+<body onload="list()">
+<!------------------------------head------------------------------>
+<div class="head">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
+                                                                           style="width: 35%;height: auto"/></a>
+        </h1>
+            <div class="fr clearfix" id="top1">
+                <p class="fl">
+                    <a href="/login" id="login">login</a>
+                    <a href="/toPage/mall/register" id="reg">register</a>
+                </p>
+                <div class="btn fl clearfix">
+                    <a href="/toPage/mall/personCenter">
+                        <img th:src="@{/image/grzx.png}"/>
+                    </a>
+                    <a href="/toPage/mall/cart">
+                        <img th:src="@{/image/gwc.png}"/>
+                    </a>
+                    <a href="/logout">
+                        <img th:src="@{/image/logout.png}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/toPage/mall/productList">All Products</a></li>
+            <li><a href="/toPage/mall/myProduct">My Products</a></li>
+            <li><a href="/toPage/mall/chart">Chart room</a></li>
+        </ul>
+    </div>
+</div>
+<!------------------------------Bott------------------------------>
+<div class="Bott">
+    <input id="buyerId" th:value="${customerId}" style="display: none">
+    <div class="wrapper clearfix">
+        <div class="you fl">
+            <div class="dlist clearfix">
+                <ul class="fl clearfix" id="wa">
+                    <li class="on"><a onclick="setAll()">All Orders</a></li>
+                    <li class="on"><a onclick="setCompleted()">Completed Orders</a></li>
+                    <li class="on"><a onclick="setOrdered()">Ordered Orders</a></li>
+                    <li class="on"><a onclick="setWithdrawn()">Withdrawn Orders</a></li>
+                </ul>
+            </div>
+            <div id="app">
+                <template v-for="order in orders">
+                    <div class="dkuang"><p class="one">{{ order.state }}</p>
+                        <div class="word clearfix">
+                            <ul class="fl clearfix">
+                                <li>OrderID:{{ order.orderId }}</li>
+                            </ul>
+                        </div>
+                        <div class="shohou clearfix">
+                            <p class="fl">
+                                <a>{{ order.commodityName }}</a>
+                                <a>￥{{ order.price }}</a>
+                            </p>
+                            <p class="fr" v-if="order.state == 'Completed'">
+                                <a href="myprod.html">Complain</a>
+                            </p>
+                            <p class="fr" v-if="order.state == 'Ordered'">
+                                <a @click="OrderCompleted(order.orderId)">Completed</a>
+                                <a @click="OrderWithdrawn">Withdrawn</a>
+                            </p>
+                            <p class="fr" v-if="order.state == 'Withdrawn'">
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script>
+    let buyerId = $("#buyerId").val();
+
+    let aa = {
+        "state": "",
+        "buyerId": buyerId
+    }
+
+    let bb = {
+        "orderId": ""
+    }
+
+    let template = "<template v-for=\"order in orders\">\n" +
+        "                    <div class=\"dkuang\"><p class=\"one\">{{ order.state }}</p>\n" +
+        "                        <div class=\"word clearfix\">\n" +
+        "                            <ul class=\"fl clearfix\">\n" +
+        "                                <li>订单号:{{ order.orderId }}</li>\n" +
+        "                            </ul>\n" +
+        "                        </div>\n" +
+        "                        <div class=\"shohou clearfix\">\n" +
+        "                            <p class=\"fl\">\n" +
+        "                                <a>{{ order.commodityName }}</a>\n" +
+        "                                <a>￥{{ order.price }}</a>\n" +
+        "                            </p>\n" +
+        "                            <p class=\"fr\" v-if=\"order.state == 'Completed'\">\n" +
+        "                                <a href=\"myprod.html\">投诉</a>\n" +
+        "                                <a href=\"orderxq.html\">评价</a>\n" +
+        "                            </p>\n" +
+        "                            <p class=\"fr\" v-if=\"order.state == 'Ordered'\">\n" +
+        "                                <a href=\"myprod.html\">确认完成</a>\n" +
+        "                                <a href=\"orderxq.html\">订单详情</a>\n" +
+        "                            </p>\n" +
+        "                            <p class=\"fr\" v-if=\"order.state == 'Withdrawn'\">\n" +
+        "                                <a href=\"myprod.html\">投诉</a>\n" +
+        "                            </p>\n" +
+        "                        </div>\n" +
+        "                    </div>\n" +
+        "                </template>"
+
+    function setAll() {
+        aa.state = "";
+        $('#app').empty()
+        $('#app').append(template)
+        list();
+    }
+
+    function setCompleted() {
+        aa.state = "Completed";
+        $('#app').empty()
+        $('#app').append(template)
+        list();
+    }
+
+    function setOrdered() {
+        aa.state = "Ordered";
+        $('#app').empty()
+        $('#app').append(template)
+        list();
+    }
+
+    function setWithdrawn() {
+        aa.state = "Withdrawn";
+        $('#app').empty()
+        $('#app').append(template)
+        list();
+    }
+
+    function list(){
+        let app = new Vue({
+        el: '#app',
+        data: {
+            orders: ""
+        },
+        mounted() {
+            this.$nextTick(() => {
+                let that = this;
+                $.ajax({
+                    url: "/op/ordermy",
+                    data: aa,
+                    dataType: 'json',
+                    type: "post",
+                    success: function (data) {
+                        that.orders = data.data;
+                    }
+                })
+            })
+        },
+        methods: {
+            OrderCompleted: function (cc) {
+                // bb.orderId = this.orders.orderId
+                bb.orderId = cc
+                console.log(bb)
+                $.ajax({
+                    url: "/op/orderComplete",
+                    data: bb,
+                    dataType: "json",
+                    type: "post",
+                    success: function () {
+                        alert("Completed Succeed");
+                    }
+                })
+            }
+        },
+    });
+    };
+
+    // function OrderCompleted(obj) {
+    //     bb.orderId = this.orderId
+    //     // bb.orderId = obj.value
+    //     console.log(bb)
+    //     $.ajax({
+    //         url: "/op/orderComplete",
+    //         data: bb,
+    //         dataType: "json",
+    //         type: "post",
+    //         success: function () {
+    //             alert("Completed Succeed");
+    //         }
+    //     })
+    // }
+
+    function OrderWithdrawn(obj) {
+        bb.orderId = obj.value
+        console.log(bb)
+        $.ajax({
+            url: "/op/orderWithdraw",
+            data: bb,
+            dataType: "json",
+            type: "post",
+            success: function () {
+                alert("Withdraw Succeed");
+            }
+        })
+    }
+</script>
 </html>
