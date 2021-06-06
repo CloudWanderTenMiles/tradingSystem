@@ -254,7 +254,7 @@ public class OrderController {
 
     @RequestMapping("/op/ordermy")
     @ResponseBody
-    public String getOrderList(@Param("buyerId") String buyerId, @Param("state") String state) {
+    public String getMyOrderList(@Param("buyerId") String buyerId, @Param("state") String state) {
         Map<String, String> params = new LinkedHashMap<>();
         params.put("buyerId", buyerId);
         params.put("state", state);
