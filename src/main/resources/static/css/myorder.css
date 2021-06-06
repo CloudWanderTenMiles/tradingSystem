@@ -48,6 +48,10 @@
     border-right: 1px solid #e0e0e0;
 }
 
+.Bott .you .dlist ul li a:hover{
+    cursor:hand
+}
+
 .Bott .you .dlist ul li:last-child {
     border-right: none;
 }
@@ -119,7 +123,7 @@
 
 .Bott .you .dkuang .word ul li {
     float: left;
-    font-size: 18px;
+    font-size: 15px;
     padding: 0 8px;
     border-right: 1px solid #e0e0e0;
 }

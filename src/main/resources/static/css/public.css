@@ -30,9 +30,59 @@ img {
     border: none;
 }
 
+.submit{
+    position: relative;
+    float: left;
+    margin-left: 1368px;
+    margin-top: 25px;
+}
+
+.productList .topInfo{
+    width: 220px;
+    height: 170px;
+}
+
+
+
+.productList .title{
+    display: inline-block;
+    float: left;
+    height: 26px;
+    position: relative;
+    font-size: 20px;
+    margin-left: 30px;
+    margin-top: 20px;
+}
+
+.productList .price{
+    display: inline-block;
+    float: left;
+    margin-left: 5px;
+    margin-top: 20px;
+}
+
+.productList .delete{
+    display: inline-block;
+    float: right;
+    position: relative;
+    background-color: #ff5722;
+    font-size: 12px;
+    color:white;
+    height: 30px;
+    width: 60px;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+.productList li a{
+    float: left;
+}
+
 .submit button{
-    height: 200px;
-    width: 200px;
+    color: white;
+    background-color: #009688;
+    height: 30px;
+    width: 60px;
 }
 
 /*图片的默认边框去掉 */
@@ -86,8 +136,6 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section, summar
 /*解决ie6的兼容性问题*/
 .fl {
     float: left;
-    font-size: 20px;
-    color: gray;
 }
 
 .fr {
@@ -121,6 +169,7 @@ article, aside, figcaption, figure, footer, header, hgroup, nav, section, summar
 }
 
 .head div p a {
+    font-size: 12px;
     color: #262626;
     padding: 0 10px;
     font-size: 14px;

@@ -167,7 +167,6 @@ public class CommodityController {
         Session session=subject.getSession();
         Customer customer = (Customer) session.getAttribute("customer");
         String CustomerId=customer.getCustomerId();
-        System.out.println(CustomerId);
         Map<String,String>params=new LinkedHashMap<>();
         params.put("customerId",CustomerId);
         List<Commodity> commodities = commodityService.getCommodityList(page,limit,params);
@@ -240,25 +239,14 @@ public class CommodityController {
      * @param state 商品状态
      * @return 返回更改商品状态结果
      */
-    public boolean updateCommodityState(String commodityId,String state) {
-        Commodity commodity = new Commodity();
-        commodity.setCommodityId(commodityId);
-        commodity.setState(state);
-        return commodityService.updateCommodity(commodity) >= 0;
-    }
-
-    /**
-     *
-     * @param commodityId 商品id
-     * @param state 商品状态
-     * @return 返回更改商品状态结果
-     */
     @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)
     @ResponseBody
     public String commodityUpdateState(String commodityId,String state) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        CommodityController commodityController = new CommodityController();
-        if (!commodityController.updateCommodityState(commodityId,state)) {
+        Commodity commodity = new Commodity();
+        commodity.setCommodityId(commodityId);
+        commodity.setState(state);
+        if (commodityService.updateCommodity(commodity) < 0) {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("update commodity state error!");
         } else {
