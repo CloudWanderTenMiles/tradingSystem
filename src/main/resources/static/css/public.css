@@ -37,44 +37,91 @@ img {
     margin-top: 25px;
 }
 
-.productList .topInfo{
+.productList1{
+    width: 960px;
+    margin: 120px auto;
+    z-index: 1;
+
+}
+
+.productList1 img{
+    width: 60%;
+    margin-top: 30px;
+    margin-left:30px;
+
+}
+
+.productList1 li{
+    position: relative;
+    float:left;
+    width: 220px;
+    height: 280px;
+    border: 1px dotted #efc7c1;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    padding-right: 5px;
+    padding-left: 10px;
+}
+
+.productList1 h2{
+    font-weight: bold;
+    color: #f3b500;
+}
+
+.productList1 span{
+    color: #ff0059;
+    font-size: 20px;
+}
+
+.productList1 .topInfo{
     width: 220px;
     height: 170px;
 }
 
+.productList1 .wenzi{
+    margin-top: 5px;
+}
 
+.productList1 .btn{
+    margin-top: 5px;
+}
 
-.productList .title{
+.productList1 .title{
     display: inline-block;
-    float: left;
-    height: 26px;
     position: relative;
     font-size: 20px;
     margin-left: 30px;
-    margin-top: 20px;
 }
 
-.productList .price{
+.productList1 .price{
     display: inline-block;
-    float: left;
     margin-left: 5px;
-    margin-top: 20px;
 }
 
-.productList .delete{
+.productList1 .update{
     display: inline-block;
-    float: right;
-    position: relative;
+    background-color: #009688;
+    font-size: 12px;
+    color:white;
+    height: 30px;
+    width: 60px;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+.productList1 .delete{
+    display: inline-block;
     background-color: #ff5722;
     font-size: 12px;
     color:white;
     height: 30px;
     width: 60px;
     margin-top: 20px;
-    margin-left: 5px;
+    margin-left: 12px;
 }
 
-.productList li a{
+.productList1 li a{
     float: left;
 }
 
