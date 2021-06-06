@@ -12,7 +12,7 @@ public interface CommodityMapper {
 
     public String getCommodityState(@Param("id") String id);
 
-    public Commodity getCommodityById(String id);
+    public Commodity getCommodityById(@Param("id") String id);
 
     public int addCommodity(Commodity commodity);
 

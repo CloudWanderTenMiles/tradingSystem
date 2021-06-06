@@ -92,6 +92,7 @@
         "state": "",
         "buyerId": buyerId
     }
+    console.log(aa);
 
     let bb = {
         "orderId": ""
@@ -174,7 +175,6 @@
         },
         methods: {
             OrderCompleted: function (cc) {
-                // bb.orderId = this.orders.orderId
                 bb.orderId = cc
                 console.log(bb)
                 $.ajax({
@@ -188,7 +188,6 @@
                 })
             },
             OrderWithdrawn: function (cc) {
-                // bb.orderId = this.orders.orderId
                 bb.orderId = cc
                 console.log(bb)
                 $.ajax({
