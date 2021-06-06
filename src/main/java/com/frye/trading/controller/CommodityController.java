@@ -243,8 +243,10 @@ public class CommodityController {
     @ResponseBody
     public String commodityUpdateState(String commodityId,String state) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        CommodityController commodityController = new CommodityController();
-        if (!commodityController.updateCommodityState(commodityId,state)) {
+        Commodity commodity = new Commodity();
+        commodity.setCommodityId(commodityId);
+        commodity.setState(state);
+        if (commodityService.updateCommodity(commodity) < 0) {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("update commodity state error!");
         } else {

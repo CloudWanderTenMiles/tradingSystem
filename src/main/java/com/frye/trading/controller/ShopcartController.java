@@ -7,7 +7,6 @@ import com.frye.trading.pojo.dto.Commodity;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.ShopcartService;
 import com.frye.trading.utils.DataJsonUtils;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
