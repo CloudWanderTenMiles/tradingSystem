@@ -112,6 +112,7 @@ public class OrderController {
             Commodity commodity = new Commodity();
             commodity.setCommodityId(commodityId);
             commodity.setState("2");
+            shopcartService.deleteShopcart(buyerId, commodityId);
             shopcartService.setAllShopcartInvalidByCommodityId(commodityId);
             commodityService.updateCommodity(commodity);
             dataJsonUtils.setCode(200);
