@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>personal information</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mygrxx.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mygxin.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
+</head>
+
+<body>
+<!------------------------------head------------------------------>
+<div class="head">
+    <div class="wrapper clearfix">
+        <div class="clearfix" id="top">
+            <h1 class="fl">
+                <a href="/home"><img th:src="@{/image/logo2.1.png}" style="width: 35%;height: auto"/>
+                </a>
+            </h1>
+        </div>
+        </h1>
+        <div class="fr clearfix" id="top1">
+            <p class="fl">
+                <a href="/login" id="login">login</a>
+                <a href="/toPage/mall/register" id="reg">register</a>
+            </p>
+            <div class="btn fl clearfix">
+                <a href="/toPage/mall/personCenter">
+                    <img th:src="@{/image/grzx.png}"/>
+                </a>
+                <a href="/toPage/mall/cart">
+                    <img th:src="@{/image/gwc.png}"/>
+                </a>
+                <a href="/logout">
+                    <img th:src="@{/image/logout.png}"/>
+                </a>
+            </div>
+        </div>
+        <ul class="clearfix" id="bott">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/toPage/mall/productList">All Products</a></li>
+            <li><a href="/toPage/mall/myProduct">My Products</a></li>
+            <li><a href="/toPage/mall/chart">Chart room</a></li>
+        </ul>
+    </div>
+</div>
+
+<!------------------------------Bott------------------------------>
+<div class="Bott">
+    <input id="buyerId" th:value="${orderId}" style="display: none">
+    <div class="wrapper clearfix">
+        <div class="zuo fl">
+            <div><h4>我的交易</h4>
+                <ul>
+                    <li><a href="cart.html">我的购物车</a></li>
+                    <li><a href="/toPage/mall/myOrder.html">我的订单</a></li>
+                </ul>
+                <h4>个人中心</h4>
+                <ul>
+                    <li><a href="/toPage/mall/personCenter.html">我的中心</a></li>
+                    <li><a href="/toPage/mall/personInfo.html">个人信息</a></li>
+                    <li><a href="/toPage/mall/changePwd.html">修改密码</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="you fl">
+            <div class="my clearfix"><h2 class="fl">投诉</h2></div>
+            <div>
+                <form class="layui-form" method="post" style="width: auto;">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Order ID:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="orderId" name="orderId" class="layui-input"
+                                   th:value="${orderId}" readonly style="border: none">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">detail:</label>
+                        <div class="layui-input-block">
+            <textarea name="detail" placeholder="Please enter a description of the complaint" class="layui-textarea"
+                      style="width: 600px; height: 150px;"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- button -->
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="button" class="layui-btn layui-bg-red" onclick="window.history.back(-1)">
+                                <i class="layui-icon">&#xe603;</i>Return
+                            </button>
+                            <button type="submit" class="layui-btn layui-bg-red" lay-submit lay-filter="submit-btn">
+                                <i class="layui-icon">&#xe605;</i>Submit
+                            </button>
+                            <button type="reset" class="layui-btn layui-bg-red">
+                                <i class="layui-icon">&#xe666;</i>Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- layui动态加载效果 -->
+<script>
+    layui.use(['form', 'layer'], function () {
+        let form = layui.form;
+        let layer = layui.layer;
+
+        // 表单提交
+        form.on('submit(submit-btn)', function (data) {
+            $.ajax({
+                url: '/op/complaintAdd',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(data.field),
+                time: 2000,
+                success: function (res) {
+                    if (res.code === 200) {
+                        layer.msg(res.msg);
+                        window.location.href = "/toPage/mall/personCenter";
+                    } else {
+                        layer.msg(res.msg);
+                        return false;
+                    }
+                },
+                error: function () {
+                    layer.msg("Exception!");
+                    return false;
+                }
+            });
+            return false;
+        });
+        return false;
+    });
+</script>
+</body>
+</html>

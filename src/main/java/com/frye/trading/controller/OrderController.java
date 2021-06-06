@@ -210,6 +210,18 @@ public class OrderController {
     }
 
     /**
+     * 跳转到投诉
+     * @param orderId 修改的order id
+     * @param model 传递参数
+     * @return 页面url
+     */
+    @RequestMapping( "/mall/myComplaint/{orderId}")
+    public String toMycomplaintPage(@PathVariable("orderId") String orderId, Model model) {
+        model.addAttribute(orderId);
+        return "/mall/myComplaint";
+    }
+
+    /**
      * 从后台获取order的信息填充到form中
      * @param id order id
      * @return 返回order的json

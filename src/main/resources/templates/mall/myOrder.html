@@ -69,7 +69,7 @@
                                 <a>￥{{ order.price }}</a>
                             </p>
                             <p class="fr" v-if="order.state == 'Completed'">
-                                <a href="mycomplaint.html">Complain</a>
+                                <a :href="'/mall/myComplaint/'+ order.orderId">Complaint</a>
                             </p>
                             <p class="fr" v-if="order.state == 'Ordered'">
                                 <a @click="OrderCompleted(order.orderId)">Completed</a>
@@ -111,7 +111,7 @@
         "                                <a>￥{{ order.price }}</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Completed'\">\n" +
-        "                                <a href=\"mycomplaint.html\">Complain</a>\n" +
+        "                                <a :href=\"'/mall/myComplaint/'+ order.orderId\">Complaint</a>\n" +
         "                            </p>\n" +
         "                            <p class=\"fr\" v-if=\"order.state == 'Ordered'\">\n" +
         "                                <a @click=\"OrderCompleted(order.orderId)\">Completed</a>\n" +
