@@ -29,6 +29,11 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
+    public Boolean checkCommodityComplete(String id) {
+        return commodityMapper.getCommodityState(id).equals("3");
+    }
+
+    @Override
     public int addCommodity(Commodity commodity) {
         return commodityMapper.addCommodity(commodity);
     }
