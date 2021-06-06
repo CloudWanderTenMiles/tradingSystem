@@ -34,18 +34,6 @@
       <input type="text" id="commodityId" th:value="${id}" name="commodityId" class="layui-input" readonly
              style="border: none">
     </div>
-    <label class="layui-form-label">state:</label>
-    <div class="layui-inline">
-      <select name="state" id="state" lay-verify="required" lay-reqText="The state cannot be null">
-        <option value="" selected="">state</option>
-        <option value="0">withdraw</option>
-        <option value="1">on sale</option>
-        <option value="2">ordered</option>
-        <option value="3">wait for transaction</option>
-        <option value="4">wait for confirm</option>
-        <option value="5">completed</option>
-      </select>
-    </div>
   </div>
 
   <div class="layui-form-item">
