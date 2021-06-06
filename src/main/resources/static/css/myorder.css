@@ -199,10 +199,12 @@
 
 .Bott .you .dkuang .shohou p.fr a:nth-child(1) {
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .Bott .you .dkuang .shohou p.fr a:nth-child(2) {
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .Bott .you .deng p.one {
