@@ -180,15 +180,14 @@ public class OrderController {
     public String completeOrder(@RequestBody String orderId) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         Order order = orderService.getOrderById(orderId);
-        if (commodityService.checkCommodityComplete(order.getCommodityId())) {
+        String commodityId = order.getCommodityId();
+        if (commodityService.checkCommodityComplete(commodityId)) {
             order.setState("completed");
             if (orderService.updateOrder(order) < 0) {
                 dataJsonUtils.setCode(100);
                 dataJsonUtils.setMsg("complete error!");
             } else {
-                String commodityId = orderService.getOrderById(orderId).getCommodityId();
-                Commodity commodity = new Commodity();
-                commodity.setCommodityId(commodityId);
+                Commodity commodity = commodityService.getCommodityById(commodityId);
                 commodity.setState("4");
                 commodityService.updateCommodity(commodity);
                 dataJsonUtils.setCode(200);
