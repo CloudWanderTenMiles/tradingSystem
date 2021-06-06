@@ -72,7 +72,6 @@ public class ComplaintController {
             dataJsonUtils.setMsg("the order does not exist!");
             return dataJsonUtils.toString();
         }
-
         Complaint complaint = new Complaint();
         String complaintId = GenerateIdUtils.generateComplaintID();
         while (complaintService.getComplaintById(complaintId) != null) {

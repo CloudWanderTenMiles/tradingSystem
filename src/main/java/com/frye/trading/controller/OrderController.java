@@ -179,20 +179,23 @@ public class OrderController {
     @ResponseBody
     public String completeOrder(@RequestBody String orderId) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        Order order = new Order();
-        order.setOrderId(orderId);
-        order.setState("completed");
-        if (orderService.updateOrder(order) < 0) {
-            dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("complete error");
+        Order order = orderService.getOrderById(orderId);
+        String commodityId = order.getCommodityId();
+        if (commodityService.checkCommodityComplete(commodityId)) {
+            order.setState("completed");
+            if (orderService.updateOrder(order) < 0) {
+                dataJsonUtils.setCode(100);
+                dataJsonUtils.setMsg("complete error!");
+            } else {
+                Commodity commodity = commodityService.getCommodityById(commodityId);
+                commodity.setState("4");
+                commodityService.updateCommodity(commodity);
+                dataJsonUtils.setCode(200);
+                dataJsonUtils.setMsg("complete successfully!");
+            }
         } else {
-            String commodityId = orderService.getOrderById(orderId).getCommodityId();
-            Commodity commodity = new Commodity();
-            commodity.setCommodityId(commodityId);
-            commodity.setState("4");
-            commodityService.updateCommodity(commodity);
-            dataJsonUtils.setCode(200);
-            dataJsonUtils.setMsg("complete successfully!");
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("wait seller confirm!");
         }
         return dataJsonUtils.toString();
     }

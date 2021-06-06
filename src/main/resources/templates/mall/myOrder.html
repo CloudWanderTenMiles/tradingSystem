@@ -49,10 +49,10 @@
         <div class="you fl">
             <div class="dlist clearfix">
                 <ul class="fl clearfix" id="wa">
-                    <li class="on"><a onclick="setAll()">All Orders</a></li>
-                    <li class="on"><a onclick="setCompleted()">Completed Orders</a></li>
-                    <li class="on"><a onclick="setOrdered()">Ordered Orders</a></li>
-                    <li class="on"><a onclick="setWithdrawn()">Withdrawn Orders</a></li>
+                    <li class="on" style="cursor: pointer"><a onclick="setAll()">All Orders</a></li>
+                    <li class="on" style="cursor: pointer"><a onclick="setCompleted()">Completed Orders</a></li>
+                    <li class="on" style="cursor: pointer"><a onclick="setOrdered()">Ordered Orders</a></li>
+                    <li class="on" style="cursor: pointer"><a onclick="setWithdrawn()">Withdrawn Orders</a></li>
                 </ul>
             </div>
             <div id="app">
@@ -173,28 +173,30 @@
         },
         methods: {
             OrderCompleted: function (cc) {
-                bb.orderId = cc
-                console.log(bb)
+                // bb.orderId = cc
+                // console.log(bb)
+                console.log(cc)
                 $.ajax({
                     url: "/op/orderComplete",
-                    data: bb,
+                    data: cc,
                     dataType: "json",
                     type: "post",
-                    success: function () {
-                        alert("Completed Succeed");
+                    success: function (data) {
+                        alert(data.msg);
                     }
                 })
             },
             OrderWithdrawn: function (cc) {
-                bb.orderId = cc
-                console.log(bb)
+                // bb.orderId = cc
+                // console.log(bb)
+                console.log(cc)
                 $.ajax({
                     url: "/op/orderWithdraw",
-                    data: bb,
+                    data: cc,
                     dataType: "json",
                     type: "post",
-                    success: function () {
-                        alert("Withdraw Succeed");
+                    success: function (data) {
+                        alert(data.msg);
                     }
                 })
             }

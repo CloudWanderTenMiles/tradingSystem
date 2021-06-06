@@ -16,6 +16,8 @@ public interface CommodityService {
 
     public Commodity getCommodityById(String id);
 
+    public Boolean checkCommodityComplete(String id);
+
     public int addCommodity(Commodity commodity);
 
     public int updateCommodity(Commodity commodity);
