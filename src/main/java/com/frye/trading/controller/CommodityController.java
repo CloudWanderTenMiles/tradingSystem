@@ -223,10 +223,10 @@ public class CommodityController {
         commodity.setState(map.get("state"));
         if (commodityService.updateCommodity(commodity) < 0) {
             dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("add commodity error! please check the data you enter.");
+            dataJsonUtils.setMsg("Update commodity error! please check the data you enter.");
         } else {
             dataJsonUtils.setCode(200);
-            dataJsonUtils.setMsg("add commodity successfully!");
+            dataJsonUtils.setMsg("Update commodity successfully!");
         }
         return dataJsonUtils.toString();
     }
@@ -253,7 +253,11 @@ public class CommodityController {
         }
         return dataJsonUtils.toString();
     }
-
+    @RequestMapping( "/mall/goodsUpdate/{id}")
+    public String toUpdatePage1(@PathVariable("id") String id, Model model) {
+        model.addAttribute(id);
+        return "/mall/goodsUpdate";
+    }
 
     /**
      * 跳转到商品详情页

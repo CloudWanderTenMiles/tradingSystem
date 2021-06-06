@@ -50,7 +50,7 @@
     <button>+ Add</button>
 </a>
 
-<div class="productList" id="myProductList"></div>
+<div class="productList1" id="myProductList1"></div>
 
 <!--<div><button id="add"></button>添加商品</div>-->
 
@@ -78,17 +78,30 @@
                         str += "<li>" +
                             "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
                             "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
-                            "<div class='botInfo'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span><button class='delete' id='del'>Delete</button></div>" +
+                            "<div class='botInfo'><div class='wenzi'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span></div>" +
+                            "<div class='btn'><button class='update' id='upd'>Update</button><button class='delete' id='del'>Delete</button></div></div>" +
                             "</li>"
                     });
                     str += "</ul>";
-                    $("#myProductList").append(str);
+                    $("#myProductList1").append(str);
                     $(".delete").click(function (){
-                        let id = $($(this).parent().prev().children().get(0)).val();
+                        let id = $($(this).parent().parent().prev().children().get(0)).val();
                         layer.confirm("delete this commodity?",function (){
                             delLine(id);
                         })
                     });
+
+                    $(".update").click(function (){
+                        let id = $($(this).parent().parent().prev().children().get(0)).val();
+                        layer.confirm("update this commodity?",function (){
+                            update(id);
+                        })
+                    })
+
+                    function update(data){
+                        window.location.href = "/mall/goodsUpdate/" +data;
+
+                    }
 
                     function delLine(data){
                         let id=[];
