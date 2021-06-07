@@ -155,7 +155,6 @@ public class OrderController {
         String orderId = map.get("orderId");
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         Order order = orderService.getOrderById(orderId);
-        //order.setOrderId(orderId);
         order.setState("withdrawn");
         if (orderService.updateOrder(order) < 0) {
             dataJsonUtils.setCode(100);

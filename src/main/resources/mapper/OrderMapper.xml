@@ -37,6 +37,7 @@
         delete
         from tradingsystem.order_form
         where commodity_id = #{id}
+          and `state` = 'Ordered'
     </delete>
 
     <select id="getOrderList" resultType="com.frye.trading.pojo.model.Order" parameterType="map">

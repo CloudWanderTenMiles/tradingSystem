@@ -264,8 +264,6 @@ public class CommodityController {
 
     /**
      *
-     * @param commodityId 商品id
-     * @param state 商品状态
      * @return 返回更改商品状态结果
      */
     @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)

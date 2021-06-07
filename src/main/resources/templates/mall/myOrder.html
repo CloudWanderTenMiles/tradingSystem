@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/fontawesome.css}">
     <script type="text/javascript" charset="utf-8" th:src="@{/js/jquery.min.js}"></script>
     <script type="text/javascript" charset="utf-8" th:src="@{/js/vue.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 <body onload="list()">
 <!------------------------------head------------------------------>
@@ -86,16 +87,16 @@
 </div>
 </body>
 <script>
+
+    layui.use(['form', 'layer'], function () {
+        let layer = layui.layer;
+    });
+
     let buyerId = $("#buyerId").val();
 
     let aa = {
         "state": "",
         "buyerId": buyerId
-    }
-    console.log(aa);
-
-    let bb = {
-        "orderId": ""
     }
 
     let template = "<template v-for=\"order in orders\">\n" +
@@ -125,77 +126,87 @@
 
     function setAll() {
         aa.state = "";
-        $('#app').empty()
-        $('#app').append(template)
+        $('#app').empty();
+        $('#app').append(template);
         list();
     }
 
     function setCompleted() {
         aa.state = "Completed";
-        $('#app').empty()
-        $('#app').append(template)
+        $('#app').empty();
+        $('#app').append(template);
         list();
     }
 
     function setOrdered() {
         aa.state = "Ordered";
-        $('#app').empty()
-        $('#app').append(template)
+        $('#app').empty();
+        $('#app').append(template);
         list();
     }
 
     function setWithdrawn() {
         aa.state = "Withdrawn";
-        $('#app').empty()
-        $('#app').append(template)
+        $('#app').empty();
+        $('#app').append(template);
         list();
     }
 
-    function list(){
+    function list() {
         let app = new Vue({
-        el: '#app',
-        data: {
-            orders: ""
-        },
-        mounted() {
-            this.$nextTick(() => {
-                let that = this;
-                $.ajax({
-                    url: "/op/ordermy",
-                    data: aa,
-                    dataType: 'json',
-                    type: "post",
-                    success: function (data) {
-                        that.orders = data.data;
-                    }
-                })
-            })
-        },
-        methods: {
-            OrderCompleted: function (cc) {
-                $.ajax({
-                    url: "/op/orderComplete",
-                    data: cc,
-                    dataType: "json",
-                    type: "post",
-                    success: function (data) {
-                        alert(data.msg);
-                    }
+            el: '#app',
+            data: {
+                orders: ""
+            },
+            mounted() {
+                this.$nextTick(() => {
+                    let that = this;
+                    $.ajax({
+                        url: "/op/ordermy",
+                        data: aa,
+                        dataType: 'json',
+                        type: "post",
+                        success: function (data) {
+                            that.orders = data.data;
+                        }
+                    })
                 })
             },
-            OrderWithdrawn: function (cc) {
-                $.ajax({
-                    url: "/op/orderWithdraw",
-                    data: cc,
-                    dataType: "json",
-                    type: "post",
-                    success: function (data) {
-                        alert(data.msg);
+            methods: {
+                OrderCompleted: function (cc) {
+                    let data = {
+                        "orderId": cc
                     }
-                })
-            }
-        },
-    });
-    };
+                    $.ajax({
+                        url: "/op/orderComplete",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: "json",
+                        type: "post",
+                        success: function (res) {
+                            layer.msg(res.msg);
+                            window.location.href = "/toPage/mall/myOrder";
+                        }
+                    })
+                },
+                OrderWithdrawn: function (cc) {
+                    let data = {
+                        "orderId": cc
+                    }
+                    $.ajax({
+                        url: "/op/orderWithdraw",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        dataType: "json",
+                        type: "post",
+                        success: function (res) {
+                            layer.msg(res.msg);
+                            window.location.href = "/toPage/mall/myOrder";
+                        }
+                    })
+                }
+            },
+        });
+    }
 </script>
 </html>
