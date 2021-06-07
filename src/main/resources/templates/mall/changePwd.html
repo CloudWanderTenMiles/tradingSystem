@@ -10,7 +10,6 @@
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
     <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 
@@ -46,7 +45,7 @@
             <li><a href="/home">Home</a></li>
             <li><a href="/toPage/mall/productList">All Products</a></li>
             <li><a href="/toPage/mall/myProduct">My Products</a></li>
-            <li><a href="/toPage/mall/chart">Chart room</a></li>
+            <li><a href="/mall/chat">Chatroom</a></li>
         </ul>
     </div>
 </div>
@@ -55,20 +54,20 @@
 <div class="Bott">
     <div class="wrapper clearfix">
         <div class="zuo fl">
-            <div><h4>我的交易</h4>
+            <div><h4>MyTransaction</h4>
                 <ul>
-                    <li><a href="cart.html">我的购物车</a></li>
-                    <li><a href="/toPage/mall/myOrder.html">我的订单</a></li>
+                    <li><a href="cart.html">MyShopCart</a></li>
+                    <li><a href="/mall/myOrder">MyOrder</a></li>
                 </ul>
-                <h4>个人中心</h4>
+                <h4>Personal Center</h4>
                 <ul>
-                    <li><a href="/toPage/mall/personCenter.html">我的中心</a></li>
-                    <li><a href="/toPage/mall/personInfo.html">个人信息</a></li>
-                    <li><a href="/toPage/mall/changePwd.html">修改密码</a></li>
+                    <li><a href="/toPage/mall/personCenter">PersonCenter</a></li>
+                    <li><a href="/toPage/mall/personInfo">PersonInfomation</a></li>
+                    <li><a href="/toPage/mall/changePwd">ChangePassword</a></li>
                 </ul>
             </div>
         </div>
-        <div class="you fl"><h2>修改密码</h2>
+        <div class="you fl"><h2>Change Password</h2>
             <form class="layui-form" method="post" lay-filter="myForm" style="width: auto; margin-left: 32%; margin-top: 30px;">
 
                 <div class="layui-form-item">

@@ -129,14 +129,13 @@
         window.onload = function (){
             let id = $("#customerId").val();
             $.ajax({
-                url: '/op/getCustomer',
+                url: '/op/getCustomer1',
                 type: 'post',
-                dataType: 'text',
+                dataType: 'json',
                 contentType: 'application/json',
                 data: id,
                 timeout: 2000,
-                success: function (data) {
-                    let res = JSON.parse(data);
+                success: function (res) {
                     if (res.code === 200) {
                         layer.msg(res.msg);
                         form.val('myForm', res.data);

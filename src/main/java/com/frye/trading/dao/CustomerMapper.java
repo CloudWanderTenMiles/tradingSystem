@@ -14,6 +14,8 @@ public interface CustomerMapper {
 
     public Customer getCustomerById(@Param("id") String id);
 
+    public String getCustomerPhotoByName(String name);
+
     public Customer getCustomerByPhone(@Param("phone") String phone);
 
     public int changePwd(String id, String password);

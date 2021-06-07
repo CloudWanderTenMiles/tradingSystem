@@ -17,6 +17,9 @@
             <if test="params.email != null and params.email != ''">
                 and email = #{params.email}
             </if>
+            <if test="params.name != null and params.name != ''">
+                and customer_name = #{params.name}
+            </if>
         </where>
     </select>
 
@@ -30,6 +33,12 @@
         select *
         from tradingsystem.customer
         where phone = #{phone}
+    </select>
+
+    <select id="getCustomerPhotoByName" resultType="String">
+        select photo
+        from tradingsystem.customer
+        where customer_name = #{name}
     </select>
 
     <update id="changePwd">
@@ -60,6 +69,8 @@
             <if test="email != null">email = #{email},</if>
             <if test="phone != null">phone = #{phone},</if>
             <if test="credit != null">credit = #{credit},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="birth != null">birth = #{birth},</if>
             <if test="photo != null">photo = #{photo}</if>
         </set>
         <where>

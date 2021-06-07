@@ -15,7 +15,7 @@
 <body>
 <div class="head">
     <div class="wrapper clearfix">
-        <input id="custId" th:value="${custid}" style="display: none"/>
+<!--        <input id="custId" th:value="${custid}" style="display: none"/>-->
 
         <div class="clearfix" id="top"><h1 class="fl"><a href="/home"><img th:src="@{/image/logo2.1.png}"
                                                                            style="width: 35%;height: auto"/></a>
@@ -42,7 +42,7 @@
             <li><a href="/home">Home</a></li>
             <li><a href="/toPage/mall/productList">All Products</a></li>
             <li><a href="/toPage/mall/myProduct">My Products</a></li>
-            <li><a href="/toPage/mall/chart">Chart room</a></li>
+            <li><a href="/mall/chat">Chatroom</a></li>
         </ul>
     </div>
 </div>
@@ -61,8 +61,6 @@
             $ = layui.jquery,
             layer = layui.layer;
         //请求json数据拼接字符串，并在URL传参数id跳转
-
-
 
         $(function () {
             let shop = {"page": 1, "limit": 20, "state": 1};

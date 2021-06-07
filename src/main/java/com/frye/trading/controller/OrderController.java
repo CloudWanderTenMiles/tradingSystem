@@ -151,7 +151,8 @@ public class OrderController {
      */
     @RequestMapping(value = "/op/orderWithdraw", method = RequestMethod.POST)
     @ResponseBody
-    public String withdrawOrder(@RequestBody String orderId) {
+    public String withdrawOrder(@RequestBody Map<String, String> map) {
+        String orderId = map.get("orderId");
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         Order order = new Order();
         order.setOrderId(orderId);
@@ -177,18 +178,18 @@ public class OrderController {
      */
     @RequestMapping(value = "/op/orderComplete", method = RequestMethod.POST)
     @ResponseBody
-    public String completeOrder(@RequestBody String orderId) {
+    public String completeOrder(@RequestBody Map<String, String> map) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        String orderId = map.get("orderId");
         Order order = orderService.getOrderById(orderId);
-        if (commodityService.checkCommodityComplete(order.getCommodityId())) {
+        String commodityId = order.getCommodityId();
+        if (commodityService.checkCommodityComplete(commodityId)) {
             order.setState("completed");
             if (orderService.updateOrder(order) < 0) {
                 dataJsonUtils.setCode(100);
                 dataJsonUtils.setMsg("complete error!");
             } else {
-                String commodityId = orderService.getOrderById(orderId).getCommodityId();
-                Commodity commodity = new Commodity();
-                commodity.setCommodityId(commodityId);
+                Commodity commodity = commodityService.getCommodityById(commodityId);
                 commodity.setState("4");
                 commodityService.updateCommodity(commodity);
                 dataJsonUtils.setCode(200);
@@ -211,6 +212,18 @@ public class OrderController {
     public String toUpdatePage(@PathVariable("id") String id, Model model) {
         model.addAttribute(id);
         return "/admin/orderUpdate";
+    }
+
+    /**
+     * 跳转到投诉
+     * @param orderId 修改的order id
+     * @param model 传递参数
+     * @return 页面url
+     */
+    @RequestMapping( "/mall/myComplaint/{orderId}")
+    public String toMycomplaintPage(@PathVariable("orderId") String orderId, Model model) {
+        model.addAttribute(orderId);
+        return "/mall/myComplaint";
     }
 
     /**

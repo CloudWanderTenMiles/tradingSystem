@@ -211,6 +211,7 @@ public class CommodityController {
             dataJsonUtils.setMsg("the customer does not exist.");
             return dataJsonUtils.toString();
         }
+        System.out.println(map);
         Commodity commodity = new Commodity();
         commodity.setCommodityId(map.get("commodityId"));
         commodity.setCommodityName(map.get("commodityName"));

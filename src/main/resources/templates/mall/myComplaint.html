@@ -6,9 +6,11 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/mygrxx.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/mygxin.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
     <script th:src="@{/js/user.js}" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 
@@ -53,13 +55,12 @@
 <div class="Bott">
     <div class="wrapper clearfix">
         <div class="zuo fl">
-            <h3><a href="#" id="image"></a><p class="clearfix"><span id="cutomername"></span></p></h3>
             <div><h4>MyTransaction</h4>
                 <ul>
                     <li><a href="cart.html">MyShopCart</a></li>
                     <li><a href="/mall/myOrder">MyOrder</a></li>
                 </ul>
-                <h4>Personal Center</h4>
+                <h4>个人中心</h4>
                 <ul>
                     <li><a href="/toPage/mall/personCenter">PersonCenter</a></li>
                     <li><a href="/toPage/mall/personInfo">PersonInfomation</a></li>
@@ -68,48 +69,71 @@
             </div>
         </div>
         <div class="you fl">
-            <div class="tx clearfix">
-                <div class="fl clearfix">
-<!--                    <input id="customerId" th:value="${id}" style="display: none"/></a>-->
-                    <p class="fl"><a href="/toPage/mall/personInfo">Edit Personal Infomation></a></p></div>
-                <div class="fr" id="email"></div>
-            </div>
-            <div class="bott">
-                <div class="clearfix"><a href="#" class="fl"><img th:src="@{/image/gxin1.jpg}"/></a>
-                    <p class="fl"><span>Pending Order</span><a
-                            href="/toPage/mall/myOrder">View Pending Orders></a></p></div>
-                <div class="clearfix"><a href="#" class="fl"><img th:src="@{/image/gxin3.png}"/></a>
-                    <p class="fl"><span>Shopping Cart：</span><a href="/toPage/mall/cart">View Shopping Cart></a></p></div>
+            <div class="my clearfix"><h2 class="fl">Compliant</h2></div>
+            <div>
+                <form class="layui-form" method="post" style="width: auto;">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Order ID:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="orderId" name="orderId" class="layui-input"
+                                   th:value="${orderId}" readonly style="border: none">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">detail:</label>
+                        <div class="layui-input-block">
+            <textarea name="detail" placeholder="Please enter a description of the complaint" class="layui-textarea"
+                      style="width: 600px; height: 150px;"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- button -->
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="submit" class="layui-btn layui-bg-red" lay-submit lay-filter="submit-btn">
+                                <i class="layui-icon">&#xe605;</i>Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<!-- layui动态加载效果 -->
 <script>
+    layui.use(['form', 'layer'], function () {
+        let form = layui.form;
+        let layer = layui.layer;
 
-    layui.use(['form', 'jquery', 'layer'], function () {
-        let $ = layui.jquery,
-            layer = layui.layer;
-
-        $(function () {
+        // 表单提交
+        form.on('submit(submit-btn)', function (data) {
             $.ajax({
-                type: "post",
-                dataType: "json",
-                url: "/op/getCustomer",
-                contentType: "application/json",
-                async: false,
-                success: function (data) {
-                    let str1 = "";
-                    let str2 = "";
-                    let str3 = "";
-                    str1 += "<img width='92' height='92' src=" + data.data.photo + ">";
-                    str2 += "[" + data.data.customerName + "]";
-                    str3 += "Bind mailbox：" + data.data.email;
-                    $("#image").append(str1);
-                    $("#cutomername").append(str2);
-                    $("#email").append(str3);
+                url: '/op/complaintAdd',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(data.field),
+                time: 2000,
+                success: function (res) {
+                    if (res.code === 200) {
+                        layer.msg(res.msg);
+                        window.location.href = "/toPage/mall/personCenter";
+                    } else {
+                        layer.msg(res.msg);
+                        return false;
+                    }
+                },
+                error: function () {
+                    layer.msg("Exception!");
+                    return false;
                 }
             });
+            return false;
         });
+        return false;
     });
 </script>
 </body>
