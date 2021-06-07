@@ -55,7 +55,6 @@ public class ChatEndpoint {
             this.name = admin.getAdminName();
         }
         onlineUsers.put(name, this);
-        System.out.println(name + "已上线");
     }
 
     /**
@@ -71,7 +70,6 @@ public class ChatEndpoint {
             ObjectMapper mapper = new ObjectMapper();
             Message mess = mapper.readValue(message,Message.class);
             String toUser = mess.getToUser();
-            System.out.println(mess);
             String data = (String) mess.getMessage();
             String resultMessage = MessageUtils.getMessage(false, this.name, data);
             // 发送对象

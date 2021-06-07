@@ -41,11 +41,19 @@
         <!--聊天列表-->
         <div class="middle on">
             <div class="wx_search">
-                <input id="search-text" type="text" placeholder="search"/>
+                <input id="search-text" type="text" placeholder="search user"/>
                 <button id="addUser">+</button>
             </div>
             <div class="office_text">
                 <ul class="user_list">
+                    <a href="javascript:void(0);" onclick="changeChat(this)" value="Admin">
+                        <li>
+                            <div class="user_head"><img th:src="@{/image/admin.png}"/></div>
+                            <div class="user_text">
+                                <p class="user_name">Admin</p>
+                            </div>
+                        </li>
+                    </a>
                 </ul>
             </div>
         </div>
@@ -85,7 +93,6 @@
         let layer = layui.layer;
         let toUser;
         let photo = '[[${image}]]';
-        let user = '[[${name}]]'
 
         changeChat = function (data) {
             let name = $(data).attr("value");
@@ -96,11 +103,14 @@
             if (chatData !== null) {
                 // 将聊天记录渲染到聊天窗口
                 $('#chatbox').html(chatData);
+            } else {
+                $('#chatbox').html('');
             }
         }
 
         $('#addUser').click(function () {
             let userName = $('#search-text').val();
+            $('#search-text').val('');
             let image;
             $.ajax({
                 url: '/op/getCustomerPhoto',
@@ -144,7 +154,7 @@
                 if (chatData !== null) {
                     str = chatData + str;
                 }
-                sessionStorage.setItem(toUser,str);
+                sessionStorage.setItem(toUser, str);
                 ws.send(JSON.stringify(message));
                 // 清空消息窗口
                 text.value = '';
@@ -164,29 +174,34 @@
         ws.onmessage = function (event) {
             let data = JSON.parse(event.data);
             let image;
-            $.ajax({
-                url: '/op/getCustomerPhoto',
-                type: 'post',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: data.fromUser,
-                time: 2000,
-                async: false,
-                success: function (res) {
-                    if (res.code === 200) {
-                        image = res.data;
+
+            if (data.fromUser === 'Admin') {
+                image = '/image/admin.png'
+            } else {
+                $.ajax({
+                    url: '/op/getCustomerPhoto',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: data.fromUser,
+                    time: 2000,
+                    async: false,
+                    success: function (res) {
+                        if (res.code === 200) {
+                            image = res.data;
+                        }
                     }
-                }
-            });
+                });
+            }
             // 展示服务端推送的消息
             let chat = '<li class="other"><img src="' + image + '"><span>' + data.message + '</span></li>';
             $('#chatbox').append(chat);
             let chatData = sessionStorage.getItem(data.fromUser);
-            if (chatData != null){
+            if (chatData != null) {
                 chat = chatData + chat;
             }
             //保存聊天消息
-            sessionStorage.setItem(data.fromUser,chat);
+            sessionStorage.setItem(data.fromUser, chat);
         }
 
         ws.onclose = function () {

@@ -43,12 +43,12 @@ public class AdminRealm extends AuthorizingRealm {
             return null;
         }
         // 盐值加密
-        ByteSource credentialsSalt = ByteSource.Util.bytes(admin.getAdminName());
+        ByteSource credentialsSalt = ByteSource.Util.bytes(admin.getAdminId());
         return new SimpleAuthenticationInfo(account, admin.getAdminPwd(), credentialsSalt, this.getName());
     }
 
     public static void main(String[] args) {
-        String username = "15529559896";
+        String username = "1120";
         String credentials = "123456";
         String result = getEncryptedPassword(username, credentials);
         System.out.println(result);
