@@ -133,7 +133,8 @@
     function initial_page() {
         let aa = {
             "page": 1,
-            "limit": 20
+            "limit": 20,
+            "state": 1
         };
         $.ajax({
             url: "/op/commodityList",//后台请求的数据
@@ -185,7 +186,8 @@
     function getPno(obj) {
         let bb = {
             "page": 1,
-            "limit": 20
+            "limit": 20,
+            "state": 1
         };
         var text = $(obj).text();
         if (parseInt(text) > 1) {
@@ -239,7 +241,8 @@
         let cc = {
             "page": 1,
             "limit": 20,
-            "parentTypeName": current_type
+            "parentTypeName": current_type,
+            "state": 1
         };
         console.log(cc);
 
@@ -300,7 +303,8 @@
         let dd = {
             "page": 1,
             "limit": 20,
-            "parentTypeName": current_type
+            "parentTypeName": current_type,
+            "state": 1
         };
         var text = $(obj).text();
         if (parseInt(text) > 1) {
@@ -351,7 +355,8 @@
             "page": 1,
             "limit": 20,
             "parentTypeName": current_type,
-            "commodityName": find_text
+            "commodityName": find_text,
+            "state": 1
         };
         console.log(find_text);
         $.ajax({
@@ -414,7 +419,8 @@
             "page": 1,
             "limit": 20,
             "parentTypeName": current_type,
-            "commodityName": find_text
+            "commodityName": find_text,
+            "state": 1
         };
         var text = $(obj).text();
         if (parseInt(text) > 1) {
