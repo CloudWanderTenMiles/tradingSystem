@@ -58,6 +58,7 @@ public class LoginController {
         Admin admin = adminService.getAdminByID(account);
         Session session = subject.getSession();
         session.setAttribute("admin",admin);
+        session.setAttribute("type","admin");
         return "success";
     }
 
@@ -85,6 +86,7 @@ public class LoginController {
         Customer customer = customerService.getCustomerByPhone(telephone);
         Session session = subject.getSession();
         session.setAttribute("customer",customer);
+        session.setAttribute("type","customer");
         return "success";
     }
 
@@ -106,6 +108,7 @@ public class LoginController {
         Staff staff = csService.getStaffByPhone(telephone);
         Session session = subject.getSession();
         session.setAttribute("staff",staff);
+        session.setAttribute("type","staff");
         return "success";
     }
 }

@@ -7,9 +7,11 @@ import java.util.Map;
 
 public interface CustomerService {
 
-    public boolean checkExist(String stuId, String phone, String email);
+    public boolean checkExist(String stuId, String phone, String email, String name);
 
     public Customer getCustomerById(String id);
+
+    public String getCustomerPhotoByName(String name);
 
     public Customer getCustomerByPhone(String phone);
 

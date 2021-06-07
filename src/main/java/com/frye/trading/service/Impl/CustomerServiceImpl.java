@@ -17,17 +17,23 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerMapper customerMapper;
 
     @Override
-    public boolean checkExist(String stuId, String phone, String email) {
+    public boolean checkExist(String stuId, String phone, String email, String name) {
         Map<String, String> params = new LinkedHashMap<>();
         params.put("studentId", stuId);
         params.put("phone", phone);
         params.put("email", email);
+        params.put("name", name);
         return customerMapper.checkExist(params) > 0;
     }
 
     @Override
     public Customer getCustomerById(String id) {
         return customerMapper.getCustomerById(id);
+    }
+
+    @Override
+    public String getCustomerPhotoByName(String name) {
+        return customerMapper.getCustomerPhotoByName(name);
     }
 
     @Override

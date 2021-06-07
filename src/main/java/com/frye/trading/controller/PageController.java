@@ -1,6 +1,7 @@
 package com.frye.trading.controller;
 
 import com.frye.trading.pojo.model.Admin;
+import com.frye.trading.pojo.model.Customer;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -88,5 +89,27 @@ public class PageController {
     @RequestMapping("/toPage/cstaff/{page}")
     public String toCstaffPage(@PathVariable String page) {
         return "/cstaff/" + page;
+    }
+
+    @RequestMapping("/mall/chat")
+    public String toUserChatPage(Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        Customer customer = (Customer) session.getAttribute("customer");
+        model.addAttribute("name", customer.getCustomerName());
+        model.addAttribute("id", customer.getCustomerId());
+        model.addAttribute("image", customer.getPhoto());
+        return "/mall/chat";
+    }
+
+    @RequestMapping("/admin/chat")
+    public String toAdminChatPage(Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        Admin admin = (Admin) session.getAttribute("admin");
+        model.addAttribute("name", admin.getAdminName());
+        model.addAttribute("id", admin.getAdminId());
+        model.addAttribute("image","/image/admin.jpg");
+        return "/admin/chat";
     }
 }

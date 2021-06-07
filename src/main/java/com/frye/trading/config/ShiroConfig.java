@@ -52,6 +52,7 @@ public class ShiroConfig {
         filterMap.put("/logout", "logout");
 
         // 认证后才能进入
+        filterMap.put("/mall/chat", "authc");
         filterMap.put("/mall/**", "authc");
         filterMap.put("/toPage/mall/myProduct", "authc");
         filterMap.put("/toPage/mall/**", "authc");

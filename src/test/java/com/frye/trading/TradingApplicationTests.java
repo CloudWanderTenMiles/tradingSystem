@@ -1,6 +1,7 @@
 package com.frye.trading;
 
 import com.frye.trading.pojo.dto.Commodity;
+import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.pojo.model.Type;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
@@ -14,9 +15,9 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+//
 
-
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TradingApplicationTests {
 
     @Autowired
@@ -31,8 +32,8 @@ class TradingApplicationTests {
     @Test
     public void contextLoads() {
 
-        String commodityId = "O16229509163671";
-        Commodity commodity = commodityService.getCommodityById(commodityId);
-        System.out.println(commodity);
+        String name = "zz";
+        String photo = customerService.getCustomerPhotoByName(name);
+        System.out.println(photo);
     }
 }
