@@ -5,6 +5,7 @@ import com.frye.trading.pojo.model.Customer;
 import com.frye.trading.service.CommodityService;
 import com.frye.trading.service.CustomerService;
 import com.frye.trading.service.ShopcartService;
+import com.frye.trading.service.OrderService;
 import com.frye.trading.utils.DataJsonUtils;
 import com.frye.trading.utils.GenerateIdUtils;
 import org.apache.ibatis.annotations.Param;
@@ -31,6 +32,8 @@ public class CommodityController {
     CustomerService customerService;
     @Autowired
     ShopcartService shopcartService;
+    @Autowired
+    OrderService orderService;
 
 
     /**
@@ -271,6 +274,10 @@ public class CommodityController {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         String commodityId = map.get("commodityId");
         Commodity commodity = commodityService.getCommodityById(commodityId);
+        if(map.get("state").equals("1")){
+            orderService.deleteOrderByCid(commodityId);
+            shopcartService.setAllShopcartValidByCommodityId(commodityId);
+        }
         commodity.setState(map.get("state"));
         if (commodityService.updateCommodity(commodity) < 0) {
             dataJsonUtils.setCode(100);

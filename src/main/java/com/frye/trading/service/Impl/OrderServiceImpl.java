@@ -36,6 +36,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public int deleteOrderByCid(String id) {
+        return orderMapper.deleteOrderByCid(id);
+    }
+
+    @Override
     public List<Order> getOrderList(int pageNo, int pageSize, Map<String, String> params) {
         int begin = (pageNo-1) * pageSize;
         return orderMapper.getOrderList(begin, pageSize, params);

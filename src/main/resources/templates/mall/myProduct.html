@@ -239,7 +239,7 @@
 
             $(document).on("click",".complete",function (){
                 let commodityId=$($(this).parent().parent().prev().children().get(0)).val();
-                let data={"commodityId":commodityId,"state":"4"};
+                let data={"commodityId":commodityId,"state":"3"};
                 console.log(data);
                 $.ajax({
                     type:"post",
@@ -260,7 +260,7 @@
                 console.log(data);
                 $.ajax({
                     type:"post",
-                    url:"/op/orderWithdraw",
+                    url:"/op/commodityUpdateState",
                     data:JSON.stringify(data),
                     contentType:"application/json",
                     dataType:"json",

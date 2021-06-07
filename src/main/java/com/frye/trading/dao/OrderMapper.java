@@ -21,4 +21,6 @@ public interface OrderMapper {
     public List<Order> getOrderList(int begin, int pageSize, @Param("params") Map<String, String> params);
 
     public int getCount(@Param("params") Map<String, String> params);
+
+    public int deleteOrderByCid(String id);
 }

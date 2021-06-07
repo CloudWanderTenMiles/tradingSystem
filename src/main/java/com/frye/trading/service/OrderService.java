@@ -15,6 +15,8 @@ public interface OrderService {
 
     public int deleteOrder(String id);
 
+    public int deleteOrderByCid(String id);
+
     public List<Order> getOrderList(int pageNo, int pageSize, Map<String, String> params);
 
     public int getCount(Map<String, String> params);

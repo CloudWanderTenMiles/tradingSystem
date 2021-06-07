@@ -33,6 +33,12 @@
         where order_id = #{id}
     </delete>
 
+    <delete id="deleteOrderByCid">
+        delete
+        from tradingsystem.order_form
+        where commodity_id = #{id}
+    </delete>
+
     <select id="getOrderList" resultType="com.frye.trading.pojo.model.Order" parameterType="map">
         select *
         from tradingsystem.order_form
