@@ -171,17 +171,41 @@ public class CustomerController {
         return "/admin/customerUpdate";
     }
 
+//    /**
+//     * 跳转到用户页
+//     *
+//     * @param id    customer id
+//     * @param model 传递参数
+//     * @return 页面url
+//     */
+//    @RequestMapping("/mall/personCenter/{id}")
+//    public String topersonCenterPage(@PathVariable("id") String id, Model model) {
+//        model.addAttribute(id);
+//        return "/mall/personCenter";
+//    }
+
     /**
-     * 跳转到用户页
+     * 从后台获取customer的信息填充到form中
      *
-     * @param id    customer id
-     * @param model 传递参数
-     * @return 页面url
+     * @return 返回customer的json
      */
-    @RequestMapping("/mall/personCenter/{id}")
-    public String topersonCenterPage(@PathVariable("id") String id, Model model) {
-        model.addAttribute(id);
-        return "/mall/personCenter";
+    @RequestMapping("/op/getCustomer")
+    @ResponseBody
+    public String getCustomer() {
+        DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        Customer customer = (Customer) session.getAttribute("customer");
+        Customer customer1 = customerService.getCustomerById(customer.getCustomerId());
+        if (customer1 != null) {
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setData(customer1);
+            dataJsonUtils.setMsg("successfully");
+        } else {
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("Error");
+        }
+        return dataJsonUtils.toString();
     }
 
     /**

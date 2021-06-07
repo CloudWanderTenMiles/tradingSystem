@@ -53,24 +53,23 @@
 
 <!------------------------------Bott------------------------------>
 <div class="Bott">
-    <input id="buyerId" th:value="${orderId}" style="display: none">
     <div class="wrapper clearfix">
         <div class="zuo fl">
-            <div><h4>我的交易</h4>
+            <div><h4>MyTransaction</h4>
                 <ul>
-                    <li><a href="cart.html">我的购物车</a></li>
-                    <li><a href="/toPage/mall/myOrder.html">我的订单</a></li>
+                    <li><a href="cart.html">MyShopCart</a></li>
+                    <li><a href="/mall/myOrder">MyOrder</a></li>
                 </ul>
                 <h4>个人中心</h4>
                 <ul>
-                    <li><a href="/toPage/mall/personCenter.html">我的中心</a></li>
-                    <li><a href="/toPage/mall/personInfo.html">个人信息</a></li>
-                    <li><a href="/toPage/mall/changePwd.html">修改密码</a></li>
+                    <li><a href="/toPage/mall/personCenter">PersonCenter</a></li>
+                    <li><a href="/toPage/mall/personInfo">PersonInfomation</a></li>
+                    <li><a href="/toPage/mall/changePwd">ChangePassword</a></li>
                 </ul>
             </div>
         </div>
         <div class="you fl">
-            <div class="my clearfix"><h2 class="fl">投诉</h2></div>
+            <div class="my clearfix"><h2 class="fl">Compliant</h2></div>
             <div>
                 <form class="layui-form" method="post" style="width: auto;">
 
@@ -93,14 +92,8 @@
                     <!-- button -->
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button type="button" class="layui-btn layui-bg-red" onclick="window.history.back(-1)">
-                                <i class="layui-icon">&#xe603;</i>Return
-                            </button>
                             <button type="submit" class="layui-btn layui-bg-red" lay-submit lay-filter="submit-btn">
                                 <i class="layui-icon">&#xe605;</i>Submit
-                            </button>
-                            <button type="reset" class="layui-btn layui-bg-red">
-                                <i class="layui-icon">&#xe666;</i>Reset
                             </button>
                         </div>
                     </div>
