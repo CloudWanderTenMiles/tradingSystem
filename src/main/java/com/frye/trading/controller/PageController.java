@@ -109,7 +109,7 @@ public class PageController {
         Admin admin = (Admin) session.getAttribute("admin");
         model.addAttribute("name", admin.getAdminName());
         model.addAttribute("id", admin.getAdminId());
-        model.addAttribute("image","/image/admin.jpg");
+        model.addAttribute("image","/image/admin.png");
         return "/admin/chat";
     }
 }
