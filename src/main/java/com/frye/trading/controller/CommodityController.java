@@ -145,7 +145,7 @@ public class CommodityController {
      */
     @RequestMapping("/op/getCommodity")
     @ResponseBody
-    public String getCustomer(@RequestBody String id) {
+    public String getCommodity(@RequestBody String id) {
         Commodity commodity = commodityService.getCommodityById(id);
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         if (commodity != null) {
@@ -220,7 +220,9 @@ public class CommodityController {
         commodity.setPrice(Double.parseDouble(map.get("price")));
         commodity.setImage(map.get("image"));
         commodity.setDetail(map.get("detail"));
-        commodity.setTypeId(Integer.parseInt(map.get("typeId")));
+        if(map.get("typeId")!=null){
+            commodity.setTypeId(Integer.parseInt(map.get("typeId")));
+        }
         commodity.setState(map.get("state"));
         if (commodityService.updateCommodity(commodity) < 0) {
             dataJsonUtils.setCode(100);
@@ -238,11 +240,13 @@ public class CommodityController {
      * @param state 商品状态
      * @return 返回更改商品状态结果
      */
-    @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)
     @ResponseBody
     public String commodityUpdateState(String commodityId,String state) {
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
         Commodity commodity = new Commodity();
+        System.out.println("123"+commodityId);
+        System.out.println("123"+state);
         commodity.setCommodityId(commodityId);
         commodity.setState(state);
         if (commodityService.updateCommodity(commodity) < 0) {
@@ -253,7 +257,31 @@ public class CommodityController {
             dataJsonUtils.setMsg("update commodity state successfully!");
         }
         return dataJsonUtils.toString();
+    }*/
+
+    /**
+     *
+     * @param commodityId 商品id
+     * @param state 商品状态
+     * @return 返回更改商品状态结果
+     */
+    @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)
+    @ResponseBody
+    public String commodityUpdateState(@RequestBody Map<String, String> map) {
+        DataJsonUtils dataJsonUtils = new DataJsonUtils();
+        String commodityId = map.get("commodityId");
+        Commodity commodity = commodityService.getCommodityById(commodityId);
+        commodity.setState(map.get("state"));
+        if (commodityService.updateCommodity(commodity) < 0) {
+            dataJsonUtils.setCode(100);
+            dataJsonUtils.setMsg("update commodity state error!");
+        } else {
+            dataJsonUtils.setCode(200);
+            dataJsonUtils.setMsg("update commodity state successfully!");
+        }
+        return dataJsonUtils.toString();
     }
+
     @RequestMapping( "/mall/goodsUpdate/{id}")
     public String toUpdatePage1(@PathVariable("id") String id, Model model) {
         model.addAttribute(id);

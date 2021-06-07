@@ -154,8 +154,8 @@ public class OrderController {
     public String withdrawOrder(@RequestBody Map<String, String> map) {
         String orderId = map.get("orderId");
         DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        Order order = new Order();
-        order.setOrderId(orderId);
+        Order order = orderService.getOrderById(orderId);
+        //order.setOrderId(orderId);
         order.setState("withdrawn");
         if (orderService.updateOrder(order) < 0) {
             dataJsonUtils.setCode(100);

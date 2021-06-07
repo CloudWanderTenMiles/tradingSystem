@@ -171,6 +171,19 @@ public class CustomerController {
         return "/admin/customerUpdate";
     }
 
+    /**
+     * 跳转到修改页面
+     *
+     * @param id    修改的customer id
+     * @param model 传递参数
+     * @return 页面url
+     */
+    @RequestMapping("/mall/custUpdate/{id}")
+    public String toUpdatePage1(@PathVariable("id") String id, Model model) {
+        model.addAttribute(id);
+        return "/mall/custUpdate";
+    }
+
 //    /**
 //     * 跳转到用户页
 //     *
@@ -292,9 +305,15 @@ public class CustomerController {
         }
         // 设置customer的成员
         customer.setCustomerName(customerName);
-        customer.setRealName(map.get("realName"));
-        customer.setStudentId(stuId);
-        customer.setCustomerPwd(CustomerRealm.getEncryptedPassword(phone, map.get("customerPwd")));
+        if(map.get("realName")!=null){
+            customer.setRealName(map.get("realName"));
+        }
+        if(stuId!=null){
+            customer.setStudentId(stuId);
+        }
+        if(map.get("customerPwd")!=null){
+            customer.setCustomerPwd(CustomerRealm.getEncryptedPassword(phone, map.get("customerPwd")));
+        }
         customer.setSex(map.get("sex"));
         customer.setBirth(map.get("birth"));
         customer.setPhone(phone);

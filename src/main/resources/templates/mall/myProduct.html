@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <link rel="stylesheet" th:href="@{/css/show.css}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/myorder.css}">
     <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
     <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
@@ -23,7 +24,7 @@
             <div class="fr clearfix" id="top1">
                 <p class="fl">
                     <a href="/login" id="login">login</a>
-                    <a href="/toPage/mall/" id="reg">register</a>
+                    <a href="/toPage/mall/register" id="reg">register</a>
                 </p>
                 <div class="btn fl clearfix">
                     <a href="/toPage/mall/personCenter">
@@ -46,24 +47,46 @@
         </ul>
     </div>
 </div>
-<a class="submit" href="/toPage/mall/goodsAdd">
-    <button>+ Add</button>
-</a>
 
-<div class="productList1" id="myProductList1"></div>
+<div class="Bott" >
+    <div class="wrapper clearfix">
+        <div class="you fl" style="width: 1092px;padding-bottom: 0px">
+            <div class="dlist clearfix">
+                <ul class="fl clearfix" id="wa">
+                    <li class="on" style="cursor:pointer;padding: 0 14px"><a class="setOnsale">On-sale Orders</a></li>
+                    <li class="on" style="cursor:pointer;padding: 0 14px"><a class="setOrdered">Ordered Orders</a></li>
+                    <li class="on" style="cursor:pointer;padding: 0 14px"><a class="setCompleted">Completed Orders</a></li>
+                    <li class="on" style="cursor:pointer;padding: 0 14px"><a class="submit" href="/toPage/mall/goodsAdd">
+                        <button>+ Add</button>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="productList1" id="myProductList1">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <!--<div><button id="add"></button>添加商品</div>-->
 
 <script>
 
     layui.use(['table','form', 'jquery', 'layer'], function () {
-        var table =layui.table,
+        let table =layui.table,
             $ = layui.jquery,
             layer = layui.layer;
         //请求json数据拼接字符串，并在URL传参数id跳转
 
         $(function () {
             let shop = {"page": 1, "limit": 20, "state": 1};
+            let strOnsale   = "<ul>";
+            let strOrdered  = "<ul>";
+            let strCompleted= "<ul>";
+
             $.ajax({
                 type: "post",
                 url: "/op/getCommodityByCid",
@@ -71,17 +94,38 @@
                 data: shop,
 
                 success: function (data) {
-                    var str = "<ul>";
+
                     $.each(data.data, function (i, value) {
-                        str += "<li>" +
-                            "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
-                            "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
-                            "<div class='botInfo'><div class='wenzi'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span></div>" +
-                            "<div class='btn'><button class='update' id='upd'>Update</button><button class='delete' id='del'>Delete</button></div></div>" +
-                            "</li>"
+                        if(value.state==1){
+                            strOnsale += "<li>" +
+                                "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
+                                "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
+                                "<div class='botInfo'><div class='wenzi'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span></div>" +
+                                "<div class='btn'><button class='update' id='upd'>Update</button><button class='delete' id='del'>Delete</button></div>" +
+                                "</li>"
+                        }
+                        else if(value.state==2){
+                            strOrdered += "<li>" +
+                                "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
+                                "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
+                                "<div class='botInfo'><div class='wenzi'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span></div>" +
+                                "<div class='btn'><button class='complete' id='comp'>Complete</button><button class='delOrder'>Delorder</button></div>" +
+                                "</li>"
+                        }
+                        else if(value.state==4){
+                            strCompleted += "<li>" +
+                                "<div class='topInfo'>" +"<input style='display: none' value="+value.commodityId+">"+
+                                "<a href='" + "/mall/commodityDetail/" + value.commodityId + "'><img src='" + value.image + "' alt=''></a></div>" +
+                                "<div class='botInfo'><div class='wenzi'><h2 class='title'>" + value.commodityName + "</h2><span class='price'>" + "￥" + value.price + "</span></div>" +
+                                "</li>"
+                        }
                     });
-                    str += "</ul>";
-                    $("#myProductList1").append(str);
+                    strOnsale  += "</ul>";
+                    strOrdered += "</ul>";
+                    strCompleted += "</ul>";
+                    $("#myProductList1").append(strOnsale);
+
+                    
                     $(".delete").click(function (){
                         let id = $($(this).parent().parent().prev().children().get(0)).val();
                         layer.confirm("delete this commodity?",function (){
@@ -131,6 +175,113 @@
                     alert("error")
                 }
             });
+
+            $('.setOnsale').click(function (){
+                setOnsale();
+            })
+
+            $('.setOrdered').click(function (){
+                setOrdered();
+            })
+
+            $('.setCompleted').click(function (){
+                setCompleted();
+            })
+
+            function setOnsale(){
+                $('#myProductList1').empty();
+                $('#myProductList1').append(strOnsale);
+                $(".update").click(function (){
+                    let id = $($(this).parent().parent().prev().children().get(0)).val();
+                    layer.confirm("update this commodity?",function (){
+                        update(id);
+                    })
+                })
+
+                function update(data){
+                    window.location.href = "/mall/goodsUpdate/" +data;
+
+                }
+                $(".delete").click(function (){
+                    let id = $($(this).parent().parent().prev().children().get(0)).val();
+                    layer.confirm("delete this commodity?",function (){
+                        delLine(id);
+                    })
+                });
+
+                function delLine(data){
+                    let id=[];
+                    id.push(data);
+                    $.ajax({
+                        url:'/op/commodityDelete',
+                        type: 'post',
+                        dataType: 'json',
+                        contentType:'application/json',
+                        data:JSON.stringify(id),
+                        timeout:2000,
+                        success:function (res){
+                            if(res.code===200){
+                                layer.msg(res.msg,{time:1000});
+                                window.history.go(0);
+                                return false;
+                            }
+                            else{
+                                layer.msg(res.msg);
+                                return false;
+                            }
+                        },
+                        error: function () {
+                            layer.msg("Exception!");
+                        }
+                    });
+                }
+            }
+
+            $(document).on("click",".complete",function (){
+                let commodityId=$($(this).parent().parent().prev().children().get(0)).val();
+                let data={"commodityId":commodityId,"state":"4"};
+                console.log(data);
+                $.ajax({
+                    type:"post",
+                    url:"/op/commodityUpdateState",
+                    data:JSON.stringify(data),
+                    contentType:"application/json",
+                    dataType:"json",
+                    success:function (data){
+                        layer.msg(data.msg);
+                        window.history.go(0);
+                    }
+                })
+            })
+
+            $(document).on("click",".delOrder",function (){
+                let commodityId=$($(this).parent().parent().prev().children().get(0)).val();
+                let data={"commodityId":commodityId,"state":"1"};
+                console.log(data);
+                $.ajax({
+                    type:"post",
+                    url:"/op/orderWithdraw",
+                    data:JSON.stringify(data),
+                    contentType:"application/json",
+                    dataType:"json",
+                    success:function (data){
+                        layer.msg(data.msg);
+                        window.history.go(0);
+                    }
+                })
+            })
+
+
+            function setOrdered(){
+                $('#myProductList1').empty();
+                $('#myProductList1').append(strOrdered);
+            }
+
+            function setCompleted(){
+                $('#myProductList1').empty();
+                $('#myProductList1').append(strCompleted);
+            }
+
         })
     })
 </script>

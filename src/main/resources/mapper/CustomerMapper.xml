@@ -68,6 +68,9 @@
             <if test="sex != null">sex = #{sex},</if>
             <if test="email != null">email = #{email},</if>
             <if test="phone != null">phone = #{phone},</if>
+            <if test="birth != null">birth = #{birth},</if>
+            <if test="address != null">address = #{address},</if>
+
             <if test="credit != null">credit = #{credit},</if>
             <if test="address != null">address = #{address},</if>
             <if test="birth != null">birth = #{birth},</if>

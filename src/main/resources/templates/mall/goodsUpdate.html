@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -29,8 +30,8 @@
   <input type="text" style="display: none" name="image" id="imagePath">
 
   <div class="layui-form-item">
-    <label class="layui-form-label">ID:</label>
-    <div class="layui-input-inline">
+    <label class="layui-form-label" style="display:none;">ID:</label>
+    <div class="layui-input-inline" style="display:none;">
       <input type="text" id="commodityId" th:value="${id}" name="commodityId" class="layui-input" readonly
              style="border: none">
     </div>
@@ -55,8 +56,8 @@
              lay-verify="required|username"
              lay-reqText="The commodity name cannot be null">
     </div>
-    <label class="layui-form-label">owner Id:</label>
-    <div class="layui-input-inline">
+    <label class="layui-form-label" style="display:none;">owner Id:</label>
+    <div class="layui-input-inline" style="display: none">
       <input type="text" id="customerId" name="customerId" readonly class="layui-input" lay-verify="required"
              lay-reqText="The owner id cannot be null">
     </div>
@@ -257,7 +258,7 @@
         if (res.code === 200) {
           layer.msg(res.msg);
           $('#image').attr("src", res.data.src);
-          $('#imagePath').attr("value", res.data.src);
+          $('#imagePath').val(res.data.src);
         }
       }
       , error: function () {

@@ -31,15 +31,14 @@ img {
 }
 
 .submit{
-    position: relative;
-    float: left;
-    margin-left: 1368px;
-    margin-top: 25px;
+    display: inline-block;
+    margin-top: -7px;
+    margin-left: 10px;
 }
 
 .productList1{
     width: 960px;
-    margin: 120px auto;
+    margin: 32px auto;
     z-index: 1;
 
 }
@@ -99,6 +98,17 @@ img {
     margin-left: 5px;
 }
 
+.productList1 .complete{
+    display: inline-block;
+    background-color: #009688;
+    font-size: 12px;
+    color:white;
+    height: 30px;
+    width: 60px;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
 .productList1 .update{
     display: inline-block;
     background-color: #009688;
@@ -109,6 +119,18 @@ img {
     margin-top: 20px;
     margin-left: 30px;
 }
+
+.productList1 .delOrder{
+    display: inline-block;
+    background-color: #ff5722;
+    font-size: 12px;
+    color:white;
+    height: 30px;
+    width: 60px;
+    margin-top: 20px;
+    margin-left: 12px;
+}
+
 
 .productList1 .delete{
     display: inline-block;
@@ -128,8 +150,8 @@ img {
 .submit button{
     color: white;
     background-color: #009688;
-    height: 30px;
-    width: 60px;
+    height: 35px;
+    width: 73px;
 }
 
 /*图片的默认边框去掉 */

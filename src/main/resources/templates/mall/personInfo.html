@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
@@ -43,7 +44,7 @@
             <li><a href="/home">Home</a></li>
             <li><a href="/toPage/mall/productList">All Products</a></li>
             <li><a href="/toPage/mall/myProduct">My Products</a></li>
-            <li><a href="/mall/chat">Chatroom</a></li>
+            <li><a href="/toPage/mall/chart">Chart room</a></li>
         </ul>
     </div>
 </div>
@@ -69,14 +70,24 @@
                         </div>
                         <a href="#" class="fr" id="edit1">Edit</a>
                     </h3>
+                    <input id="customerId" style="display: none">
+                    <div id="customerName"></div>
+                    <div id="realName"></div>
+                    <div id="studentId"></div>
+                    <div id="phone"></div>
+                    <div id="email"></div>
+                    <div id="birth"></div>
+                    <div id="address"></div>
+                    <div id="sex"></div>
+                    <div id="credit"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="mask"></div>
-<!--编辑弹框-->
+<!--<div class="mask"></div>
+&lt;!&ndash;编辑弹框&ndash;&gt;
 <div class="bj">
     <div class="clearfix"><a href="/toPage/mall/personCenter" class="fr gb"><img th:src="@{/image/icon.png}"/></a></div>
     <h3>Edit</h3>
@@ -96,7 +107,7 @@
         <p><label>Address：</label><input style="width: 200px;margin-left: 16px" type="text" id="address"/></p>
         <div class="bc"><input type="submit" value="save"/><input type="reset" value="cancel"/></div>
     </form>
-</div>
+</div>-->
 
 
 <script type="text/javascript">
@@ -106,18 +117,7 @@
             $ = layui.jquery,
             layer = layui.layer;
 
-        let btn = document.getElementById("edit");
-
-        btn.onclick = function () {
-            updateCustomer();
-        }
-
-        function updateCustomer() {
-            alert(11);
-            layer.close(index);
-            window.location.href = "/toPage/mall/home/";
-        }
-
+        let id;
         $(function () {
             $.ajax({
                 type: "post",
@@ -126,24 +126,67 @@
                 dataType: "json",
                 success: function (data) {
                     let obj = data.data;
+                    console.log(obj);
                     let str = "";
-                    let str1 = "";
                     $.each(obj, function (i, n) {
-                        if (i === 'customerPwd' || i === 'photo') {
+                        /*if (i === 'customerPwd' || i === 'photo') {
                             return true;
                         }
                         $('#' + i).val(n);
                         str += "<div>" + i + ":" + n + "</div>";
                         if (i === 'customerId') {
                             str += "<input type='text' id='customerId' name='customerId' class='layui-input' style='display:none' value='" + n + "'>";
+                        }*/
+                        if(i==='customerPwd'||i==='photo'||i==='role'){
+                            return true;
+                        }
+                        else if(i==='customerId'){
+                            $('#customerId').val(n);
+                        }
+                        else if(i==='customerName'){
+                            $('#customerName').html("Nickname:&nbsp;&nbsp;"+n);
+                        }
+                        else if(i==='realName'){
+                            $('#realName').html("Realname:&nbsp;&nbsp;"+n);
+                        }
+                        else if(i==='studentId'){
+                            $('#studentId').html("Student Id:&nbsp;&nbsp;"+n);
+                        }
+                        else if(i==='phone'){
+                            $('#phone').html("Phone:&nbsp;&nbsp;"+n);
+                        }
+                        else if(i==='email'){
+                            $('#email').html("Email:&nbsp;&nbsp;"+n);
+                        }
+                        else if(i==='birth'){
+                            let newDate=new Date(n);
+                            let year=newDate.getFullYear();
+                            let month=newDate.getMonth()+1;
+                            let day=newDate.getDate();
+                            $('#birth').html("Birthday:&nbsp;&nbsp;"+year+"-"+month+"-"+day);
+                        }
+                        else if(i==='address'){
+                            $('#address').html("Address:&nbsp;&nbsp;"+n);
+                        }
+                        else if(i==='sex'){
+                            $('#sex').html("Sex:&nbsp;&nbsp;"+n);
+                        }
+                        else if(i==='credit'){
+                            $('#credit').html("Credit:&nbsp;&nbsp;"+n);
                         }
                     });
-                    $('#grxx').append(str);
+                    //$('#grxx').append(str);
                     $('#photo').attr("src", obj.photo);
                 }
             })
         })
+
+        $('#edit1').click(function (){
+            var id = $('#customerId').val();
+            window.location.href="/mall/custUpdate/"+id;
+        })
     })
+
 </script>
 </body>
 </html>

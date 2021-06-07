@@ -127,6 +127,7 @@
                 timeout: 2000,
                 success: function (data) {
                     let res = JSON.parse(data);
+                    console.log(res.data);
                     if (res.code === 200) {
                         $.each(res.data, function (index, value) {
                             $('#parentTypeId').append("<option value=\"" + value.parentTypeId + "\">" + value.parentTypeName + "</option>");
@@ -152,6 +153,7 @@
                 timeout: 2000,
                 success: function (data) {
                     let res = JSON.parse(data);
+                    console.log(res.data);
                     if (res.code === 200) {
                         layer.msg(res.msg);
                         form.val('myForm', res.data);
