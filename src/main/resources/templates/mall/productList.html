@@ -63,46 +63,46 @@
 </div>
 
 <div id="contact-info" class="contact-info">
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-mobile-alt"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Digital & Accessories</div>
+        <div class="text">Digital & Accessories</div>
     </div>
 
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-tshirt"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Clothing & Shoes</div>
+        <div class="text">Clothing & Shoes</div>
     </div>
 
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-utensils"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Food & Beverage</div>
+        <div class="text">Food & Beverage</div>
     </div>
 
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-gem"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Jewelry & Ornament</div>
+        <div class="text">Jewelry & Ornament</div>
     </div>
 
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-pump-soap"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Home & Cleaning</div>
+        <div class="text">Home & Cleaning</div>
     </div>
 
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-book"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Books & Stationery</div>
+        <div class="text">Books & Stationery</div>
     </div>
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-running"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Sport & Outdoors</div>
+        <div class="text">Sport & Outdoors</div>
     </div>
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-car"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Vehicle & Accessories</div>
+        <div class="text">Vehicle & Accessories</div>
     </div>
-    <div class="option">
+    <div onclick="getByTypeIntial(this)" class="option">
         <i class="fas fa-ticket-alt"></i>
-        <div onclick="getByTypeIntial(this)" class="text">Coupons & Member</div>
+        <div class="text">Coupons & Member</div>
     </div>
 </div>
 <!----------------productList------------------------->
@@ -149,7 +149,7 @@
                 var str1 = "";   //声明str1，防止产生undefined
                 var str2 = "";
 
-                for (var i = 0; i < data_num; i++) {   //遍历
+                for (var i = 0; i < data_num && i < 20; i++) {   //遍历
                     str1 += "<li><a href='/mall/commodityDetail/" + tt[i].commodityId + "'><dl><dt><img style='width: 120px; height: 160px;' src='"
                         + tt[i].image + "'></dt><dd>" + tt[i].commodityName + "</dd><dd>￥"
                         + tt[i].price + "</dd></dl></a></li>";
@@ -234,7 +234,7 @@
     }
 
     function getByTypeIntial(obj) {
-        let type = $(obj).text();
+        let type = $($(obj).children().get(1)).text();
         current_type = type;
         console.log(current_type);
 
