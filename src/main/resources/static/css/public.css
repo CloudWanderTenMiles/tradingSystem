@@ -83,7 +83,7 @@ img {
 }
 
 .productList1 .btn{
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .productList1 .title{
@@ -98,6 +98,12 @@ img {
     margin-left: 5px;
 }
 
+.buyerName{
+    font-size: 16px;
+    margin-left: 25px;
+    margin-top: 10px;
+}
+
 .productList1 .complete{
     display: inline-block;
     background-color: #009688;
@@ -105,7 +111,6 @@ img {
     color:white;
     height: 30px;
     width: 60px;
-    margin-top: 20px;
     margin-left: 30px;
 }
 
@@ -127,7 +132,6 @@ img {
     color:white;
     height: 30px;
     width: 60px;
-    margin-top: 20px;
     margin-left: 12px;
 }
 
