@@ -35,7 +35,7 @@ public class GenerateIdUtils {
      * @return 'C' + year + (10000 + customerIndex)
      */
     public static String generateCustID() {
-        return "C" + getSysYear() + 10000 + customerIndex++;
+        return "C" + getSysYear() + (100000 + customerIndex++);
     }
 
     /**

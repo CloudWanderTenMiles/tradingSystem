@@ -96,4 +96,17 @@
         limit #{begin}, #{pageSize}
     </select>
 
+    <select id="getBuyerName" resultType="String">
+        select customer_name
+        from customer
+        <where>
+            customer_id in (
+            select buyer_id
+            from order_form
+            where `state` = 'Ordered'
+            and commodity_id = #{id}
+            )
+        </where>
+    </select>
+
 </mapper>

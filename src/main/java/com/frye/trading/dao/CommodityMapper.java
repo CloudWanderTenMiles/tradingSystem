@@ -23,4 +23,6 @@ public interface CommodityMapper {
     public List<Commodity> getCommodityList(int begin, int pageSize, @Param("params") Map<String, String> params);
 
     public int getCount(@Param("params") Map<String, String> params);
+
+    public String getBuyerName(@Param("id") String id);
 }

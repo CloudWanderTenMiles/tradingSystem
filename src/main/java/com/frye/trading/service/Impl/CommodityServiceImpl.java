@@ -58,4 +58,9 @@ public class CommodityServiceImpl implements CommodityService {
     public int getCount(Map<String, String> params) {
         return commodityMapper.getCount(params);
     }
+
+    @Override
+    public String getBuyerName(String id) {
+        return commodityMapper.getBuyerName(id);
+    }
 }

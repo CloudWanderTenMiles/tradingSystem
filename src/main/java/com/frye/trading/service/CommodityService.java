@@ -27,4 +27,6 @@ public interface CommodityService {
     public List<Commodity> getCommodityList(int pageNo, int pageSize, Map<String, String> params);
 
     public int getCount(Map<String, String> params);
+
+    public String getBuyerName(String id);
 }

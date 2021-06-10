@@ -193,6 +193,7 @@
                     }
                 });
             }
+
             // 展示服务端推送的消息
             let chat = '<li class="other"><img src="' + image + '"><span>' + data.message + '</span></li>';
             $('#chatbox').append(chat);
@@ -204,7 +205,9 @@
             sessionStorage.setItem(data.fromUser, chat);
         }
 
-        ws.onclose = function () {
+        ws.onclose = function (e) {
+            console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
+            console.log(e);
             layer.msg("you are offline!");
         }
     })

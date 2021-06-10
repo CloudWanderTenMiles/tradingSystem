@@ -186,7 +186,9 @@
             sessionStorage.setItem(data.fromUser,chat);
         }
 
-        ws.onclose = function () {
+        ws.onclose = function (e) {
+            console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean);
+            console.log(e);
             layer.msg("you are offline!");
         }
     })

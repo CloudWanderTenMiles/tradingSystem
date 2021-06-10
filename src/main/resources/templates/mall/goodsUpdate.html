@@ -9,7 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
   <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-  <script type="text/javascript" th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 <body>
@@ -35,31 +34,17 @@
       <input type="text" id="commodityId" th:value="${id}" name="commodityId" class="layui-input" readonly
              style="border: none">
     </div>
-    <label class="layui-form-label">state:</label>
-    <div class="layui-inline">
-      <select name="state" id="state" lay-verify="required" lay-reqText="The state cannot be null">
-        <option value="" selected="">state</option>
-        <option value="0">withdraw</option>
-        <option value="1">on sale</option>
-        <option value="2">ordered</option>
-        <option value="3">wait for transaction</option>
-        <option value="4">wait for confirm</option>
-        <option value="5">completed</option>
-      </select>
-    </div>
   </div>
 
   <div class="layui-form-item">
     <label class="layui-form-label">Name:</label>
     <div class="layui-input-inline">
       <input type="text" id="commodityName" name="commodityName" class="layui-input"
-             lay-verify="required|username"
-             lay-reqText="The commodity name cannot be null">
+             lay-verify="required|username" lay-reqText="The commodity name cannot be null">
     </div>
     <label class="layui-form-label" style="display:none;">owner Id:</label>
     <div class="layui-input-inline" style="display: none">
-      <input type="text" id="customerId" name="customerId" readonly class="layui-input" lay-verify="required"
-             lay-reqText="The owner id cannot be null">
+      <input type="text" id="customerId" name="customerId" readonly class="layui-input" style="border: none">
     </div>
   </div>
 

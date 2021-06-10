@@ -305,21 +305,20 @@ public class CustomerController {
         }
         // 设置customer的成员
         customer.setCustomerName(customerName);
-        if(map.get("realName")!=null){
+        if (map.get("realName") != null) {
             customer.setRealName(map.get("realName"));
         }
-        if(stuId!=null){
-            customer.setStudentId(stuId);
-        }
-        if(map.get("customerPwd")!=null){
+        if (map.get("customerPwd") != null) {
             customer.setCustomerPwd(CustomerRealm.getEncryptedPassword(phone, map.get("customerPwd")));
         }
+        customer.setStudentId(stuId);
         customer.setSex(map.get("sex"));
         customer.setBirth(map.get("birth"));
         customer.setPhone(phone);
         customer.setEmail(email);
         customer.setAddress(map.get("address"));
         customer.setCredit(Double.parseDouble(map.get("credit")));
+        customer.setPhoto(map.get("photo"));
         if (customerService.updateCustomer(customer) < 0) {
             dataJsonUtils.setCode(100);
             dataJsonUtils.setMsg("update customer error! please check the data you enter.");

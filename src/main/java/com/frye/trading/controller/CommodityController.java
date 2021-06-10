@@ -35,7 +35,6 @@ public class CommodityController {
     @Autowired
     OrderService orderService;
 
-
     /**
      * 获取商品列表
      * @param page                 pageNo, 页码
@@ -173,8 +172,11 @@ public class CommodityController {
         Map<String,String>params=new LinkedHashMap<>();
         params.put("customerId",CustomerId);
         List<Commodity> commodities = commodityService.getCommodityList(page,limit,params);
+        for (Commodity commodity : commodities) {
+            String name = commodityService.getBuyerName(commodity.getCommodityId());
+            commodity.setCustomerName(name);
+        }
         int count = commodityService.getCount(params);
-
         if (count >= 0) {
             dataJsonUtils.setCode(200);
             dataJsonUtils.setMsg("get data successfully");
@@ -236,31 +238,6 @@ public class CommodityController {
         }
         return dataJsonUtils.toString();
     }
-
-    /**
-     *
-     * @param commodityId 商品id
-     * @param state 商品状态
-     * @return 返回更改商品状态结果
-     */
-   /* @RequestMapping(value = "/op/commodityUpdateState", method = RequestMethod.POST)
-    @ResponseBody
-    public String commodityUpdateState(String commodityId,String state) {
-        DataJsonUtils dataJsonUtils = new DataJsonUtils();
-        Commodity commodity = new Commodity();
-        System.out.println("123"+commodityId);
-        System.out.println("123"+state);
-        commodity.setCommodityId(commodityId);
-        commodity.setState(state);
-        if (commodityService.updateCommodity(commodity) < 0) {
-            dataJsonUtils.setCode(100);
-            dataJsonUtils.setMsg("update commodity state error!");
-        } else {
-            dataJsonUtils.setCode(200);
-            dataJsonUtils.setMsg("update commodity state successfully!");
-        }
-        return dataJsonUtils.toString();
-    }*/
 
     /**
      *

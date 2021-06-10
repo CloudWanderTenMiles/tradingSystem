@@ -9,7 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
   <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-  <script type="text/javascript" th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/layui/2.5.7/layui.js}" charset="utf-8"></script>
 </head>
 <body>
@@ -58,14 +57,6 @@
     </div>
   </div>
 
-  <!--<div class="layui-form-item">
-    <label class="layui-form-label">Password:</label>
-    <div class="layui-input-inline">
-      <input type="password" id="customerPwd" name="customerPwd" class="layui-input"
-             lay-verify="required|password" lay-reqText="The password cannot be null">
-    </div>
-  </div>-->
-
   <div class="layui-form-item">
     <label class="layui-form-label">Sex:</label>
     <div class="layui-input-block">
@@ -105,13 +96,7 @@
     </div>
   </div>
 
-  <div class="layui-form-item">
-    <label class="layui-form-label">Credit:</label>
-    <div class="layui-input-inline">
-      <input type="text" id="credit" name="credit" class="layui-input" lay-verify="required|credit"
-             lay-reqText="The credit cannot be null">
-    </div>
-  </div>
+  <input type="text" id="credit" name="credit" class="layui-input" style="display: none">
 
   <!-- button -->
   <div class="layui-form-item">
@@ -121,9 +106,6 @@
       </button>
       <button type="submit" class="layui-btn" lay-submit lay-filter="submit-btn">
         <i class="layui-icon">&#xe605;</i>Submit
-      </button>
-      <button type="reset" class="layui-btn">
-        <i class="layui-icon">&#xe666;</i>Reset
       </button>
     </div>
   </div>
@@ -164,7 +146,7 @@
           }
         },
         error: function (){
-          layer.msg("Pulling data from the background is abnormal");
+          layer.msg("Pulling data from the server is abnormal");
         }
       })
     }
